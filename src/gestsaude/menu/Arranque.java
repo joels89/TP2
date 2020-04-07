@@ -3,11 +3,15 @@ package gestsaude.menu;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import javax.swing.Timer;
 
+import gestsaude.recurso.Consulta;
 import gestsaude.recurso.GEstSaude;
 import gestsaude.recurso.Servico;
+import gestsaude.recurso.Utente;
 import gestsaude.util.RelogioSimulado;
 
 /** Classe responsável pelo arranque do sistema.
@@ -26,6 +30,7 @@ public class Arranque {
 		
 //	deve ter os seguintes utentes, a informação é número, nome
 //	120, Dália Ribeiro Sanches
+	Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
 //	121, Raquel Marques Soares
 //	122, Daniel Mendes Rodrigues
 //	123, Zeferino Dias Torres
@@ -38,6 +43,7 @@ public class Arranque {
 //	130, Daniel Mendes Rodrigues
 //
 //	deve ter os seguintes serviços que aceitam consultas (identificação, Nome do serviço)
+	Servico Pediatria1 = new Servico("Ped1", "Pediatria - Drª P. Quena");
 //	Ped1, Pediatria - Drª P. Quena
 //	Ped2, Pediatria - Dr B. B. Zinho
 //	Orto1, Ortopedia - Dr Ossos
@@ -57,7 +63,8 @@ public class Arranque {
 //	Enf, Enfermaria
 //	NeuLab, EEG + Dopler
 		
-// Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente		
+// Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
+	Consulta consulta = new Consulta(Dalia, Pediatria1,LocalDate.of(2020, 4, 06), LocalTime.of(8, 00, 00));
 //	Hoje 8h10, Ped1, 120
 //	Hoje 8h10, Ped2, 121
 //	Hoje 8h10, Orto1, 122
