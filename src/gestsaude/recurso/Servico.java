@@ -1,6 +1,8 @@
 package gestsaude.recurso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /** Representa um Serviço
  */
@@ -47,5 +49,33 @@ public class Servico {
 	{
 		senhasTiradas.remove(s);
 	}
+	
+	public void addConsultas(Consulta consulta)
+	{
+		consultadasMarcadas.add(consulta);
+		
+		Collections.sort(consultadasMarcadas, new Comparator<Consulta>() 
+		{		
+			public int compare(Consulta consulta, Consulta consulta2) 
+			{
+				if(consulta.getData().equals(consulta2.getData()))
+				{
+					System.out.println("Datas Iguais");
+					return consulta.getHora().compareTo(consulta2.getHora());
+				}
+				return consulta.getData().compareTo(consulta2.getData());
+			}
+		});			    	
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Servico [id=" + id + ", descricao=" + descricao + "]";
+	}
+	
+	
+	
+	
 }
 

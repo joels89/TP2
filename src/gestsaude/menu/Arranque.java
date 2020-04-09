@@ -102,12 +102,12 @@ public class Arranque {
 		// criar todos os menus de serviço
 		Collection<Servico> servs = gs.getServicos(); 
 		int serIdx = 0;
-		MenuServico menus[] = new MenuServico[ servs.size() ];
-		for( Servico s : servs ) {
-			menus[serIdx] = new MenuServico( new Point( 10 + (serIdx % 5)*200, 250 + (serIdx / 5 )*170  ), s, gs );
-			menus[serIdx].setVisible( true );
-			serIdx++;
-		}
+		MenuServico menus[] = new MenuServico[0 /*servs.size()*/ ];
+		/*
+		 * for( Servico s : servs ) { menus[serIdx] = new MenuServico( new Point( 10 +
+		 * (serIdx % 5)*200, 250 + (serIdx / 5 )*170 ), s, gs );
+		 * menus[serIdx].setVisible( true ); serIdx++; }
+		 */
 		
 		// criar um temporizador que vai atualizando as várias janelas
 		// do menu de serviços, de 10 em 10 segundos (10000 milisegundos)
@@ -115,7 +115,8 @@ public class Arranque {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for( MenuServico ms : menus )
-					ms.atualizarInfo();				
+					ms.atualizarInfo();
+				 lc.atualizarRelogio();
 			}
 		});
 		t.start();

@@ -27,10 +27,51 @@ public class Consulta
 		this.data = data;
 		this.hora = hora;
 	}
-	
-	
+
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+
+	public Servico getServico() {
+		return servico;
+	}
+
+
+	public void setServico(Servico servico) {
+		this.servico = servico;
+	}
+
+
+	public LocalDate getData() {
+		return data;
+	}
+
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+
+	public LocalTime getHora() {
+		return hora;
+	}
+
+
+	public void setHora(LocalTime hora) {
+		this.hora = hora;
+	}
 	
 
+	@Override
+	public String toString() {
+		return "Consulta [utente=" + utente + ", servico=" + servico + ", data=" + data + ", hora=" + hora + "]";
+	}
 	
-
 }

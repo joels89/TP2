@@ -2,6 +2,7 @@ package gestsaude.recurso;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -44,6 +45,18 @@ public class Utente
 	public void addConsulta(Consulta consulta)
 	{
 		consultasMarcadas.add(consulta);
+		Collections.sort(consultasMarcadas, new Comparator<Consulta>() 
+		{		
+			public int compare(Consulta consulta, Consulta consulta2) 
+			{
+				if(consulta.getData().equals(consulta2.getData()))
+				{
+					System.out.println("Datas Iguais");
+					return consulta.getHora().compareTo(consulta2.getHora());
+				}
+				return consulta.getData().compareTo(consulta2.getData());
+			}
+		});			    	
 	}
 	
 	public void eliminarConsulta(Consulta consulta) 
@@ -52,14 +65,17 @@ public class Utente
 	}
 	
 	public List <Consulta> getPresentes()
-	{
+	{		
 		return Collections.unmodifiableList(consultasMarcadas);
 	}
+	
+	
+	
 
 
 	@Override
 	public String toString() {
-		return "Utente [Numero de Utente=" + snsnumber + ", nomeDoUtente=" + nomeDoUtente + "]";
+		return "Utente [Numero de Utente= " + snsnumber + ", nomeDoUtente= " + nomeDoUtente + "]";
 	}
 	
 }
