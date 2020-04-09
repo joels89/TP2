@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import javax.swing.Timer;
 
@@ -18,6 +19,11 @@ import gestsaude.util.RelogioSimulado;
  * Tem um método para criar a configuração de teste
  */
 public class Arranque {
+	
+	
+	public static final LocalDate today = LocalDate.now();
+	public static final LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
+	public static final LocalDate yesterday = tomorrow.minusDays(2);
 
 	/** método qeu cria a configuração inicial do sistema
 	 * @return um GEstSaude já completamente configurado
@@ -83,19 +89,30 @@ public class Arranque {
 //	Scopia, Endo/Colonoscopia
 //	Enf, Enfermaria
 //	NeuLab, EEG + Dopler
-		
+	
+	
+	
+
+    
 // Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
-	Consulta consulta8 = new Consulta(Dalia, PediatriaQuena,LocalDate.now(), LocalTime.of(8, 10, 00));
+	Consulta consulta1 = new Consulta(121, "Ped1",today, LocalTime.of(8, 10, 00));
 //	Hoje 8h10, Ped1, 120
-	Consulta consulta8 = new Consulta(Dalia, PediatriaQuena,LocalDate.now(), LocalTime.of(8, 10, 00));
+	Consulta consulta2 = new Consulta(121, "Ped2",today, LocalTime.of(8, 10, 00));
 //	Hoje 8h10, Ped2, 121
+	Consulta consulta3 = new Consulta(122, "Orto1",today, LocalTime.of(8, 10, 00));
 //	Hoje 8h10, Orto1, 122
+	Consulta consulta4 = new Consulta(125, "Derm1",today, LocalTime.of(8, 20, 00));
 //	Hoje 8h20, Derm1, 125
+	Consulta consulta5 = new Consulta(126, "Ped1",today, LocalTime.of(8, 30, 00));
 //	Hoje 8h30, Ped1, 126
+	Consulta consulta6 = new Consulta(127, "Ped1",today, LocalTime.of(8, 40, 00));
 //	Hoje 8h40, Ped1, 127
 //	
+	Consulta consulta7 = new Consulta(127, "Ped1",tomorrow, LocalTime.of(8, 10, 00));
 //	Amanhã 8h10, Ped1, 127
+	Consulta consulta8 = new Consulta(129, "Ped1",tomorrow, LocalTime.of(8, 10, 00));
 //	Amanhã 8h10, Ped1, 129
+	Consulta consulta9 = new Consulta(129, "Ped1",today.plus(2, ChronoUnit.DAYS), LocalTime.of(8, 10, 00));
 //	Daqui a dois dias 8h40, Ped1, 123
 				
 		return gest;
