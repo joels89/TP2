@@ -59,7 +59,7 @@ public class Utente
 		});			    	
 	}
 	
-	public void eliminarConsulta(Consulta consulta) 
+	public void removeConsulta(Consulta consulta) 
 	{
 		consultasMarcadas.remove(consulta);
 	}
@@ -70,8 +70,6 @@ public class Utente
 	}
 	
 	
-	
-
 
 	@Override
 	public String toString() {

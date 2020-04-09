@@ -32,31 +32,52 @@ public class Arranque {
 //	120, Dália Ribeiro Sanches
 	Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
 //	121, Raquel Marques Soares
+	Utente Raquel = new Utente(121,"Raquel Marques Soares");
 //	122, Daniel Mendes Rodrigues
+	Utente Daniel = new Utente(122,"Daniel Mendes Rodrigues");
+	Utente Zeferino = new Utente(123, "Zeferino Dias Torres");
 //	123, Zeferino Dias Torres
+	Utente Anabela = new Utente(124, "Anabela Dias Santos");
 //	124, Anabela Dias Santos
+	Utente Felizbetrto = new Utente(125, "Felizbetrto Desgraçado");
 //	125, Felizbetrto Desgraçado
+	Utente Antonina = new Utente(126, "Antonina Martins Pires");
 //	126, Antonina Martins Pires
+	Utente Camaleão = new Utente(127, "Camaleão das Neves Freitas");
 //	127, Camaleão das Neves Freitas
+	Utente João = new Utente(128, "João Pais Pereira");
 //	128, João Pais Pwreira
+	Utente Carlos = new Utente(129, "Carlos Freitas Lobo");
 //	129, Carlos Freitas Lobo
+	Utente DanielMendes = new Utente(130, "Daniel Mendes Rodrigues");
 //	130, Daniel Mendes Rodrigues
 //
 //	deve ter os seguintes serviços que aceitam consultas (identificação, Nome do serviço)
-	Servico Pediatria1 = new Servico("Ped1", "Pediatria - Drª P. Quena");
+	Servico PediatriaQuena = new Servico("Ped1", "Pediatria - Drª P. Quena");
 //	Ped1, Pediatria - Drª P. Quena
+	Servico PediatriaZinho = new Servico("Ped2", "Pediatria - Dr B. B. Zinho");
 //	Ped2, Pediatria - Dr B. B. Zinho
+	Servico OrtopediaOssos = new Servico("Orto1", "Ortopedia - Dr Ossos");
 //	Orto1, Ortopedia - Dr Ossos
+	Servico OrtopediaEntorse = new Servico("Orto2", "Ortopedia - Drª Entorse");
 //	Orto2, Ortopedia - Drª Entorse
+	Servico OtorrinoNarize = new Servico("Oto1", "Otorrino - Dr Narize");
 //	Oto1, Otorrino - Dr Narize
+	Servico OtorrinoOdete = new Servico("Oto2", "Otorrino - Drª Odete Otite");
 //	Oto2, Otorrino - Drª Odete Otite
+	Servico PneumologiaPaula = new Servico("Pneu1", "Pneumologia - Drª Paula Mão");
 //	Pneu1, Pneumologia - Drª Paula Mão
+	Servico DermatologiaRuga = new Servico("Derm1", "Dermatologia - Dr V. Ruga");
 //	Derm1, Dermatologia - Dr V. Ruga
+	Servico CardiologiaCard1 = new Servico("Card1", "Cardiologia - Dr Paul Sassão");
 //	Card1, Cardiologia - Dr Paul Sassão
+	Servico OftalmologiaOfta1 = new Servico("Ofta1", "Oftalmologia - Drª Íris Tapada");
 //	Ofta1, Oftalmologia - Drª Íris Tapada
+	Servico OftalmologiaAler = new Servico("Aler", "Alergologia - Dr E. S. Pirro");
 //	Aler, Alergologia - Dr E. S. Pirro
 //		
 // deve ter os seguintes serviços que NÃO aceitam consultas (identificação, Nome do serviço)
+	
 //	Rad, Radiologia
 //	Audio, Audiometria
 //	Scopia, Endo/Colonoscopia
@@ -64,8 +85,9 @@ public class Arranque {
 //	NeuLab, EEG + Dopler
 		
 // Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
-	Consulta consulta = new Consulta(Dalia, Pediatria1,LocalDate.of(2020, 4, 06), LocalTime.of(8, 00, 00));
+	Consulta consulta8 = new Consulta(Dalia, PediatriaQuena,LocalDate.now(), LocalTime.of(8, 10, 00));
 //	Hoje 8h10, Ped1, 120
+	Consulta consulta8 = new Consulta(Dalia, PediatriaQuena,LocalDate.now(), LocalTime.of(8, 10, 00));
 //	Hoje 8h10, Ped2, 121
 //	Hoje 8h10, Orto1, 122
 //	Hoje 8h20, Derm1, 125

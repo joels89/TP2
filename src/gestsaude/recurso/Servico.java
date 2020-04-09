@@ -60,7 +60,6 @@ public class Servico {
 			{
 				if(consulta.getData().equals(consulta2.getData()))
 				{
-					System.out.println("Datas Iguais");
 					return consulta.getHora().compareTo(consulta2.getHora());
 				}
 				return consulta.getData().compareTo(consulta2.getData());
