@@ -16,13 +16,13 @@ public class TesteClasses {
 		Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
 		Servico Pediatria1 = new Servico("Ped1", "Pediatria - Drª P. Quena");
 		
-		
+		/*
 		
 		Consulta consulta3 = new Consulta(Dalia,Pediatria1,LocalDate.of(2020, 01, 01),LocalTime.of(9,00));
 		Consulta consulta1 = new Consulta(Dalia,Pediatria1,LocalDate.now(),LocalTime.of(8,00));
 		Consulta consulta = new Consulta(Dalia,Pediatria1,LocalDate.now(),LocalTime.of(9,00));
 		Consulta consulta2 = new Consulta(Dalia,Pediatria1,LocalDate.of(2020, 05, 01),LocalTime.of(9,00));
-		
+	
 		Dalia.addConsulta(consulta2);
 		Dalia.addConsulta(consulta);
 		Dalia.addConsulta(consulta1);
@@ -35,7 +35,7 @@ public class TesteClasses {
 		// TODO Auto-generated method stub
 		
 		
-		System.out.println(Dalia.getPresentes());
+		System.out.println(Dalia.getPresentes());	*/
 
 	}
 	

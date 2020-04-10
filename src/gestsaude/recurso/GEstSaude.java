@@ -51,6 +51,8 @@ public class GEstSaude {
 	
 	public int addConsulta( Consulta c ) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
+		c.getServico().addConsultasServico(c);
+		c.getUtente().addConsulta(c);
 		return CONSULTA_ACEITE;
 	}
 	

@@ -37,6 +37,7 @@ public class Arranque {
 //	deve ter os seguintes utentes, a informação é número, nome
 //	120, Dália Ribeiro Sanches
 	Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
+	System.out.println(Dalia);
 //	121, Raquel Marques Soares
 	Utente Raquel = new Utente(121,"Raquel Marques Soares");
 //	122, Daniel Mendes Rodrigues
@@ -81,6 +82,9 @@ public class Arranque {
 //	Ofta1, Oftalmologia - Drª Íris Tapada
 	Servico OftalmologiaAler = new Servico("Aler", "Alergologia - Dr E. S. Pirro");
 //	Aler, Alergologia - Dr E. S. Pirro
+	
+	Servico servPed1 = new Servico("Ped1", "Pediatria - Drª P. Quena");
+	System.out.println(servPed1);
 //		
 // deve ter os seguintes serviços que NÃO aceitam consultas (identificação, Nome do serviço)
 	
@@ -93,7 +97,7 @@ public class Arranque {
 	
 	
 
-    
+    /*
 // Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
 	Consulta consulta1 = new Consulta(121, "Ped1",today, LocalTime.of(8, 10, 00));
 //	Hoje 8h10, Ped1, 120
@@ -113,8 +117,14 @@ public class Arranque {
 	Consulta consulta8 = new Consulta(129, "Ped1",tomorrow, LocalTime.of(8, 10, 00));
 //	Amanhã 8h10, Ped1, 129
 	Consulta consulta9 = new Consulta(129, "Ped1",today.plus(2, ChronoUnit.DAYS), LocalTime.of(8, 10, 00));
-//	Daqui a dois dias 8h40, Ped1, 123
-				
+//	Daqui a dois dias 8h40, Ped1, 123*/
+	Consulta consulta1 = new Consulta(LocalDate.now(), LocalTime.now(), servPed1, Dalia);
+	Consulta consulta2 = new Consulta(LocalDate.of(2020, 5, 20), LocalTime.of(8, 10), servPed1, Raquel);
+	System.out.println(consulta1);	
+	
+	gest.addConsulta(consulta1);
+	System.out.println(servPed1);
+	System.out.println(Dalia);
 		return gest;
 	}
 

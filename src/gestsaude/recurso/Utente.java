@@ -11,35 +11,35 @@ import java.util.List;
  */
 public class Utente 
 {
-	private int snsnumber;
-	private String nomeDoUtente;
+	private int numeroSNS;
+	private String nomeUtente;
 	private ArrayList<Consulta> consultasMarcadas = new ArrayList<Consulta>();
 	
 	
-	public Utente(int sns, String nomeDoUtente) 
+	public Utente(int numeroSNS, String nomeUtente) 
 	{		
-		this.snsnumber = sns;
-		this.nomeDoUtente = nomeDoUtente;
+		this.numeroSNS = numeroSNS;
+		this.nomeUtente = nomeUtente;
 	}
 
 
-	public int getSnsnumber() {
-		return snsnumber;
+	public int getNumeroSNS() {
+		return numeroSNS;
 	}
 
 
-	public void setSnsnumber(int snsnumber) {
-		this.snsnumber = snsnumber;
+	public void setNumeroSNS(int numeroSNS) {
+		this.numeroSNS = numeroSNS;
 	}
 
 
-	public String getNomeDoUtente() {
-		return nomeDoUtente;
+	public String getNomeUtente() {
+		return nomeUtente;
 	}
 
 
-	public void setNomeDoUtente(String nomeDoUtente) {
-		this.nomeDoUtente = nomeDoUtente;
+	public void setNomeUtente(String nomeUtente) {
+		this.nomeUtente = nomeUtente;
 	}
 	
 	public void addConsulta(Consulta consulta)
@@ -49,12 +49,12 @@ public class Utente
 		{		
 			public int compare(Consulta consulta, Consulta consulta2) 
 			{
-				if(consulta.getData().equals(consulta2.getData()))
+				if(consulta.getDataConsulta().equals(consulta2.getDataConsulta()))
 				{
 					System.out.println("Datas Iguais");
-					return consulta.getHora().compareTo(consulta2.getHora());
+					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
 				}
-				return consulta.getData().compareTo(consulta2.getData());
+				return consulta.getDataConsulta().compareTo(consulta2.getDataConsulta());
 			}
 		});			    	
 	}
@@ -73,7 +73,7 @@ public class Utente
 
 	@Override
 	public String toString() {
-		return "Utente [Numero de Utente= " + snsnumber + ", nomeDoUtente= " + nomeDoUtente + "]";
+		return "Utente: " + nomeUtente + " - SnsNº(" + numeroSNS + "), Consultas Marcadas:" + consultasMarcadas;
 	}
 	
 }

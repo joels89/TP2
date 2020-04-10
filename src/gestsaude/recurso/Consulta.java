@@ -15,63 +15,65 @@ public class Consulta
 /*	Esta classe representa uma consulta. Deve ter a indicação do utente, do serviço e o dia e
 	hora da consulta. Deve ter construtores, getters e setters relevantes. */
 	
-	private int utente;
-	private String servico;
-	private LocalDate data;
-	private LocalTime hora;
+	private Utente utente;
+	private Servico servico;
+	private LocalDate dataConulta;
+	private LocalTime horaConsulta;
 	
 	
-	public Consulta(int utente, String servico, LocalDate data, LocalTime hora) {
-		this.utente = utente;
+	public Consulta(LocalDate dataConsulta, LocalTime horaConsulta, Servico servico, Utente utente) {
+		this.dataConulta = dataConsulta;
+		this.horaConsulta = horaConsulta;
 		this.servico = servico;
-		this.data = data;
-		this.hora = hora;
+		this.utente = utente;
 	}
 
 
-	public int getUtente() {
+	public Utente getUtente() {
 		return utente;
 	}
 
 
-	public void setUtente(int utente) {
+	public void setUtente(Utente utente) {
 		this.utente = utente;
 	}
 
 
-	public String getServico() {
+	public Servico getServico() {
 		return servico;
 	}
 
 
-	public void setServico(String servico) {
+	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
 
 
-	public LocalDate getData() {
-		return data;
+	public LocalDate getDataConsulta() {
+		return dataConulta;
 	}
 
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setDataConsulta(LocalDate dataConsulta) {
+		this.dataConulta = dataConsulta;
 	}
 
 
-	public LocalTime getHora() {
-		return hora;
+	public LocalTime getHoraConsulta() {
+		return horaConsulta;
 	}
 
 
-	public void setHora(LocalTime hora) {
-		this.hora = hora;
+	public void setHoraConsulta(LocalTime horaConsulta) {
+		this.horaConsulta = horaConsulta;
 	}
 	
 
 	@Override
 	public String toString() {
-		return "Consulta [utente=" + utente + ", servico=" + servico + ", data=" + data + ", hora=" + hora + "]";
+		return "Consulta: Data: " + dataConulta + ", Hora: " + horaConsulta +
+				", Servico: " +	servico.getServicoNome() + "(" +servico.getServicoId() + ")" +
+				", Utente: " + utente.getNomeUtente() + " - SnsNº(" + utente.getNumeroSNS() + ")";
 	}
 	
 }
