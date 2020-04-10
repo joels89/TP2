@@ -101,9 +101,6 @@ public class Arranque {
 //	NeuLab, EEG + Dopler
 	
 	
-	
-
- 
 // Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
 	Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,10), ped1.getServicoId(), utente120.getNumeroSNS());
 	Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped2.getServicoId(), utente121.getNumeroSNS());
@@ -125,20 +122,47 @@ public class Arranque {
 //	Daqui a dois dias 8h40, Ped1, 123*/
 
 	
-	System.out.println(consulta1);	
-	System.out.println(consulta2);
 	gest.addUtente(utente120);
 	gest.addUtente(utente121);
 	gest.addUtente(utente122);
-	gest.addServico(ped1);
+	gest.addUtente(utente123);
+	gest.addUtente(utente124);
+	gest.addUtente(utente125);
+	gest.addUtente(utente126);
+	gest.addUtente(utente127);
+	gest.addUtente(utente128);
+	gest.addUtente(utente129);
+	gest.addUtente(utente130);
 
+	gest.addServico(ped1);
+	gest.addServico(ped2);
+	gest.addServico(orto1);
+	gest.addServico(orto2);
+	gest.addServico(oto1);
+	gest.addServico(oto2);		
+	gest.addServico(pneu1);
+	gest.addServico(ped2);
+	gest.addServico(derm1);
+	gest.addServico(card1);
+	gest.addServico(ofta1);
+	gest.addServico(aler);
 	
 	
 	//gest.addConsulta(consulta1);
-	gest.addConsulta(consulta2);
+	gest.addConsulta(consulta1);
+	//gest.addConsulta(consulta2);
+	//gest.addConsulta(consulta3);
+	//gest.addConsulta(consulta4);
+	gest.addConsulta(consulta5);
+	gest.addConsulta(consulta6);
+	gest.addConsulta(consulta7);
+	//gest.addConsulta(consulta8);
+	//gest.addConsulta(consulta9);
 	System.out.println(ped1);
+	System.out.println("-------------------------");
 	System.out.println(utente120);
-	
+	System.out.println("-------------------------");
+	System.out.println(utente127);	
 		return gest;
 	}
 
