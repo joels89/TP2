@@ -1,9 +1,13 @@
 package gestsaude.recurso;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import gestsaude.util.RelogioSimulado;
+import gestsaude.util.gestSaudeUtilitarios;
 
 
 
@@ -45,7 +49,7 @@ public class Utente
 	public void addConsulta(Consulta consulta)
 	{
 		consultasMarcadas.add(consulta);
-		ordenarListaCronologica(consultasMarcadas);
+		gestSaudeUtilitarios.ordenarListaCronologica(consultasMarcadas);
 	    	
 	}
 	
@@ -58,22 +62,6 @@ public class Utente
 	{		
 		return Collections.unmodifiableList(consultasMarcadas);
 	}
-	
-	public void ordenarListaCronologica (ArrayList<Consulta> consultasMarcadas)
-	{
-		Collections.sort(consultasMarcadas, new Comparator<Consulta>() 
-		{		
-			public int compare(Consulta consulta, Consulta consulta2) 
-			{
-				if(consulta.getDataConulta().equals(consulta2.getDataConulta()))
-				{
-					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
-				}
-				return consulta.getDataConulta().compareTo(consulta2.getDataConulta());
-			}
-		});					
-	}
-	
 	
 
 	@Override

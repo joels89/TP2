@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import gestsaude.util.gestSaudeUtilitarios;
+
 /** Representa um Serviço
  */
 public class Servico {
@@ -73,18 +75,9 @@ public class Servico {
 	public void addConsultasServico(Consulta consulta)
 	{
 		consultadasMarcadasServico.add(consulta);
+		gestSaudeUtilitarios.ordenarListaCronologica(consultadasMarcadasServico);
 		
-		Collections.sort(consultadasMarcadasServico, new Comparator<Consulta>() 
-		{		
-			public int compare(Consulta consulta, Consulta consulta2) 
-			{
-				if(consulta.getDataConulta().equals(consulta2.getDataConulta()))
-				{
-					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
-				}
-				return consulta.getDataConulta().compareTo(consulta2.getDataConulta());
-			}
-		});			    	
+	    	
 	}
 	
 	public void removeConsultasServico(Consulta consulta) {
