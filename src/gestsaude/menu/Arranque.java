@@ -21,9 +21,9 @@ import gestsaude.util.RelogioSimulado;
 public class Arranque {
 	
 	
-	public static final LocalDate today = LocalDate.now();
-	public static final LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
-	public static final LocalDate yesterday = tomorrow.minusDays(2);
+	public static final LocalDate TODAY = LocalDate.now();
+	public static final LocalDate TOMORROW = TODAY.plus(1, ChronoUnit.DAYS);
+	public static final LocalDate YESTERDAY = TOMORROW.minusDays(2);
 
 	/** método qeu cria a configuração inicial do sistema
 	 * @return um GEstSaude já completamente configurado
@@ -118,7 +118,7 @@ public class Arranque {
 //	Amanhã 8h10, Ped1, 129
 	Consulta consulta9 = new Consulta(129, "Ped1",today.plus(2, ChronoUnit.DAYS), LocalTime.of(8, 10, 00));
 //	Daqui a dois dias 8h40, Ped1, 123*/
-	Consulta consulta1 = new Consulta(LocalDate.now(), LocalTime.now(), servPed1, Dalia);
+	Consulta consulta1 = new Consulta(TODAY, LocalTime.now(), servPed1, Dalia);
 	Consulta consulta2 = new Consulta(LocalDate.of(2020, 5, 20), LocalTime.of(8, 10), servPed1, Raquel);
 	System.out.println(consulta1);	
 	
