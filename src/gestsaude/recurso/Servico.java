@@ -78,11 +78,11 @@ public class Servico {
 		{		
 			public int compare(Consulta consulta, Consulta consulta2) 
 			{
-				if(consulta.getDataConsulta().equals(consulta2.getDataConsulta()))
+				if(consulta.getDataConulta().equals(consulta2.getDataConulta()))
 				{
 					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
 				}
-				return consulta.getDataConsulta().compareTo(consulta2.getDataConsulta());
+				return consulta.getDataConulta().compareTo(consulta2.getDataConulta());
 			}
 		});			    	
 	}

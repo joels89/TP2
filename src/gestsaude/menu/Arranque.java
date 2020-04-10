@@ -36,29 +36,12 @@ public class Arranque {
 		
 //	deve ter os seguintes utentes, a informação é número, nome
 //	120, Dália Ribeiro Sanches
-	Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
+		
+	Utente Dalia = new Utente("120","Dália Ribeiro Sanches");
 	System.out.println(Dalia);
 //	121, Raquel Marques Soares
-	Utente Raquel = new Utente(121,"Raquel Marques Soares");
-//	122, Daniel Mendes Rodrigues
-	Utente Daniel = new Utente(122,"Daniel Mendes Rodrigues");
-	Utente Zeferino = new Utente(123, "Zeferino Dias Torres");
-//	123, Zeferino Dias Torres
-	Utente Anabela = new Utente(124, "Anabela Dias Santos");
-//	124, Anabela Dias Santos
-	Utente Felizbetrto = new Utente(125, "Felizbetrto Desgraçado");
-//	125, Felizbetrto Desgraçado
-	Utente Antonina = new Utente(126, "Antonina Martins Pires");
-//	126, Antonina Martins Pires
-	Utente Camaleão = new Utente(127, "Camaleão das Neves Freitas");
-//	127, Camaleão das Neves Freitas
-	Utente João = new Utente(128, "João Pais Pereira");
-//	128, João Pais Pwreira
-	Utente Carlos = new Utente(129, "Carlos Freitas Lobo");
-//	129, Carlos Freitas Lobo
-	Utente DanielMendes = new Utente(130, "Daniel Mendes Rodrigues");
-//	130, Daniel Mendes Rodrigues
-//
+	Utente Raquel = new Utente("121","Raquel Marques Soares");
+
 //	deve ter os seguintes serviços que aceitam consultas (identificação, Nome do serviço)
 	Servico PediatriaQuena = new Servico("Ped1", "Pediatria - Drª P. Quena");
 //	Ped1, Pediatria - Drª P. Quena
@@ -118,13 +101,22 @@ public class Arranque {
 //	Amanhã 8h10, Ped1, 129
 	Consulta consulta9 = new Consulta(129, "Ped1",today.plus(2, ChronoUnit.DAYS), LocalTime.of(8, 10, 00));
 //	Daqui a dois dias 8h40, Ped1, 123*/
-	Consulta consulta1 = new Consulta(LocalDate.now(), LocalTime.now(), servPed1, Dalia);
-	Consulta consulta2 = new Consulta(LocalDate.of(2020, 5, 20), LocalTime.of(8, 10), servPed1, Raquel);
-	System.out.println(consulta1);	
 	
-	gest.addConsulta(consulta1);
+	Consulta consulta1 = new Consulta(LocalDate.now(), LocalTime.now(), servPed1.getServicoId(), Dalia.getNumeroSNS());
+	Consulta consulta2 = new Consulta(LocalDate.of(2020, 5, 20), LocalTime.of(8, 10), servPed1.getServicoId(), Dalia.getNumeroSNS());
+
+	
+	System.out.println(consulta1);	
+	System.out.println(consulta2);
+	gest.addUtente(Dalia);
+	gest.addUtente(Raquel);
+	gest.addServico(servPed1);
+	
+	//gest.addConsulta(consulta1);
+	gest.addConsulta(consulta2);
 	System.out.println(servPed1);
 	System.out.println(Dalia);
+	
 		return gest;
 	}
 

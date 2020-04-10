@@ -1,6 +1,7 @@
 package gestsaude.recurso;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,6 +35,20 @@ public class GEstSaude {
 		return null;
 	}
 	
+	public void addUtente(Utente utente) {
+		utentes.put(utente.getNumeroSNS(), utente);
+	}
+	public void removeUtente( String numeroSNSUtente ){
+		utentes.remove( numeroSNSUtente );
+	}
+	
+	public void addServico(Servico servico) {
+		servicos.put(servico.getServicoId(), servico);
+	}
+	public void removeServico( String servicoId ){
+		servicos.remove( servicoId );
+	}
+	
 	public void resetSenhas() {
 		proxSenha = 1;
 	}
@@ -46,13 +61,30 @@ public class GEstSaude {
 	
 	public int podeAceitarConsulta( Consulta c ) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
+		/*
+	    - O utente tem de estar identificado; - DONE - getNumeroSNSUtente
+		- O serviço tem de estar identificado; - DONE - getServicoId
+		- O horário deve estar entre as 8h10 e as 19:50; - DONE - getServicoId
+		- O intervalo entre consultas no mesmo serviço, deve ser de 10 minutos; ------------------------ TODO
+		- O utente não pode duas consultas, no mesmo dia, com diferença inferior a 3 horas; ------------- TODO
+		*/
+		if ((c.getHoraConsulta().compareTo(LocalTime.of(8, 10)) < 0) || (c.getHoraConsulta().compareTo(LocalTime.of(19, 50)) > 0)) {
+			System.out.println("******************************************* NAO pode Aceitar consulta - ver condicoes - TODO - Apagar no fim ************");
+			return -1;
+		}
+		System.out.println(" ******************************************* Consulta ACEITE - TODO - Apagar no fim ************");
 		return CONSULTA_ACEITE;
 	}
 	
 	public int addConsulta( Consulta c ) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
-		c.getServico().addConsultasServico(c);
-		c.getUtente().addConsulta(c);
+		if (podeAceitarConsulta(c) != CONSULTA_ACEITE) {
+			return -1;
+		}	
+		consultas.add(c);
+		System.out.println("consultas ****************" + consultas);
+		servicos.get(c.getServicoId()).addConsultasServico(c);
+		utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
 		return CONSULTA_ACEITE;
 	}
 	
@@ -70,4 +102,6 @@ public class GEstSaude {
 		// TODO acabar este método
 		return null;
 	}
+
+
 }

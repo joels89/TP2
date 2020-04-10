@@ -13,8 +13,8 @@ public class TesteClasses {
 		
 		
 		
-		Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
-		Servico Pediatria1 = new Servico("Ped1", "Pediatria - Drª P. Quena");
+		//Utente Dalia = new Utente(120,"Dália Ribeiro Sanches");
+		//Servico Pediatria1 = new Servico("Ped1", "Pediatria - Drª P. Quena");
 		
 		/*
 		

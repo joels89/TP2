@@ -11,24 +11,24 @@ import java.util.List;
  */
 public class Utente 
 {
-	private int numeroSNS;
+	private String numeroSNS;
 	private String nomeUtente;
 	private ArrayList<Consulta> consultasMarcadas = new ArrayList<Consulta>();
 	
 	
-	public Utente(int numeroSNS, String nomeUtente) 
+	public Utente(String numeroSNS, String nomeUtente) 
 	{		
 		this.numeroSNS = numeroSNS;
 		this.nomeUtente = nomeUtente;
 	}
 
 
-	public int getNumeroSNS() {
+	public String getNumeroSNS() {
 		return numeroSNS;
 	}
 
 
-	public void setNumeroSNS(int numeroSNS) {
+	public void setNumeroSNS(String numeroSNS) {
 		this.numeroSNS = numeroSNS;
 	}
 
@@ -49,12 +49,12 @@ public class Utente
 		{		
 			public int compare(Consulta consulta, Consulta consulta2) 
 			{
-				if(consulta.getDataConsulta().equals(consulta2.getDataConsulta()))
+				if(consulta.getDataConulta().equals(consulta2.getDataConulta()))
 				{
 					System.out.println("Datas Iguais");
 					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
 				}
-				return consulta.getDataConsulta().compareTo(consulta2.getDataConsulta());
+				return consulta.getDataConulta().compareTo(consulta2.getDataConulta());
 			}
 		});			    	
 	}
