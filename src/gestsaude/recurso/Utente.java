@@ -45,18 +45,8 @@ public class Utente
 	public void addConsulta(Consulta consulta)
 	{
 		consultasMarcadas.add(consulta);
-		Collections.sort(consultasMarcadas, new Comparator<Consulta>() 
-		{		
-			public int compare(Consulta consulta, Consulta consulta2) 
-			{
-				if(consulta.getDataConulta().equals(consulta2.getDataConulta()))
-				{
-					System.out.println("Datas Iguais");
-					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
-				}
-				return consulta.getDataConulta().compareTo(consulta2.getDataConulta());
-			}
-		});			    	
+		ordenarListaCronologica(consultasMarcadas);
+	    	
 	}
 	
 	public void removeConsulta(Consulta consulta) 
@@ -67,6 +57,21 @@ public class Utente
 	public List <Consulta> getPresentes()
 	{		
 		return Collections.unmodifiableList(consultasMarcadas);
+	}
+	
+	public void ordenarListaCronologica (ArrayList<Consulta> consultasMarcadas)
+	{
+		Collections.sort(consultasMarcadas, new Comparator<Consulta>() 
+		{		
+			public int compare(Consulta consulta, Consulta consulta2) 
+			{
+				if(consulta.getDataConulta().equals(consulta2.getDataConulta()))
+				{
+					return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
+				}
+				return consulta.getDataConulta().compareTo(consulta2.getDataConulta());
+			}
+		});					
 	}
 	
 	
