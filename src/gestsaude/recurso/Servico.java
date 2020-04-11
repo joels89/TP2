@@ -75,9 +75,7 @@ public class Servico {
 	public void addConsultasServico(Consulta consulta)
 	{
 		consultadasMarcadasServico.add(consulta);
-		gestSaudeUtilitarios.ordenarListaCronologica(consultadasMarcadasServico);
-		
-	    	
+		gestSaudeUtilitarios.ordenarListaCronologica(consultadasMarcadasServico);    	
 	}
 	
 	public void removeConsultasServico(Consulta consulta) {
