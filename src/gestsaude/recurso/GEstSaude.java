@@ -17,6 +17,11 @@ public class GEstSaude {
 	public static final int DATA_JA_PASSOU = 3;        // indica que a data já passou  
 	public static final int ALTERACAO_INVALIDA = 4;    // indica que a alteração é inválida
 	
+	public static final int MINS_POR_HORA = 60;
+	public static final int TRES_HORAS = 180;
+	public static final LocalTime HORARIO_INICIO = LocalTime.of(8, 10);
+	public static final LocalTime HORARIO_FIM = LocalTime.of(19, 50);	
+	
 	// mapas com as listas de todas as informações
 	private HashMap<String,Utente> utentes = new HashMap<String,Utente>();
 	private HashMap<String,Servico> servicos = new HashMap<String,Servico>();
@@ -61,31 +66,56 @@ public class GEstSaude {
 	
 	public int podeAceitarConsulta( Consulta c ) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
-		/*
-	    - O utente tem de estar identificado; - DONE - getNumeroSNSUtente
-		- O serviço tem de estar identificado; - DONE - getServicoId
-		- O horário deve estar entre as 8h10 e as 19:50; - DONE - getServicoId
-		- O intervalo entre consultas no mesmo serviço, deve ser de 10 minutos; ------------------------ TODO
-		- O utente não pode duas consultas, no mesmo dia, com diferença inferior a 3 horas; ------------- TODO
-		*/
-		if ((c.getHoraConsulta().compareTo(LocalTime.of(8, 10)) < 0) || (c.getHoraConsulta().compareTo(LocalTime.of(19, 50)) > 0)) {
-			System.out.println("******************************************* NAO pode Aceitar consulta - ver condicoes - TODO - Apagar no fim ************");
-			return -1;
-		}
-		System.out.println(" ******************************************* Consulta ACEITE - TODO - Apagar no fim ************");
+
 		return CONSULTA_ACEITE;
 	}
 	
-	public int addConsulta( Consulta c ) {
+	public int localTime2Min( LocalTime hora ) {//----------------------------------TODO ver onde por o método
+		return  hora.getHour() * MINS_POR_HORA + hora.getMinute();
+	}
+	public boolean validaConsulta( Consulta c ) {//---------------------------------TODO ver onde por o método
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
-		if (podeAceitarConsulta(c) != CONSULTA_ACEITE) {
+		/*
+	    - O utente tem de estar identificado; - DONE - getNumeroSNSUtente
+		- O serviço tem de estar identificado; - DONE - getServicoId
+		- O horário deve estar entre as 8h10 e as 19:50; - DONE
+		- O intervalo entre consultas no mesmo serviço, deve ser de 10 minutos; ------------------------ Testado no método podeAceitarConsulta (TODO ate ter senha)
+		- O utente não pode duas consultas, no mesmo dia, com diferença inferior a 3 horas;  - DONE
+		*/
+		if (servicos.get(c.getServicoId()) == null) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");
+			return false;	
+		}
+		if (utentes.get(c.getNumeroSNSUtente()) == null) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n");
+			return false;	
+		}
+		if ((c.getHoraConsulta().compareTo(HORARIO_INICIO) < 0) || (c.getHoraConsulta().compareTo(HORARIO_FIM) > 0)) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");
+			return false;
+		}
+
+		for (Consulta consultaListada : consultas){
+			if ((c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) &&
+					((c.getDataConsulta() == consultaListada.getDataConsulta()) && 
+					(Math.abs(localTime2Min(c.getHoraConsulta()) - localTime2Min(consultaListada.getHoraConsulta())) < TRES_HORAS))){
+				System.out.println("        **** ATENCAO CONSULTA INVALIDA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");
+				return false;	
+			}}
+		return true;
+	}
+
+	
+	//Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped2.getServicoId(), utente121.getNumeroSNS());
+	public int addConsulta( Consulta c ) {
+		if (!validaConsulta(c)){
 			return -1;
-		}	
-		consultas.add(c);
-		System.out.println("consultas ****************" + consultas);
-		servicos.get(c.getServicoId()).addConsultasServico(c);
-		utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
-		return CONSULTA_ACEITE;
+		}else
+			consultas.add(c);
+			System.out.println(servicos.get(c.getServicoId()));//--------------------controlo de consultas TODO retirar no final
+			servicos.get(c.getServicoId()).addConsultasServico(c);
+			utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
+			return CONSULTA_ACEITE;
 	}
 	
 	public int podeAlterarConsulta( Consulta antiga, Consulta nova ) {
