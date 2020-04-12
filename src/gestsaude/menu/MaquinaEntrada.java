@@ -3,6 +3,8 @@ package gestsaude.menu;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.swing.*;
 
@@ -33,17 +35,20 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 	/** método chamado quando se pressiona o botão "Validar Consulta"*/
 	private void validarConsulta() {
 		String numSns = JOptionPane.showInputDialog(this, "Qual o seu número de SNS?");
-		// TODO associar o id ao utente
 		Utente u = null;
+		u = gest.getUtente(numSns);
+		// TODO associar o id ao utente
+		//Utente u = null;
 		if( u != null ) {
-			String nome = "NOME UTENTE"; // TODO inicializar nome do utente
-			// TODO verificar se o utente tem consulta hoje 
-			if( false ) {
+			String nome = u.getNomeUtente(); // TODO inicializar nome do utente --------------- DONE -----------
+			// TODO verificar se o utente tem consulta hoje   --------------------------------- DONE -----------
+			if(!gest.temConsultaHoje(u, LocalDate.now())) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas hoje!" );
 				return;
 			}
-			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas
-			if( false ){
+			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30)             LocalTime.now()  confirmar enunciado diz antesou depois
+			//System.out.println("temConsultaProxima +++++++++++++++++++++++++++++++++++++++++++" + gest.temConsultaProxima(u, LocalTime.of(10, 20)));
+			if(!gest.temConsultaProxima(u, LocalTime.of(8, 00))){
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}

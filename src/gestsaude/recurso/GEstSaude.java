@@ -1,5 +1,6 @@
 package gestsaude.recurso;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class GEstSaude {
 	private HashMap<String,Servico> servicos = new HashMap<String,Servico>();
 	private HashMap<String,Senha> senhas = new HashMap<String,Senha>();
 	private ArrayList<Consulta> consultas = new ArrayList<Consulta>();
+	private List<Consulta> listaConsultas = new ArrayList<Consulta>();
 	
 	// definição da próxima senha
 	private int proxSenha = 1;
@@ -52,6 +54,10 @@ public class GEstSaude {
 		
 		return senha;		
 		
+	}
+	
+	public Utente getUtente(String numeroSNSUtente) {
+		return utentes.get(numeroSNSUtente);
 	}
 	
 	public void addUtente(Utente utente) {
@@ -94,11 +100,36 @@ public class GEstSaude {
 		return CONSULTA_ACEITE;
 	}
 	
-	public int localTime2Min( LocalTime hora ) {//----------------------------------TODO ver onde por o método
+	public int localTime2Min( LocalTime hora ) {//---------------------------------------------------------------------------------------TODO ver onde por o método
 		return  hora.getHour() * MINS_POR_HORA + hora.getMinute();
 	}
 	
-	public boolean validaConsulta( Consulta c ) {//---------------------------------TODO ver onde por o método
+	public boolean temConsultaHoje(Utente u, LocalDate data) {//------------------------------------------------------------------------------------TODO ver onde por o método
+		if ( u.getPresentes()!= null) {
+			listaConsultas = u.getPresentes();
+			for (Consulta consultaListada : listaConsultas){
+				return consultaListada.getDataConsulta().equals(data);
+			}
+		}
+		return false;
+	}
+	
+	public boolean temConsultaProxima(Utente u, LocalTime horaSenha) {//------------------------------------------------------------------------------------TODO ver onde por o método
+		if ( u.getPresentes()!= null) {
+			listaConsultas = u.getPresentes();
+			/*System.out.println(" consultas do utente         *** ----------------------- " + listaConsultas);
+			System.out.println(" consultas do utente inicio         *** ----------------------- " + listaConsultas.get(0));
+			System.out.println("listada TOPO/////////////////////////////////// " + listaConsultas.get(0).getHoraConsulta());
+			System.out.println("hora senha" + horaSenha);
+			System.out.println("diferença - " + (localTime2Min(listaConsultas.get(0).getHoraConsulta()) - localTime2Min(horaSenha)));
+			System.out.println((Math.abs(localTime2Min(listaConsultas.get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS));*/  //TODO testar final com senha e ver questao das 3 horas
+			return (Math.abs(localTime2Min(listaConsultas.get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS);//indice zero pois e sempre a 1 consulta qd uma termina e removida ...
+
+		}
+		return false;
+	}
+	
+	public boolean validaConsulta( Consulta c ) {//---------------------------------------------------------------------------------------TODO ver onde por o método
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
 		/*
 	    - O utente tem de estar identificado; - DONE - getNumeroSNSUtente
@@ -136,7 +167,7 @@ public class GEstSaude {
 			return -1;
 		}else
 			consultas.add(c);
-			System.out.println(servicos.get(c.getServicoId()));//--------------------controlo de consultas TODO retirar no final
+			System.out.println("------Consultas adicionadas a lista -------------" + servicos.get(c.getServicoId()));//--------------------controlo de consultas TODO retirar no final
 			servicos.get(c.getServicoId()).addConsultasServico(c);
 			utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
 			return CONSULTA_ACEITE;
@@ -159,6 +190,9 @@ public class GEstSaude {
 	public List<Consulta> getConsultas() {
 		return Collections.unmodifiableList(consultas);
 	}
+
+
+
 
 
 }
