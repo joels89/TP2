@@ -38,20 +38,34 @@ public class GEstSaude {
 	
 	public Senha emiteSenha( Consulta c, LocalDateTime t ) {
 		// TODO testar se a consulta já está validada, se estiver retornar a senha já emitida	
-		// TODO senão criar e retornar a nova senha
+		// TODO senão criar e retornar a nova senha	
 		
-		if (!validaConsulta(c))
+		for (Consulta consulta : consultas)
 		{
-			System.out.println("Senha Rejeitada!!");
-			return null;
-			
+			if (!consulta.equals(c))
+			{
+				System.out.println("        **** ATENCAO CONSULTA INVALIDA ****  \n Consulta nao existe na Lista de consultas  \n ");
+				return null;
+			}
+			else
+			{
+				if(Math.abs(t.getHour() - localTime2Min(consulta.getHoraConsulta())) <= TRES_HORAS)
+				{
+					Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t);
+					addSenha(senha);
+					return senha;
+				}
+				else
+				{
+					System.out.println("        **** ATENCAO SENHA INVALIDA ****  \n Volte no horario mais proximo a sua consulta.  \n ");
+					return null;
+				}
+				
+			}
+				
 		}
 		
-		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t);
-		addSenha(senha);
-		
-		return senha;		
-		
+		return null;	
 	}
 	
 	public void addUtente(Utente utente) {
