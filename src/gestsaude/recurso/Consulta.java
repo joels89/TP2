@@ -61,7 +61,7 @@ public class Consulta
 
 
 	public String toString() {
-		return "Consulta - Data: " + dataConsulta + ", Hora: " + horaConsulta + ", servicoId: (" + servicoId
+		return "\n Consulta - Data: " + dataConsulta + ", Hora: " + horaConsulta + ", servicoId: (" + servicoId
 				+ "), Utente (NºSNS): " + numeroSNSUtente;
 	}
 	

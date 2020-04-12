@@ -52,20 +52,37 @@ public class MenuSecretaria extends JFrame {
 	}
 
 	/** lista todas as consultas */
-	private void listarTodas() {
-		// TODO implementar este método
+	private void listarTodas() 
+	{
+		for (Consulta consultas : gest.getConsultas())
+		{
+			System.out.println(consultas);
+		}
 	}
 
 	/** lista apenas as consultas de hoje */
 	private void listarHoje() {
-		// TODO implementar este método
+		for (Consulta consultas : gest.getConsultas())
+		{
+			if(consultas.getDataConsulta() == Arranque.HOJE)
+			{
+				System.out.println(consultas);
+			}
+		}
 	}
 	
 	/** lista todas as consultas de um utente */
 	private void listarPorUtente() {
 		// pedir o utente
 		String numSns = JOptionPane.showInputDialog(this, "Número de SNS do utente?");
-		// TODO listar as consultas deste utente
+		for (Consulta consulta : gest.getConsultas())
+		{
+			if (consulta.getNumeroSNSUtente() == numSns)
+			{
+				System.out.println(consulta);
+			}
+				
+		}
 		// TODO ou, se o id não for válido, informar 
 		JOptionPane.showMessageDialog( this, "Utente inválido" );			
 	}

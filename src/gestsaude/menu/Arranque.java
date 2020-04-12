@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
@@ -11,6 +12,7 @@ import javax.swing.Timer;
 
 import gestsaude.recurso.Consulta;
 import gestsaude.recurso.GEstSaude;
+import gestsaude.recurso.Senha;
 import gestsaude.recurso.Servico;
 import gestsaude.recurso.Utente;
 import gestsaude.util.RelogioSimulado;
@@ -23,7 +25,7 @@ public class Arranque {
 	
 	public static final LocalDate HOJE = LocalDate.now();
 	public static final LocalDate AMANHA = HOJE.plus(1, ChronoUnit.DAYS);
-	public static final LocalDate ONTEM = AMANHA.minusDays(2);
+	public static final LocalDate ONTEM = HOJE.minusDays(1);
 
 	/** método qeu cria a configuração inicial do sistema
 	 * @return um GEstSaude já completamente configurado
@@ -90,7 +92,7 @@ public class Arranque {
 	Servico aler = new Servico("Aler", "Alergologia - Dr E. S. Pirro");
 //	Aler, Alergologia - Dr E. S. Pirro
 	
-	System.out.println(ped1);
+
 //		
 // deve ter os seguintes serviços que NÃO aceitam consultas (identificação, Nome do serviço)
 	
@@ -102,7 +104,7 @@ public class Arranque {
 	
 	
 // Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
-	Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,10), ped1.getServicoId(), utente120.getNumeroSNS());
+	Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,50), ped1.getServicoId(), utente120.getNumeroSNS());
 	Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped2.getServicoId(), utente121.getNumeroSNS());
 	Consulta consulta3 = new Consulta(HOJE, LocalTime.of(8,10), orto1.getServicoId(), utente122.getNumeroSNS());
 	Consulta consulta4 = new Consulta(HOJE, LocalTime.of(8,20), derm1.getServicoId(), utente125.getNumeroSNS());
@@ -120,8 +122,11 @@ public class Arranque {
 //	Amanhã 8h10, Ped1, 127
 //	Amanhã 8h10, Ped1, 129
 //	Daqui a dois dias 8h40, Ped1, 123*/
-
 	
+	Senha senhaA = new Senha(utente120, consulta1, LocalDateTime.of(HOJE, LocalTime.of(8, 30)));
+	Senha senhaB = new Senha(utente121, consulta1, LocalDateTime.of(HOJE, LocalTime.of(10, 30)));
+	Senha senhaC = new Senha(utente122, consulta1, LocalDateTime.of(HOJE, LocalTime.of(14, 30)));
+		
 	gest.addUtente(utente120);
 	gest.addUtente(utente121);
 	gest.addUtente(utente122);
@@ -149,20 +154,21 @@ public class Arranque {
 	
 	
 	//gest.addConsulta(consulta1);
+	gest.addConsulta(consulta9);
 	gest.addConsulta(consulta1);
-	//gest.addConsulta(consulta2);
+	gest.addConsulta(consulta2);
 	//gest.addConsulta(consulta3);
 	//gest.addConsulta(consulta4);
 	gest.addConsulta(consulta5);
 	gest.addConsulta(consulta6);
 	gest.addConsulta(consulta7);
+	gest.addSenha(senhaA);
+	gest.addSenha(senhaB);
+	gest.addSenha(senhaC);
+	
+	
 	//gest.addConsulta(consulta8);
 	//gest.addConsulta(consulta9);
-	System.out.println(ped1);
-	System.out.println("-------------------------");
-	System.out.println(utente120);
-	System.out.println("-------------------------");
-	System.out.println(utente127);	
 		return gest;
 	}
 

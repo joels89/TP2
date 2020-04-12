@@ -15,7 +15,7 @@ public class Senha {
 
 	private Utente utente;
 	private Consulta consulta;
-	private LocalDateTime Data;
+	private LocalDateTime DataeHoradeEntrada;
 	public List<Servico> servicosaVisitar = new ArrayList<Servico>();
 	
 	
@@ -48,10 +48,10 @@ public class Senha {
 	 * e a senha quando todos os serviços tiverem terminado a consulta.
 	 */
 	
-	public Senha (Utente utente, Consulta consulta, LocalDateTime Data) {
+	public Senha (Utente utente, Consulta consulta, LocalDateTime DataeHoradeEntrada) {
 		this.utente = utente;
 		this.consulta = consulta;
-		this.Data = Data;	
+		this.DataeHoradeEntrada = DataeHoradeEntrada;	
 	}
 	
 
@@ -89,12 +89,12 @@ public class Senha {
 
 
 	public LocalDateTime getHoraEntrada() {
-		return Data;
+		return DataeHoradeEntrada;
 	}
 
 
 	public void setHoraEntrada(LocalDateTime Data) {
-		this.Data = Data;
+		this.DataeHoradeEntrada = Data;
 	}
 	
 	public void addServicosVistar(Servico servico)
@@ -110,10 +110,13 @@ public class Senha {
 	public List<Servico> getConsultasMarcadasServico() {
 		return Collections.unmodifiableList(servicosaVisitar);
 	}
-	
+
+
 	@Override
 	public String toString() {
-		return "Senha [utente=" + utente + ", consulta=" + consulta + ", horaEntrada=" + Data + "]";
+		return " \nSenha [utente=" + utente + ", consulta=" + consulta + ", HoradeEntrada=" + DataeHoradeEntrada + "]";
 	}
 	
+	
+
 }

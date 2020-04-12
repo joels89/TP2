@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /** Representa o sistema
  */
@@ -37,7 +39,19 @@ public class GEstSaude {
 	public Senha emiteSenha( Consulta c, LocalDateTime t ) {
 		// TODO testar se a consulta já está validada, se estiver retornar a senha já emitida	
 		// TODO senão criar e retornar a nova senha
-		return null;
+		
+		if (!validaConsulta(c))
+		{
+			System.out.println("Senha Rejeitada!!");
+			return null;
+			
+		}
+		
+		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t);
+		addSenha(senha);
+		
+		return senha;		
+		
 	}
 	
 	public void addUtente(Utente utente) {
@@ -53,6 +67,16 @@ public class GEstSaude {
 	public void removeServico( String servicoId ){
 		servicos.remove( servicoId );
 	}
+	
+	public void addSenha(Senha senha)
+	{
+		senhas.put(getProximoIdSenha(), senha);
+		senha.addServicosVistar(servicos.get(senha.getConsulta().getServicoId()));
+		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);
+		
+	}
+	
+	
 	
 	public void resetSenhas() {
 		proxSenha = 1;
@@ -73,6 +97,7 @@ public class GEstSaude {
 	public int localTime2Min( LocalTime hora ) {//----------------------------------TODO ver onde por o método
 		return  hora.getHour() * MINS_POR_HORA + hora.getMinute();
 	}
+	
 	public boolean validaConsulta( Consulta c ) {//---------------------------------TODO ver onde por o método
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e enunciado)
 		/*
@@ -106,7 +131,6 @@ public class GEstSaude {
 	}
 
 	
-	//Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped2.getServicoId(), utente121.getNumeroSNS());
 	public int addConsulta( Consulta c ) {
 		if (!validaConsulta(c)){
 			return -1;
@@ -129,8 +153,11 @@ public class GEstSaude {
 	}
 
 	public Collection<Servico> getServicos() {
-		// TODO acabar este método
-		return null;
+		return Collections.unmodifiableCollection(servicos.values());
+	}
+	
+	public List<Consulta> getConsultas() {
+		return Collections.unmodifiableList(consultas);
 	}
 
 

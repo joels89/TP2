@@ -82,11 +82,26 @@ public class Servico {
 		consultadasMarcadasServico.remove(consulta);
 	}
 	
+	public List<Senha> getSenhasaAtender() {
+		return Collections.unmodifiableList(senhasAtender);
+	}
+	
+	public void addSenhasServico(Senha senha)
+	{
+		senhasAtender.add(senha);	
+	}
+	
+	public void removeConsultasServico(Senha senha) {
+		senhasAtender.remove(senha);
+	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "Servico: " + servicoNome + " (" + servicoId + "), consultas Marcadas:"
-				+ consultadasMarcadasServico + ", Senhas Atender:" + senhasAtender;
+		return "Servico: " + servicoNome + " (" + servicoId + ") \n Consultas Marcadas: \n"
+				+ consultadasMarcadasServico + "\n Senhas Atender:" + senhasAtender + "\n";
+		
 	}
 	
 	
