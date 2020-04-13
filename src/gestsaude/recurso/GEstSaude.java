@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /** Representa o sistema
  */
@@ -150,9 +151,11 @@ public class GEstSaude {
 			return -1;
 		}else
 			consultas.add(c);
+			gestsaude.util.gestSaudeUtilitarios.ordenarListaCronologica(consultas);
 			System.out.println(servicos.get(c.getServicoId()));//--------------------controlo de consultas TODO retirar no final
 			servicos.get(c.getServicoId()).addConsultasServico(c);
 			utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
+			
 			return CONSULTA_ACEITE;
 	}
 	
@@ -172,6 +175,18 @@ public class GEstSaude {
 	
 	public List<Consulta> getConsultas() {
 		return Collections.unmodifiableList(consultas);
+	}
+	
+	public Utente getUtentesFromMap(String string)
+	{
+		return utentes.get(string);
+	
+	}
+	
+	public Servico getServicosFromMap(String string)
+	{
+		return servicos.get(string);
+	
 	}
 
 

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.*;
@@ -15,8 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import gestsaude.recurso.*;
-import gestsaude.recurso.GEstSaude;
-import gestsaude.recurso.Senha;
 import gestsaude.util.RelogioSimulado;
 
 /** Interface reservada aos funcionários da secretaria.
@@ -54,19 +53,18 @@ public class MenuSecretaria extends JFrame {
 	/** lista todas as consultas */
 	private void listarTodas() 
 	{
-		for (Consulta consultas : gest.getConsultas())
-		{
-			System.out.println(consultas);
-		}
+		consultasListadas = gest.getConsultas();
+		listarConsultas(consultasListadas);
 	}
 
 	/** lista apenas as consultas de hoje */
-	private void listarHoje() {
+	private void listarHoje() 
+	{
 		for (Consulta consultas : gest.getConsultas())
 		{
 			if(consultas.getDataConsulta() == Arranque.HOJE)
 			{
-				System.out.println(consultas);
+				System.out.println(consultas);	
 			}
 		}
 	}
@@ -75,16 +73,21 @@ public class MenuSecretaria extends JFrame {
 	private void listarPorUtente() {
 		// pedir o utente
 		String numSns = JOptionPane.showInputDialog(this, "Número de SNS do utente?");
+		Boolean existe = false;
+		
 		for (Consulta consulta : gest.getConsultas())
 		{
-			if (consulta.getNumeroSNSUtente() == numSns)
+			if (consulta.getNumeroSNSUtente().matches(numSns))
 			{
 				System.out.println(consulta);
-			}
-				
-		}
-		// TODO ou, se o id não for válido, informar 
-		JOptionPane.showMessageDialog( this, "Utente inválido" );			
+				JOptionPane.showMessageDialog( this,consulta);
+				existe = true;
+			}				
+		}		
+		if (!existe)
+		{
+			JOptionPane.showMessageDialog( this, "Utente inválido" );
+		}			
 	}
 	
 	/** lista todas as consultas de um serviço */
@@ -102,13 +105,13 @@ public class MenuSecretaria extends JFrame {
 		consultasListadas = consultas;
 		consultasModel.setRowCount( 0 );
 		for( Consulta c : consultas ) {
-			LocalDate d = null; // TODO a data da consulta
-			LocalTime h = null; // TODO a hora da consulta
+			LocalDate d = c.getDataConsulta(); // TODO a data da consulta
+			LocalTime h = c.getHoraConsulta(); // TODO a hora da consulta
 			String dStr = d.format( DateTimeFormatter.ofPattern("dd/MM/yyyy") );
 			String hStr = h.format( DateTimeFormatter.ofPattern("hh:mm:ss") );
 			// TODO colocar a informação necessária
-			addLinhaTabela( "ID_UTENTE" + " - " + "NOME UTENTE",
-					        "ID_SERVIÇO" + " - " + "NOME SERVIÇO", dStr, hStr);
+			addLinhaTabela( c.getNumeroSNSUtente() + " - " + gest.getUtentesFromMap(c.getNumeroSNSUtente()).getNomeUtente(),
+					        c.getServicoId() + " - " + gest.getServicosFromMap(c.getServicoId()).getServicoNome(), dStr, hStr);
 		}		
 	}
 	
