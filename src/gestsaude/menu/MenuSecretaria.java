@@ -8,15 +8,16 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import gestsaude.recurso.*;
-import gestsaude.recurso.GEstSaude;
-import gestsaude.recurso.Senha;
+import gestsaude.util.Consultas;
 import gestsaude.util.RelogioSimulado;
 
 /** Interface reservada aos funcionários da secretaria.
@@ -54,45 +55,32 @@ public class MenuSecretaria extends JFrame {
 	/** lista todas as consultas */
 	private void listarTodas() 
 	{
-		for (Consulta consultas : gest.getConsultas())
-		{
-			System.out.println(consultas);
-		}
+		listarConsultas(gest.getConsultas());
 	}
 
 	/** lista apenas as consultas de hoje */
-	private void listarHoje() {
-		for (Consulta consultas : gest.getConsultas())
-		{
-			if(consultas.getDataConsulta() == Arranque.HOJE)
-			{
-				System.out.println(consultas);
-			}
-		}
+	private void listarHoje()
+	{
+		listarConsultas(Consultas.getConsultasDoDia(gest.getConsultas(), LocalDate.now()));
 	}
 	
 	/** lista todas as consultas de um utente */
 	private void listarPorUtente() {
 		// pedir o utente
 		String numSns = JOptionPane.showInputDialog(this, "Número de SNS do utente?");
-		for (Consulta consulta : gest.getConsultas())
-		{
-			if (consulta.getNumeroSNSUtente() == numSns)
-			{
-				System.out.println(consulta);
-			}
-				
-		}
-		// TODO ou, se o id não for válido, informar 
-		JOptionPane.showMessageDialog( this, "Utente inválido" );			
+		if(gest.getUtente(numSns) !=null)
+			listarConsultas(gest.getUtente(numSns).getPresentes());
+		else
+			JOptionPane.showMessageDialog( this, "Utente inválido" );			
 	}
 	
 	/** lista todas as consultas de um serviço */
 	private void listarPorServico() {
 		String numServico = JOptionPane.showInputDialog(this, "Número do serviço?");
-		// TODO listar as consultas deste serviço
-		// TODO ou, se o id não for válido, informar 
-		JOptionPane.showMessageDialog( this, "Serviço inválido" );			
+		if(gest.getServico(numServico) !=null)
+			listarConsultas(gest.getServico(numServico).getConsultasMarcadasServico());
+		else
+			JOptionPane.showMessageDialog( this, "Serviço inválido" );					
 	}
 	
 	/** método auxiliar que apresenta todas as consultas da lista
@@ -102,13 +90,12 @@ public class MenuSecretaria extends JFrame {
 		consultasListadas = consultas;
 		consultasModel.setRowCount( 0 );
 		for( Consulta c : consultas ) {
-			LocalDate d = null; // TODO a data da consulta
-			LocalTime h = null; // TODO a hora da consulta
+			LocalDate d = c.getDataConsulta(); 
+			LocalTime h = c.getHoraConsulta();
 			String dStr = d.format( DateTimeFormatter.ofPattern("dd/MM/yyyy") );
 			String hStr = h.format( DateTimeFormatter.ofPattern("hh:mm:ss") );
-			// TODO colocar a informação necessária
-			addLinhaTabela( "ID_UTENTE" + " - " + "NOME UTENTE",
-					        "ID_SERVIÇO" + " - " + "NOME SERVIÇO", dStr, hStr);
+			addLinhaTabela( c.getNumeroSNSUtente() + " - " + gest.getUtente(c.getNumeroSNSUtente()),
+					        c.getServicoId()  + " - " + gest.getServico(c.getServicoId()).getServicoNome(), dStr, hStr);
 		}		
 	}
 	

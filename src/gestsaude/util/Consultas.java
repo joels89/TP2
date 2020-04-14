@@ -2,8 +2,11 @@ package gestsaude.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import gestsaude.menu.Arranque;
 import gestsaude.recurso.Consulta;
 
 /** Class utilitária que define um conjunto base de operações com listas de consultas
@@ -34,9 +37,13 @@ public class Consultas {
 	 * @param dia dia a usar
 	 * @return uma lista com as consultas marcadas para dia
 	 */
-	public static List<Consulta> getConsultasDoDia( List<Consulta> cs, LocalDate dia ) {
-		// TODO implementar este método
-		return null;
+	public static List<Consulta> getConsultasDoDia( List<Consulta> cs, LocalDate dia ) 
+	{
+		List<Consulta> listaConsultasDia = new ArrayList<Consulta>();		
+		for (Consulta consulta : cs)
+			if(consulta.getDataConsulta().equals(dia))
+				listaConsultasDia.add(consulta);
+		return Collections.unmodifiableList(listaConsultasDia);
 	}
 	
 	/** Retorna uma lista com as consultas após uma dada data
