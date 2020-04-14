@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import gestsaude.menu.Arranque;
@@ -17,16 +18,23 @@ public class Consultas {
 	 * @param cs lista onde colcoar a consulta
 	 * @param c a cosulta a adicionar
 	 */
-	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c  ) {
-		// TODO implementar este método
+	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c  ) 
+	{
+		cs.add(c);
+		Collections.sort(cs, new Comparator<Consulta>() 
+			{		
+				public int compare(Consulta consulta, Consulta consulta2) 
+				{
+					if(consulta.getDataConsulta().equals(consulta2.getDataConsulta()))
+					{
+						return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
+					}
+					return consulta.getDataConsulta().compareTo(consulta2.getDataConsulta());
+				}
+		});									
 	}
 
-	/** retorna uma lista apenas com as consultas que estão entre as datas definidas
-	 * @param cs lista de consulta a filtrar
-	 * @param ini data inicial a considerar (inclusive)
-	 * @param fim data final a considerar (inclusive)
-	 * @return uma lista com as consultas que estão entre as datas definidas
-	 */
+
 	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim ){
 		// TODO implementar este método
 		return null;

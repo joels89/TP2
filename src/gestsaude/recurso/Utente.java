@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import gestsaude.util.Consultas;
 import gestsaude.util.RelogioSimulado;
 import gestsaude.util.gestSaudeUtilitarios;
 
@@ -48,8 +49,11 @@ public class Utente
 	
 	public void addConsulta(Consulta consulta)
 	{
-		consultasMarcadas.add(consulta);
-		gestSaudeUtilitarios.ordenarListaCronologica(consultasMarcadas);
+		/*
+		 * consultasMarcadas.add(consulta);
+		 * gestSaudeUtilitarios.ordenarListaCronologica(consultasMarcadas);
+		 */		
+		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);
 	    	
 	}
 	

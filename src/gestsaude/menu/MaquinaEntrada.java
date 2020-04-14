@@ -4,11 +4,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.swing.*;
 
 import gestsaude.recurso.*;
+import gestsaude.util.Consultas;
 
 /** Representa uma máquina de entrada, onde os clientes retiram as senhas
  * Neste caso, apenas permite retirar as senhas para confirmar consulta 
@@ -42,7 +44,7 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 		if( u != null ) {
 			String nome = u.getNomeUtente(); // TODO inicializar nome do utente --------------- DONE -----------
 			// TODO verificar se o utente tem consulta hoje   --------------------------------- DONE -----------
-			if(!gest.temConsultaHoje(u, LocalDate.now())) {
+			if(Consultas.getConsultasDoDia(u.getPresentes(), LocalDate.now()) == null) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas hoje!" );
 				return;
 			}
@@ -52,7 +54,8 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}
-			// TODO emitir a senha 
+			
+			gest.emiteSenha(u.getPresentes().get(0), LocalDateTime.now());
 			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + "NUM SENHA" ); // TODO colocar aqui o número da senha			
 		} else {
 			JOptionPane.showMessageDialog( this, "Número inválido" );

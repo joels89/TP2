@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import gestsaude.util.Consultas;
 import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa o sistema
@@ -32,7 +33,6 @@ public class GEstSaude {
 	private HashMap<String,Servico> servicos = new HashMap<String,Servico>();
 	private HashMap<String,Senha> senhas = new HashMap<String,Senha>();
 	private ArrayList<Consulta> consultas = new ArrayList<Consulta>();
-	private List<Consulta> listaConsultas = new ArrayList<Consulta>();
 	
 	// definição da próxima senha
 	private int proxSenha = 1;
@@ -43,33 +43,21 @@ public class GEstSaude {
 	public Senha emiteSenha( Consulta c, LocalDateTime t ) {
 		// TODO testar se a consulta já está validada, se estiver retornar a senha já emitida	
 		// TODO senão criar e retornar a nova senha	
-		
+		Collection<Senha> senhas = getSenhas().values();
 		for (Consulta consulta : consultas)
 		{
-			if (!consulta.equals(c))
+			for (Senha s: senhas)
 			{
-				System.out.println("        **** ATENCAO CONSULTA INVALIDA ****  \n Consulta nao existe na Lista de consultas  \n ");
-				return null;
-			}
-			else
-			{
-				if(Math.abs(t.getHour() - localTime2Min(consulta.getHoraConsulta())) <= TRES_HORAS)
+				if(consulta.equals(s.getConsulta()))
 				{
-					Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t);
-					addSenha(senha);
-					return senha;
+					return s;
 				}
-				else
-				{
-					System.out.println("        **** ATENCAO SENHA INVALIDA ****  \n Volte no horario mais proximo a sua consulta.  \n ");
-					return null;
-				}
-				
-			}
-				
+			}	
 		}
 		
-		return null;	
+		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t);
+		addSenha(new Senha(utentes.get(c.getNumeroSNSUtente()), c, t));
+		return senha;
 	}
 	
 	public Utente getUtente(String numeroSNSUtente) {
@@ -94,8 +82,7 @@ public class GEstSaude {
 	{
 		senhas.put(getProximoIdSenha(), senha);
 		senha.addServicosVistar(servicos.get(senha.getConsulta().getServicoId()));
-		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);
-		
+		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);		
 	}
 	
 	
@@ -119,28 +106,12 @@ public class GEstSaude {
 	public int localTime2Min( LocalTime hora ) {//---------------------------------------------------------------------------------------TODO ver onde por o método
 		return  hora.getHour() * MINS_POR_HORA + hora.getMinute();
 	}
-	
-	public boolean temConsultaHoje(Utente u, LocalDate data) {//------------------------------------------------------------------------------------TODO ver onde por o método
-		if ( u.getPresentes()!= null) {
-			listaConsultas = u.getPresentes();
-			for (Consulta consultaListada : listaConsultas){
-				return consultaListada.getDataConsulta().equals(data);
-			}
-		}
-		return false;
-	}
+	 
 	
 	public boolean temConsultaProxima(Utente u, LocalTime horaSenha) {//------------------------------------------------------------------------------------TODO ver onde por o método
-		if ( u.getPresentes()!= null) {
-			listaConsultas = u.getPresentes();
-			/*System.out.println(" consultas do utente         *** ----------------------- " + listaConsultas);
-			System.out.println(" consultas do utente inicio         *** ----------------------- " + listaConsultas.get(0));
-			System.out.println("listada TOPO/////////////////////////////////// " + listaConsultas.get(0).getHoraConsulta());
-			System.out.println("hora senha" + horaSenha);
-			System.out.println("diferença - " + (localTime2Min(listaConsultas.get(0).getHoraConsulta()) - localTime2Min(horaSenha)));
-			System.out.println((Math.abs(localTime2Min(listaConsultas.get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS));*/  //TODO testar final com senha e ver questao das 3 horas
-			return (Math.abs(localTime2Min(listaConsultas.get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS);//indice zero pois e sempre a 1 consulta qd uma termina e removida ...
-
+		if ( u.getPresentes()!= null) 
+		{
+			return (Math.abs(localTime2Min(u.getPresentes().get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS);//indice zero pois e sempre a 1 consulta qd uma termina e removida ...
 		}
 		return false;
 	}
@@ -182,8 +153,7 @@ public class GEstSaude {
 		if (!validaConsulta(c)){
 			return -1;
 		}else
-			consultas.add(c);
-			gestSaudeUtilitarios.ordenarListaCronologica(consultas);
+			Consultas.addConsultaOrdemData(consultas, c);
 			System.out.println("------Consultas adicionadas a lista -------------" + servicos.get(c.getServicoId()));//--------------------controlo de consultas TODO retirar no final
 			servicos.get(c.getServicoId()).addConsultasServico(c);
 			utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
@@ -212,6 +182,14 @@ public class GEstSaude {
 	public Servico getServico(String servicoId) {
 		return servicos.get(servicoId);
 	}
+
+	public HashMap<String, Senha> getSenhas() {
+		return senhas;
+	}
+	
+	
+	
+
 	
 
 

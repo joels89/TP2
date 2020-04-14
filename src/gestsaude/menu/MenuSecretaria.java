@@ -149,10 +149,10 @@ public class MenuSecretaria extends JFrame {
 	/** método chamado quando se pretende listar toda sas senhas */
 	private void listarSenhas() {
 		// TODO ir buscar as senhas
-		Collection<Senha> senhas = null;
-		String infoSenhas[] = new String[ senhas.size() ];
+		Collection<Senha> senhas = gest.getSenhas().values();
+		String infoSenhas[] = new String[senhas.size()];
 		int i=0;
-		for( Senha s : senhas ) {			
+		for( Senha s : senhas) {			
 			infoSenhas[i++] = "Nùmero Senha" + " " + "ID do próximo serviço da senha" ; 
 		}
 		// apresentar a lista numa janela

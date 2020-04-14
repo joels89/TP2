@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import gestsaude.util.Consultas;
 import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa um Serviço
@@ -74,8 +75,7 @@ public class Servico {
 	
 	public void addConsultasServico(Consulta consulta)
 	{
-		consultadasMarcadasServico.add(consulta);
-		gestSaudeUtilitarios.ordenarListaCronologica(consultadasMarcadasServico);    	
+		Consultas.addConsultaOrdemData(consultadasMarcadasServico, consulta); 	
 	}
 	
 	public void removeConsultasServico(Consulta consulta) {
