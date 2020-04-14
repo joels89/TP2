@@ -77,20 +77,17 @@ public class EditorConsulta extends JDialog {
 
 		// se for uma consulta existente é preciso carregar os dados desta
 		if( consulta != null ) {
-			// TODO colocar aqui o número de SNS do utente da consulta 
-			snsUtente.setText( "NUM SNS" ); 
+			
+			snsUtente.setText(consulta.getNumeroSNSUtente()); 
 			testaIdUtente();
 			
-			// TODO colocar aqui o identificador do serviço 
-			idServico.setSelectedItem( "ID SERVIÇO" );
+			idServico.setSelectedItem(consulta.getServicoId());
 			testaIdServico();
 
-			// TODO inicializar com a data da consulta
-			data = null;
+			data = consulta.getDataConsulta();
 			escreverData();
 
-			// TODO inicializar com a hora da consulta
-			hora = null;	
+			hora = consulta.getHoraConsulta();	
 			escreverHora();
 		}
 		testaTudoOk();
@@ -108,15 +105,13 @@ public class EditorConsulta extends JDialog {
 	 */
 	protected void testaIdUtente() {
 		String idUtente = snsUtente.getText(); // vai buscar o id introduzido pelo utilizador
-		// TODO inicializar utente com o utente associado ao id introduzido  
-		utente = null;
+		utente = gest.getUtente(idUtente);
 		if( utente == null ) {
 			apresentarMensagem( "Id do utente é inválido!", false );
 			nomeUtente.setText( "" );
 		}
 		else {
-			// TODO colocar aqui o nome do utente
-			nomeUtente.setText( "NOME UTENTE" );
+			nomeUtente.setText( gest.getUtente(idUtente).getNomeUtente() );
 			testaTudoOk();
 		}
 	}

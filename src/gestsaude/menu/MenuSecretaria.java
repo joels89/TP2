@@ -119,7 +119,7 @@ public class MenuSecretaria extends JFrame {
 		Consulta c = ec.getConsulta();
 		// se existe uma consulta adicionar ao sistema
 		if( c != null ) {
-			// TODO Adicionar consulta ao sistema
+			gest.addConsulta(c);
 			listarTodas();
 		}		
 	}
@@ -129,8 +129,7 @@ public class MenuSecretaria extends JFrame {
 		int opcao = JOptionPane.showConfirmDialog( this, "Deseja mesmo apagar esta Consulta?", "Confimação", JOptionPane.YES_NO_OPTION );
 		if( opcao == JOptionPane.NO_OPTION )
 			return;
-		
-		// TODO remover a consulta		
+		gest.removeConsulta(c);
 	}
 
 	/** método chamado quando se carrega no botão de editar consulta */

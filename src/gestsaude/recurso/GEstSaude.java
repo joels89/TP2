@@ -154,11 +154,16 @@ public class GEstSaude {
 			return -1;
 		}else
 			Consultas.addConsultaOrdemData(consultas, c);
-			System.out.println("------Consultas adicionadas a lista -------------" + servicos.get(c.getServicoId()));//--------------------controlo de consultas TODO retirar no final
 			servicos.get(c.getServicoId()).addConsultasServico(c);
 			utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
-			
 			return CONSULTA_ACEITE;
+	}
+	
+	public void removeConsulta(Consulta c)
+	{
+		consultas.remove(c);
+		servicos.get(c.getServicoId()).removeConsultasServico(c);
+		utentes.get(c.getNumeroSNSUtente()).removeConsulta(c);	
 	}
 	
 	public int podeAlterarConsulta( Consulta antiga, Consulta nova ) {
