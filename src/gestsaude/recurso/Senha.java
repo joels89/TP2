@@ -15,6 +15,7 @@ public class Senha {
 
 	private Utente utente;
 	private Consulta consulta;
+	private String idSenha;
 	private LocalDateTime DataeHoradeEntrada;
 	public List<Servico> servicosaVisitar = new ArrayList<Servico>();
 	
@@ -48,13 +49,13 @@ public class Senha {
 	 * e a senha quando todos os serviços tiverem terminado a consulta.
 	 */
 	
-	public Senha (Utente utente, Consulta consulta, LocalDateTime DataeHoradeEntrada) {
+	public Senha (Utente utente, Consulta consulta, LocalDateTime DataeHoradeEntrada, String idSenha) {
 		this.utente = utente;
 		this.consulta = consulta;
-		this.DataeHoradeEntrada = DataeHoradeEntrada;	
+		this.DataeHoradeEntrada = DataeHoradeEntrada;
+		this.idSenha = idSenha;
 	}
 	
-
 	/** retorna o prï¿½ximo serviï¿½o associado a esta senha 
 	 * @return o prï¿½ximo serviï¿½o associado a esta senha
 	 * 	 */
@@ -91,6 +92,15 @@ public class Senha {
 	public LocalDateTime getHoraEntrada() {
 		return DataeHoradeEntrada;
 	}
+	
+	public String getIdSenha() {
+		return idSenha;
+	}
+
+
+	public void setIdSenha(String idSenha) {
+		this.idSenha = idSenha;
+	}
 
 
 	public void setHoraEntrada(LocalDateTime Data) {
@@ -110,7 +120,6 @@ public class Senha {
 	public List<Servico> getConsultasMarcadasServico() {
 		return Collections.unmodifiableList(servicosaVisitar);
 	}
-
 
 	@Override
 	public String toString() {

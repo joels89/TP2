@@ -121,9 +121,10 @@ public class Arranque {
 //	Hoje 8h40, Ped1, 127
 //	Amanhã 8h10, Ped1, 127
 //	Amanhã 8h10, Ped1, 129
+	
 //	Daqui a dois dias 8h40, Ped1, 123*/
 	
-	Senha senhaA = new Senha(utente120, consulta1, LocalDateTime.of(HOJE, LocalTime.of(8, 30)));
+	Senha senhaA = gest.emiteSenha(consulta1, LocalDateTime.now());
 	Senha senhaB = new Senha(utente121, consulta1, LocalDateTime.of(HOJE, LocalTime.of(10, 30)));
 	Senha senhaC = new Senha(utente122, consulta1, LocalDateTime.of(HOJE, LocalTime.of(14, 30)));
 		

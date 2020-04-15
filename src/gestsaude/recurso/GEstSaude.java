@@ -55,8 +55,8 @@ public class GEstSaude {
 			}	
 		}
 		
-		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t);
-		addSenha(new Senha(utentes.get(c.getNumeroSNSUtente()), c, t));
+		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()); 
+		addSenha(new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()));
 		return senha;
 	}
 	
@@ -80,13 +80,11 @@ public class GEstSaude {
 	
 	public void addSenha(Senha senha)
 	{
-		senhas.put(getProximoIdSenha(), senha);
+		senhas.put(senha.getIdSenha(), senha);
 		senha.addServicosVistar(servicos.get(senha.getConsulta().getServicoId()));
 		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);		
 	}
-	
-	
-	
+		
 	public void resetSenhas() {
 		proxSenha = 1;
 	}

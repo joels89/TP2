@@ -81,7 +81,7 @@ public class EditorConsulta extends JDialog {
 			snsUtente.setText(consulta.getNumeroSNSUtente()); 
 			testaIdUtente();
 			
-			idServico.setSelectedItem(consulta.getServicoId());
+			idServico.setSelectedItem(consulta.getServicoId());		
 			testaIdServico();
 
 			data = consulta.getDataConsulta();
@@ -120,16 +120,16 @@ public class EditorConsulta extends JDialog {
 	 * Deve dar indicações de erro.
 	 */
 	protected void testaIdServico() {
-		String id = (String) idServico.getSelectedItem(); // vai buscar o id introduzido pelo utilizador
-		// TODO inicializar servico com o serviço associado ao id introduzido
-		servico = null;
+		String id = (String) idServico.getSelectedItem();
+		// vai buscar o id introduzido pelo utilizador
+		servico = gest.getServico(id);
 		if( servico == null ) {
 			apresentarMensagem( "Serviço não reconhecido!", false );
 			nomeServico.setText("");
 		}
 		else {
 			// TODO colocar aqui o nome do serviço
-			nomeServico.setText( "DESCRIÇÃO UTENTE" );
+			nomeServico.setText( servico.getServicoNome() );
 			testaTudoOk();
 		}
 	}
@@ -178,7 +178,7 @@ public class EditorConsulta extends JDialog {
 		for( Servico s : gest.getServicos() )
 			// TODO verificar se o serviço aceita consultas
 			if( true )
-				box.addItem( "ID SERVIÇO" ); // TODO substituir pelo id do serviço
+				box.addItem(consulta.getServicoId()); // TODO substituir pelo id do serviço
 	}
 	
 

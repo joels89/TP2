@@ -115,11 +115,11 @@ public class MenuServico extends JDialog {
 	/** método chamado para listar as senhas em espera neste serviço */
 	private void listarSenhas() {
 		// ver quais as senhas em espera por este serviço
-		List<Senha> senhas = null;
+		List<Senha> senhas = gest.getServico(servico.getServicoId()).getSenhasaAtender();
 		String infoSenhas[] = new String[ senhas.size() ];
+		
 		int i=0;
 		for( Senha s : senhas ) {
-			// TODO substituir o texto pela informação indicada
 			infoSenhas[i++] = "NÚMERO DA SENHA" + ": " + "NOME DO UTENTE"; 
 		}
 		JList<String> list = new JList<String>( infoSenhas );

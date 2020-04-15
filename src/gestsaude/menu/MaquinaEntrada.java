@@ -39,7 +39,6 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 		String numSns = JOptionPane.showInputDialog(this, "Qual o seu número de SNS?");
 		Utente u = null;
 		u = gest.getUtente(numSns);
-		// TODO associar o id ao utente
 		//Utente u = null;
 		if( u != null ) {
 			String nome = u.getNomeUtente(); // TODO inicializar nome do utente --------------- DONE -----------
@@ -53,8 +52,7 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 			if(!gest.temConsultaProxima(u, LocalTime.of(8, 00))){
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
-			}
-			
+			}		
 			gest.emiteSenha(u.getPresentes().get(0), LocalDateTime.now());
 			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + "NUM SENHA" ); // TODO colocar aqui o número da senha			
 		} else {
