@@ -124,9 +124,8 @@ public class Arranque {
 	
 //	Daqui a dois dias 8h40, Ped1, 123*/
 	
-	Senha senhaA = gest.emiteSenha(consulta1, LocalDateTime.now());
-	Senha senhaB = new Senha(utente121, consulta1, LocalDateTime.of(HOJE, LocalTime.of(10, 30)));
-	Senha senhaC = new Senha(utente122, consulta1, LocalDateTime.of(HOJE, LocalTime.of(14, 30)));
+
+	
 		
 	gest.addUtente(utente120);
 	gest.addUtente(utente121);
@@ -152,6 +151,7 @@ public class Arranque {
 	gest.addServico(card1);
 	gest.addServico(ofta1);
 	gest.addServico(aler);
+
 	
 	
 	//gest.addConsulta(consulta1);
@@ -163,9 +163,14 @@ public class Arranque {
 	gest.addConsulta(consulta5);
 	gest.addConsulta(consulta6);
 	gest.addConsulta(consulta7);
-	gest.addSenha(senhaA);
-	gest.addSenha(senhaB);
-	gest.addSenha(senhaC);
+	
+	Senha senhaA = gest.emiteSenha(consulta1, LocalDateTime.now());
+	Senha senhaB = gest.emiteSenha(consulta2, LocalDateTime.now());
+	Senha senhaC = gest.emiteSenha(consulta3, LocalDateTime.now());
+	Senha senhaD = gest.emiteSenha(consulta1, LocalDateTime.now());
+	
+	
+
 	
 	
 	//gest.addConsulta(consulta8);

@@ -62,13 +62,12 @@ public class MenuServico extends JDialog {
 	 */
 	private boolean proximoUtente() {
 		// TODO ver se há senhas em espera e usar a próxima
-		senha = null;
+		senha = servico.getProximaSenha();
 		if( senha == null )
 			return false;
 		
-		// TODO subsituir o texto pela informação indicada
-		senhaLbl.setText( "NÚMERO DA SENHA" );
-		utenteLbl.setText( "NOME DO UTENTE" );
+		senhaLbl.setText( senha.getIdSenha() );
+		utenteLbl.setText( senha.getUtente().getNomeUtente());
 		return true;
 	}
 

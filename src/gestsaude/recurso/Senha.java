@@ -123,9 +123,7 @@ public class Senha {
 
 	@Override
 	public String toString() {
-		return " \nSenha [utente=" + utente + ", consulta=" + consulta + ", HoradeEntrada=" + DataeHoradeEntrada + "]";
+		return "Senha [utente=" + utente + ", consulta=" + consulta + ", idSenha=" + idSenha + ", DataeHoradeEntrada="
+				+ DataeHoradeEntrada + ", servicosaVisitar=" + servicosaVisitar + "]";
 	}
-	
-	
-
 }

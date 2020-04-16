@@ -38,7 +38,7 @@ public class Servico {
 	{
 		if (senhasAtender.size() == 0)
 			return null;
-		return senhasAtender.get(senhasAtender.size()-1); //para retornar a ultima senha		
+		return senhasAtender.get(senhasAtender.indexOf(0)); //para retornar a ultima senha		
 	}
 
 	/** processo para rejeitar a próxima senha, caso o utente seja muito atrasado

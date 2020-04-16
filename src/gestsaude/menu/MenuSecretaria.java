@@ -152,7 +152,7 @@ public class MenuSecretaria extends JFrame {
 		String infoSenhas[] = new String[senhas.size()];
 		int i=0;
 		for( Senha s : senhas) {			
-			infoSenhas[i++] = "Nùmero Senha  " ++ " " + "ID do próximo serviço da senha" ; 
+			infoSenhas[i++] = "Nùmero Senha " + s.getIdSenha() + " ID do próximo serviço da senha " + s.getConsulta().getServicoId() ; 
 		}
 		// apresentar a lista numa janela
 		JList<String> list = new JList<String>( infoSenhas );

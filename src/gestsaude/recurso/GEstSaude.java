@@ -44,19 +44,16 @@ public class GEstSaude {
 		// TODO testar se a consulta já está validada, se estiver retornar a senha já emitida	
 		// TODO senão criar e retornar a nova senha	
 		Collection<Senha> senhas = getSenhas().values();
-		for (Consulta consulta : consultas)
+		
+		for(Senha s: senhas)
 		{
-			for (Senha s: senhas)
-			{
-				if(consulta.equals(s.getConsulta()))
-				{
-					return s;
-				}
-			}	
+			if (s.getConsulta().equals(c))
+				System.out.println("senha ja criada com o id: " + s.getIdSenha());
+				return s;		
 		}
 		
 		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()); 
-		addSenha(new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()));
+		addSenha(senha);
 		return senha;
 	}
 	
@@ -82,7 +79,7 @@ public class GEstSaude {
 	{
 		senhas.put(senha.getIdSenha(), senha);
 		senha.addServicosVistar(servicos.get(senha.getConsulta().getServicoId()));
-		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);		
+		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);	
 	}
 		
 	public void resetSenhas() {
