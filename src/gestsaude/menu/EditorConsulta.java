@@ -146,7 +146,7 @@ public class EditorConsulta extends JDialog {
 			apresentarMensagem( "Falta definir a data!", false );
 		else {
 			// TODO criar aqui uma consulta com todos os dados introduzidos
-			Consulta c = null;
+			   Consulta c = getConsulta();
 			// TODO verificar se pode criar/editar a consulta 
 			int res = 0;
 			switch( res ) {
@@ -174,11 +174,14 @@ public class EditorConsulta extends JDialog {
 	 * numa combo box para apresentar ao utilizador
 	 * @param box onde adicionar os serviços
 	 */
-	private void prencheServicos( JComboBox box ) {
+	private void prencheServicos( JComboBox box ) 
+	{
 		for( Servico s : gest.getServicos() )
-			// TODO verificar se o serviço aceita consultas
-			if( true )
-				box.addItem(consulta.getServicoId()); // TODO substituir pelo id do serviço
+			if(gest.aceitaConsulta(s))
+			{
+				System.out.println(s);
+				box.addItem(s.getServicoId());
+			}
 	}
 	
 
@@ -190,10 +193,9 @@ public class EditorConsulta extends JDialog {
 		// crar um objeto LocalDateTime com os dados da data e hora 
 		int h = Integer.parseInt( (String)horaBox.getSelectedItem() );
 		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
-		LocalDateTime quando = LocalDateTime.of( data, LocalTime.of( h, m));
+		LocalDateTime quando = LocalDateTime.of( data,LocalTime.of( h, m));
 		
-		// TODO criar aqui a consulta que vai retornada ao cliente 
-		consultaRes = null;
+		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), consulta.getNumeroSNSUtente());
 		setVisible( false );
 	}
 

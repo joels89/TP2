@@ -49,12 +49,7 @@ public class Utente
 	
 	public void addConsulta(Consulta consulta)
 	{
-		/*
-		 * consultasMarcadas.add(consulta);
-		 * gestSaudeUtilitarios.ordenarListaCronologica(consultasMarcadas);
-		 */		
-		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);
-	    	
+		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);	    	
 	}
 	
 	public void removeConsulta(Consulta consulta) 

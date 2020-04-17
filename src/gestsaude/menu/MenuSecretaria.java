@@ -140,14 +140,13 @@ public class MenuSecretaria extends JFrame {
 		Consulta nova = ec.getConsulta();
 		// se o utilizador editou a consulta, é preciso alterar
 		if( nova != null ) {
-			// TODO tem de alterar as consulta no sistema
+			gest.addConsulta(nova);
 			listarTodas();
 		}
 	}
 
 	/** método chamado quando se pretende listar toda sas senhas */
 	private void listarSenhas() {
-		// TODO ir buscar as senhas
 		Collection<Senha> senhas = gest.getSenhas().values();
 		String infoSenhas[] = new String[senhas.size()];
 		int i=0;

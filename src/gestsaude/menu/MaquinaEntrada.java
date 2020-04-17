@@ -53,8 +53,8 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}		
-			gest.emiteSenha(u.getPresentes().get(0), LocalDateTime.now());
-			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + "NUM SENHA" ); // TODO colocar aqui o número da senha			
+			Senha senha = gest.emiteSenha(u.getPresentes().get(0), LocalDateTime.now());
+			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha()); // TODO colocar aqui o número da senha			
 		} else {
 			JOptionPane.showMessageDialog( this, "Número inválido" );
 		}

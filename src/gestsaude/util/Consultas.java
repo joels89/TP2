@@ -2,6 +2,7 @@ package gestsaude.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,9 +36,15 @@ public class Consultas {
 	}
 
 
-	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim ){
-		// TODO implementar este método
-		return null;
+	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim )
+	{
+		List<Consulta> listaConsultasDia = new ArrayList<Consulta>();		
+		for (Consulta consulta : cs)
+		{
+			long result = ChronoUnit.DAYS.between(ini, fim);
+		}
+
+		return Collections.unmodifiableList(listaConsultasDia);
 	}
 	
 	/** Retorna uma lista apenas com as consultas marcadas num dado dia

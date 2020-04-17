@@ -96,6 +96,12 @@ public class Arranque {
 //		
 // deve ter os seguintes serviços que NÃO aceitam consultas (identificação, Nome do serviço)
 	
+	Servico Rad = new Servico ("Rad","Radiologia");
+	Servico Audio = new Servico ("Audio","Audiometria");
+	Servico Scopia = new Servico ("Scopia","Endo/Colonoscopia");
+	Servico Enf = new Servico ("Enf","Enfermaria");
+	Servico NeuLab = new Servico ("Enf","EEG + Dopler");
+	
 //	Rad, Radiologia
 //	Audio, Audiometria
 //	Scopia, Endo/Colonoscopia
@@ -151,6 +157,18 @@ public class Arranque {
 	gest.addServico(card1);
 	gest.addServico(ofta1);
 	gest.addServico(aler);
+	gest.addServico(Rad);
+	gest.addServico(Audio);
+	gest.addServico(Scopia);
+	gest.addServico(Enf);
+	gest.addServico(NeuLab);
+	
+	
+	
+	
+	
+	
+
 
 	
 	
@@ -164,18 +182,17 @@ public class Arranque {
 	gest.addConsulta(consulta6);
 	gest.addConsulta(consulta7);
 	
-	Senha senhaA = gest.emiteSenha(consulta1, LocalDateTime.now());
-	Senha senhaB = gest.emiteSenha(consulta2, LocalDateTime.now());
-	Senha senhaC = gest.emiteSenha(consulta3, LocalDateTime.now());
-	Senha senhaD = gest.emiteSenha(consulta1, LocalDateTime.now());
+	gest.emiteSenha(consulta1, LocalDateTime.now());
+	gest.emiteSenha(consulta2, LocalDateTime.now());
+	gest.emiteSenha(consulta4, LocalDateTime.now());
+	gest.emiteSenha(consulta5, LocalDateTime.now());
+	gest.emiteSenha(consulta6, LocalDateTime.now());
+	gest.emiteSenha(consulta7, LocalDateTime.now());
+	gest.emiteSenha(consulta8, LocalDateTime.now());
+	gest.emiteSenha(consulta9, LocalDateTime.now());
+	gest.emiteSenha(consulta3, LocalDateTime.now());
 	
-	
-
-	
-	
-	//gest.addConsulta(consulta8);
-	//gest.addConsulta(consulta9);
-		return gest;
+	return gest;
 	}
 
 	/** arranque do sistema

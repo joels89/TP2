@@ -12,11 +12,6 @@ import gestsaude.util.gestSaudeUtilitarios;
  */
 public class Servico {
 	
-	/*Esta classe representa um serviço da clinica. Deve ter um identificador único, uma
-	descrição e uma lista, ordenada cronologicamente, das consultas marcada. Deve também ter
-	uma lista, ordenada pela ordem de atendimento, das senhas que irão ser atendidas.
-	Deve ter construtores, getters e setters relevantes. */
-
 	private String servicoId;
 	private String servicoNome;
 	private ArrayList <Consulta> consultadasMarcadasServico = new ArrayList<Consulta>();
@@ -88,6 +83,7 @@ public class Servico {
 	
 	public void addSenhasServico(Senha senha)
 	{
+		System.out.println(senha);
 		senhasAtender.add(senha);	
 	}
 	
@@ -99,11 +95,8 @@ public class Servico {
 
 	@Override
 	public String toString() {
-		return "Servico: " + servicoNome + " (" + servicoId + ") \n Consultas Marcadas: \n"
-				+ consultadasMarcadasServico + "\n Senhas Atender:" + senhasAtender + "\n";
-		
+		return "Servico [servicoId=" + servicoId + ", servicoNome=" + servicoNome + "]";
 	}
-	
 	
 	
 	

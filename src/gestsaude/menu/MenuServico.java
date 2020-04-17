@@ -83,7 +83,7 @@ public class MenuServico extends JDialog {
 	
 	/** método chamado para finalizar a consulta */
 	private void finalizarConsulta( ) {
-		// TODO implementar este método (se necessário)
+		gest.removeConsulta(senha.getConsulta());
 	}
 
 	/** método chamado para encaminhar o utente para outros serviços */
@@ -99,13 +99,13 @@ public class MenuServico extends JDialog {
 			if( res == null || res.isEmpty() )
 				break;
 			
-			// TODO ver qual o serviço associado ao id
+			gest.getServico(res);
 			Servico s = null; 
 			if( s == null )
 				JOptionPane.showMessageDialog(this, "Esse serviço não existe!" );
 			else {
 				serv.add( res );
-				// TODO associar o serviço à senha
+				senha.addServicosVistar(s);
 			}
 		} while( true );
 		finalizarConsulta();
@@ -119,7 +119,7 @@ public class MenuServico extends JDialog {
 		
 		int i=0;
 		for( Senha s : senhas ) {
-			infoSenhas[i++] = "NÚMERO DA SENHA" + ": " + "NOME DO UTENTE"; 
+			infoSenhas[i++] = s.getIdSenha() + ": " + gest.getUtente(s.getConsulta().getNumeroSNSUtente()); 
 		}
 		JList<String> list = new JList<String>( infoSenhas );
 		JScrollPane scroll = new JScrollPane( list );
