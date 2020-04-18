@@ -2,11 +2,14 @@ package gestsaude.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import gestsaude.menu.Arranque;
 import gestsaude.recurso.Consulta;
@@ -38,13 +41,15 @@ public class Consultas {
 
 	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim )
 	{
-		List<Consulta> listaConsultasDia = new ArrayList<Consulta>();		
+		List<Consulta> listaConsultasEntreDatas = new ArrayList<Consulta>();		
 		for (Consulta consulta : cs)
 		{
-			long result = ChronoUnit.DAYS.between(ini, fim);
+			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());  //LocalDate + LocalTime = LocalDateTime
+			
+			if ((dataHoraConsulta.isBefore(fim)) && (dataHoraConsulta.isAfter(ini)))
+				listaConsultasEntreDatas.add(consulta);
 		}
-
-		return Collections.unmodifiableList(listaConsultasDia);
+		return Collections.unmodifiableList(listaConsultasEntreDatas); //needs to be tested
 	}
 	
 	/** Retorna uma lista apenas com as consultas marcadas num dado dia
@@ -67,7 +72,16 @@ public class Consultas {
 	 * @return  uma lista com as consultas após a data t
 	 */
 	public static List<Consulta> getConsultasApos( List<Consulta> cs, LocalDateTime t ) {
-		// TODO implementar este método
-		return null;
+
+		List<Consulta> listaConsultasApos = new ArrayList<Consulta>();		
+		for (Consulta consulta : cs)
+		{
+			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());  //LocalDate + LocalTime = LocalDateTime
+			
+			if ((dataHoraConsulta.isAfter(t)))
+				listaConsultasApos.add(consulta);
+		}
+		return Collections.unmodifiableList(listaConsultasApos); //needs to be tested
+
 	}
 }
