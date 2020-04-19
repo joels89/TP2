@@ -107,20 +107,15 @@ public class GEstSaude {
 		return CONSULTA_ACEITE;
 	}
 
-	public int localTime2Min(LocalTime hora) {// ---------------------------------------------------------------------------------------TODO
-												// ver onde por o método
+	public int localTime2Min(LocalTime hora) {// -------------------------TODO -ver onde por o método
 		return hora.getHour() * MINS_POR_HORA + hora.getMinute();
 	}
 
-	public boolean temConsultaProxima(Utente u, LocalTime horaSenha) {// ------------------------------------------------------------------------------------TODO
-																		// ver onde por o método
+	public boolean temConsultaProxima(Utente u, LocalTime horaSenha) {// -------------------------TODO -ver onde por o método
 		if (u.getPresentes() != null) {
 			return (Math.abs(
-					localTime2Min(u.getPresentes().get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS);// indice
-																														// zero
-																														// pois																														// e
-																														// sempre																														// a																														// 1																														// consulta
-																														// qd																														// uma																														// termina																														// e																																							// ...
+					localTime2Min(u.getPresentes().get(0).getHoraConsulta()) - localTime2Min(horaSenha)) < TRES_HORAS);
+			// indice zero verifica em relacao a primeira. se passarem tres horas a consulta deve ser removida confirmar.
 		}
 		return false;
 	}

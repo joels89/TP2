@@ -41,20 +41,18 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 		u = gest.getUtente(numSns);
 		//Utente u = null;
 		if( u != null ) {
-			String nome = u.getNomeUtente(); // TODO inicializar nome do utente --------------- DONE -----------
-			// TODO verificar se o utente tem consulta hoje   --------------------------------- DONE -----------
-			if(Consultas.getConsultasDoDia(u.getPresentes(), LocalDate.now()) == null) {
+			String nome = u.getNomeUtente();
+			if((Consultas.getConsultasDoDia(u.getPresentes(), LocalDate.now())).size() == 0) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas hoje!" );
 				return;
 			}
-			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30)             LocalTime.now()  confirmar enunciado diz antesou depois
-			//System.out.println("temConsultaProxima +++++++++++++++++++++++++++++++++++++++++++" + gest.temConsultaProxima(u, LocalTime.of(10, 20)));
+			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30) por este no FINAL LocalTime.now()
 			if(!gest.temConsultaProxima(u, LocalTime.of(8, 00))){
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}		
 			Senha senha = gest.emiteSenha(u.getPresentes().get(0), LocalDateTime.now());
-			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha()); // TODO colocar aqui o número da senha			
+			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha());			
 		} else {
 			JOptionPane.showMessageDialog( this, "Número inválido" );
 		}
