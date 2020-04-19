@@ -27,6 +27,7 @@ public class EditorConsulta extends JDialog {
 	private Servico servico;
 	private LocalDate data;
 	private LocalTime hora;
+	private boolean estaAlterarConsulta = false;
 	
 	// elementos gráficos para a interface com o utilizador
 	private static final long serialVersionUID = 1L;
@@ -48,6 +49,7 @@ public class EditorConsulta extends JDialog {
 	 */
 	public EditorConsulta( Point posicao, GEstSaude g  ) {
 		this( posicao, g, null, "Criar Nova Consulta" );
+		estaAlterarConsulta = false;
 	}
 	
 	/** Cria a janela de edição para a edição de uma consulta
@@ -57,6 +59,7 @@ public class EditorConsulta extends JDialog {
 	 */
 	public EditorConsulta( Point posicao, GEstSaude g, Consulta consulta ) {
 		this( posicao, g, consulta, "Editar Consulta" );
+		estaAlterarConsulta = true;
 		snsUtente.setFocusable( false );
 		idServico.setFocusable( false );
 	}
@@ -138,6 +141,8 @@ public class EditorConsulta extends JDialog {
 	 * estão corretos e se a consulta é aceitável. Deve dar indicações de erro.
 	 */
 	private void testaTudoOk() {
+		int h = Integer.parseInt( (String)horaBox.getSelectedItem() );
+		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
 		if( utente == null )
 			apresentarMensagem( "Falta definir o utente!", false );
 		else if( servico == null )
@@ -146,9 +151,19 @@ public class EditorConsulta extends JDialog {
 			apresentarMensagem( "Falta definir a data!", false );
 		else {
 			// TODO criar aqui uma consulta com todos os dados introduzidos
-			   Consulta c = getConsulta();
-			// TODO verificar se pode criar/editar a consulta 
+			   System.out.println("DATA - " + data);
+
+			   //Consulta c = getConsulta();
+			   Consulta c = new Consulta (data, LocalTime.of(h,m), servico.getServicoId(), utente.getNumeroSNS());
+			// TODO verificar se pode criar/editar a consulta
 			int res = 0;
+			System.out.println(estaAlterarConsulta);
+			if (estaAlterarConsulta) {
+				System.out.println(c);
+				res = gest.alteraConsulta(consulta, c);
+				System.out.println("res = " + res);
+			}else
+				res = gest.podeAceitarConsulta(c);
 			switch( res ) {
 			case GEstSaude.CONSULTA_ACEITE: 
 				apresentarMensagem( "Está tudo OK!", true );
@@ -195,7 +210,7 @@ public class EditorConsulta extends JDialog {
 		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
 		LocalDateTime quando = LocalDateTime.of( data,LocalTime.of( h, m));
 		
-		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());
+		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText()); //----- TODO
 		setVisible( false );
 	}
 
