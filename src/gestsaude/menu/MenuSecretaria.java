@@ -37,6 +37,9 @@ public class MenuSecretaria extends JFrame {
 	private ButtonGroup listagemGrp;
 	private String titulo;
 	
+	private boolean isUtente = false;
+	private String numSns = "";
+	
 	/** Cria a janela com o menu da secretaria
 	 * @param posicao onde colocar a janela
 	 * @param titulo título da janela
@@ -67,13 +70,15 @@ public class MenuSecretaria extends JFrame {
 	/** lista todas as consultas de um utente */
 	private void listarPorUtente() {
 		// pedir o utente
-		String numSns = JOptionPane.showInputDialog(this, "Número de SNS do utente?");
+		isUtente = true;
+		numSns = JOptionPane.showInputDialog(this, "Número de SNS do utente?");
 		if(gest.getUtente(numSns) !=null)
 			listarConsultas(gest.getUtente(numSns).getPresentes());
 		else
 			JOptionPane.showMessageDialog( this, "Utente inválido" );			
 	}
 	
+
 	/** lista todas as consultas de um serviço */
 	private void listarPorServico() {
 		String numServico = JOptionPane.showInputDialog(this, "Número do serviço?");
@@ -117,6 +122,7 @@ public class MenuSecretaria extends JFrame {
 		EditorConsulta ec = new EditorConsulta( getLocation(), gest );
 		ec.setVisible( true );
 		Consulta c = ec.getConsulta();
+		System.out.println("Agendar 120");
 		// se existe uma consulta adicionar ao sistema
 		if( c != null ) {
 			gest.addConsulta(c);
@@ -129,7 +135,15 @@ public class MenuSecretaria extends JFrame {
 		int opcao = JOptionPane.showConfirmDialog( this, "Deseja mesmo apagar esta Consulta?", "Confimação", JOptionPane.YES_NO_OPTION );
 		if( opcao == JOptionPane.NO_OPTION )
 			return;
-		gest.removeConsulta(c);
+		else if ( opcao == JOptionPane.YES_OPTION ) { // To do not delete consulta if you close the window
+			gest.removeConsulta(c);
+			if (isUtente)
+				listarConsultas(gest.getUtente(numSns).getPresentes());
+			else
+				listarTodas();
+			
+		isUtente = false;
+		}
 	}
 
 	/** método chamado quando se carrega no botão de editar consulta */
@@ -140,6 +154,7 @@ public class MenuSecretaria extends JFrame {
 		Consulta nova = ec.getConsulta();
 		// se o utilizador editou a consulta, é preciso alterar
 		if( nova != null ) {
+			gest.removeConsulta(c); // to remove old consulta
 			gest.addConsulta(nova);
 			listarTodas();
 		}
@@ -183,7 +198,7 @@ public class MenuSecretaria extends JFrame {
 			return;
 		if( row < 0 )
 			return;
-		if( col == 4 )
+		if( col == 4 ) 
 			apagarConsulta( consultasListadas.get( row ) );
 		else
 			editarConsulta( consultasListadas.get( row ) );
