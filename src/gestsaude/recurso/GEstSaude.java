@@ -101,16 +101,9 @@ public class GEstSaude {
 		return id;
 	}
 
-
-	//public static final int UTENTE_TEM_CONSULTA = 1; // indica que o utente já tem consulta //   intrepeto como +- 3horas
-	//public static final int SERVICO_TEM_CONSULTA = 2; // indica que o serviço já tem consulta
-	//public static final int DATA_JA_PASSOU = 3; // indica que a data já passou
-	//public static final int ALTERACAO_INVALIDA = 4; // indica que a alteração é inválida  - TODO
-	
 	public int podeAceitarConsulta(Consulta c) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
 		// enunciado)
-		System.out.println(c + "***********************************************");
 		if (servicos.get(c.getServicoId()) == null) {
 			System.out.println("        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");
 			return CONSULTA_INVALIDA;
@@ -163,10 +156,7 @@ public class GEstSaude {
 		return false;
 	}
 
-
-
 	public int addConsulta(Consulta c) {
-		//!aceitaConsulta(servicos.get(c.getServicoId()))
 		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
 			return CONSULTA_INVALIDA;
 		}
@@ -196,17 +186,26 @@ public class GEstSaude {
 		
 	}
 	
-	
-
 	public int podeAlterarConsulta(Consulta antiga, Consulta nova) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
 		// enunciado)
+		//
+		// vamos eliminar a consulta velha para q esta nao entre em conflito com a nova (marcar em menos de 3 horas ou outra condicao) ---- TODO retirar no final
+		removeConsulta(antiga);
+		if ((podeAceitarConsulta(nova) != CONSULTA_ACEITE)) {
+			addConsulta(antiga);// se chumbou a nova consulta voltamos a adicionar a consulta velha á lista  ---- TODO retirar no final
+			return CONSULTA_INVALIDA;
+		}
 		return CONSULTA_ACEITE;
 	}
 
 	public int alteraConsulta(Consulta antiga, Consulta nova) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
 		// enunciado)
+		if ((podeAlterarConsulta(antiga, nova) != CONSULTA_ACEITE)) {
+			return ALTERACAO_INVALIDA;
+		}
+		addConsulta(nova); // Adicionamos a consulta nova ---- TODO retirar no final
 		return CONSULTA_ACEITE;
 	}
 
