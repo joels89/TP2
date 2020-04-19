@@ -18,6 +18,7 @@ import gestsaude.util.gestSaudeUtilitarios;
 public class GEstSaude {
 
 	// Constantes para os erros possíveis nos métodos de aceitar chamadas
+	public static final int CONSULTA_INVALIDA = -1; // indica que a consulta é aceite
 	public static final int CONSULTA_ACEITE = 0; // indica que a consulta é aceite
 	public static final int UTENTE_TEM_CONSULTA = 1; // indica que o utente já tem consulta
 	public static final int SERVICO_TEM_CONSULTA = 2; // indica que o serviço já tem consulta
@@ -100,10 +101,52 @@ public class GEstSaude {
 		return id;
 	}
 
+
+	//public static final int UTENTE_TEM_CONSULTA = 1; // indica que o utente já tem consulta //   intrepeto como +- 3horas
+	//public static final int SERVICO_TEM_CONSULTA = 2; // indica que o serviço já tem consulta
+	//public static final int DATA_JA_PASSOU = 3; // indica que a data já passou
+	//public static final int ALTERACAO_INVALIDA = 4; // indica que a alteração é inválida  - TODO
+	
 	public int podeAceitarConsulta(Consulta c) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
 		// enunciado)
-
+		System.out.println(c + "***********************************************");
+		if (servicos.get(c.getServicoId()) == null) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");
+			return CONSULTA_INVALIDA;
+			}
+		if (utentes.get(c.getNumeroSNSUtente()) == null) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n");
+		    return CONSULTA_INVALIDA;
+			}
+		if (c.getDataConsulta() == null || c.getHoraConsulta() == null) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Consulta sem hora ou data marcada \n");
+			return CONSULTA_INVALIDA;
+			}
+		if ((c.getHoraConsulta().compareTo(HORARIO_INICIO) < 0) || (c.getHoraConsulta().compareTo(HORARIO_FIM) > 0)) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");
+			return CONSULTA_INVALIDA;
+			}
+		for (Consulta consultaListada : consultas){
+			if ((c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) &&
+				((c.getDataConsulta().equals(consultaListada.getDataConsulta())) &&
+				(Math.abs(localTime2Min(c.getHoraConsulta()) - localTime2Min(consultaListada.getHoraConsulta())) < TRES_HORAS)))
+			{
+				System.out.println("        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");
+				return UTENTE_TEM_CONSULTA;
+		}}
+		for (Consulta consultaListada : consultas){
+			if ((c.getServicoId() == consultaListada.getServicoId()) &&
+				((c.getDataConsulta().equals(consultaListada.getDataConsulta()) && (c.getHoraConsulta().equals(consultaListada.getHoraConsulta()))))){
+				System.out.println("        **** ATENCAO CONSULTA INVALIDA - SERVICO_TEM_CONSULTA *** \n O servico ja tem uma consulta marcada para esta data e hora \n");
+				return SERVICO_TEM_CONSULTA;
+		}}
+		
+		if (c.getDataConsulta().compareTo(LocalDate.now()) <= 0) {
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA - DATA_JA_PASSOU *** \n Consulta tem de ser sempre marcada para o dia seguinte. Volte para uma data a partir de amanha \n");
+			return DATA_JA_PASSOU;
+			}
+				
 		return CONSULTA_ACEITE;
 	}
 
@@ -120,40 +163,16 @@ public class GEstSaude {
 		return false;
 	}
 
-	/*
-	 * public boolean validaConsulta( Consulta c )
-	 * {//--------------------------------------------------------------------------
-	 * -------------TODO ver onde por o método // testar todos os motivos pelo qual
-	 * isto pode falhar (ver constantes e enunciado)
-	 * 
-	 * - O utente tem de estar identificado; - DONE - getNumeroSNSUtente - O serviço
-	 * tem de estar identificado; - DONE - getServicoId - O horário deve estar entre
-	 * as 8h10 e as 19:50; - DONE - O intervalo entre consultas no mesmo serviço,
-	 * deve ser de 10 minutos; ------------------------ Testado no método
-	 * podeAceitarConsulta (TODO ate ter senha) - O utente não pode duas consultas,
-	 * no mesmo dia, com diferença inferior a 3 horas; - DONE
-	 * 
-	 * if (servicos.get(c.getServicoId()) == null) { System.out.
-	 * println("        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n "
-	 * ); return false; } if (utentes.get(c.getNumeroSNSUtente()) == null) {
-	 * System.out.
-	 * println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n"
-	 * ); return false; } if ((c.getHoraConsulta().compareTo(HORARIO_INICIO) < 0) ||
-	 * (c.getHoraConsulta().compareTo(HORARIO_FIM) > 0)) { System.out.
-	 * println("        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n"
-	 * ); return false; }
-	 * 
-	 * for (Consulta consultaListada : consultas){ if ((c.getNumeroSNSUtente() ==
-	 * consultaListada.getNumeroSNSUtente()) && ((c.getDataConsulta() ==
-	 * consultaListada.getDataConsulta()) &&
-	 * (Math.abs(localTime2Min(c.getHoraConsulta()) -
-	 * localTime2Min(consultaListada.getHoraConsulta())) < TRES_HORAS))){
-	 * System.out.
-	 * println("        **** ATENCAO CONSULTA INVALIDA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n"
-	 * ); return false; }} return true; }
-	 */
+
 
 	public int addConsulta(Consulta c) {
+		//!aceitaConsulta(servicos.get(c.getServicoId()))
+		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
+			return CONSULTA_INVALIDA;
+		}
+		if(!aceitaConsulta(servicos.get(c.getServicoId()))){
+			return CONSULTA_INVALIDA;
+		}
 		Consultas.addConsultaOrdemData(consultas, c);
 		servicos.get(c.getServicoId()).addConsultasServico(c);
 		utentes.get(c.getNumeroSNSUtente()).addConsulta(c);

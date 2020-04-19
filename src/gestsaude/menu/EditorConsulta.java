@@ -195,7 +195,7 @@ public class EditorConsulta extends JDialog {
 		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
 		LocalDateTime quando = LocalDateTime.of( data,LocalTime.of( h, m));
 		
-		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), consulta.getNumeroSNSUtente());
+		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());
 		setVisible( false );
 	}
 
