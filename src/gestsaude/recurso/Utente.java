@@ -62,10 +62,9 @@ public class Utente
 		return Collections.unmodifiableList(consultasMarcadas);
 	}
 	
-
 	@Override
 	public String toString() {
-		return "Utente: " + nomeUtente + " - SnsNº(" + numeroSNS + "), Consultas Marcadas:" + consultasMarcadas;
+		return "Utente: " + nomeUtente + " - SnsNº(" + numeroSNS + ")";
 	}
 	
 }

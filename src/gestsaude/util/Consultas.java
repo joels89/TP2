@@ -2,6 +2,7 @@ package gestsaude.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 
 
 import gestsaude.recurso.Consulta;
+import gestsaude.recurso.Utente;
 
 /** Class utilitária que define um conjunto base de operações com listas de consultas
  */
@@ -83,4 +85,14 @@ public class Consultas {
 		return Collections.unmodifiableList(listaConsultasApos); //needs to be tested
 
 	}
+	
+	public static boolean temConsultaProxima(Utente u, LocalTime horaSenha) {// -------------------------TODO -ver onde por o método
+		if (u.getPresentes() != null) {
+			return (Math.abs(
+					RelogioSimulado.localTime2Min(u.getPresentes().get(0).getHoraConsulta()) - RelogioSimulado.localTime2Min(horaSenha)) < RelogioSimulado.TRES_HORAS);
+			// indice zero verifica em relacao a primeira. se passarem tres horas a consulta deve ser removida confirmar.
+		}
+		return false;
+	}
+
 }

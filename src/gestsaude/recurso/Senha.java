@@ -93,7 +93,7 @@ public class Senha {
 
 	@Override
 	public String toString() {
-		return "Senha [utente=" + utente + ", consulta=" + consulta + ", idSenha=" + idSenha + ", DataeHoradeEntrada="
+		return "idSenha=" + idSenha + ", DataeHoradeEntrada="
 				+ DataeHoradeEntrada + "]";
 	}
 	

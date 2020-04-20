@@ -137,12 +137,11 @@ public class MenuSecretaria extends JFrame {
 			return;
 		else if ( opcao == JOptionPane.YES_OPTION ) { // To do not delete consulta if you close the window
 			gest.removeConsulta(c);
-			if (isUtente)
-				listarConsultas(gest.getUtente(numSns).getPresentes());
-			else
-				listarTodas();
+			/*
+			 * //if (isUtente) listarPorUtente(); else listarTodas();
+			 */
 			
-		isUtente = false;
+		//isUtente = false;
 		}
 	}
 

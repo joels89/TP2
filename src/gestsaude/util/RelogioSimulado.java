@@ -21,6 +21,8 @@ public class RelogioSimulado {
 	private LocalDateTime horaAbertura; 
 	private long arranque;
 	private int ticksPorSegundo = 1;
+	public static final int MINS_POR_HORA = 60;
+	public static final int TRES_HORAS = 180;
 
 	/** Construtor privado. Para ter um relógio devem usar o método
 	 * getRelogioSimulado
@@ -68,6 +70,11 @@ public class RelogioSimulado {
 	public void setTicksPorSegundo(int ticksPorSegundo) {
 		if( ticksPorSegundo > 1 )
 			this.ticksPorSegundo = ticksPorSegundo;
+	}
+	
+	public static int localTime2Min(LocalTime hora) 
+	{
+		return hora.getHour() * MINS_POR_HORA + hora.getMinute();
 	}
 	
 }

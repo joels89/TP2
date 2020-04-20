@@ -24,8 +24,6 @@ public class Servico {
 		this.servicoNome = servicoNome;
 	}
 	
-	
-
 	/** Retorna a próxima senha a ser atendida, ou null, caso não haja 
 	 * @return a próxima senha a ser atendida, ou null, caso não haja
 	 */
@@ -33,20 +31,24 @@ public class Servico {
 	{
 		if (senhasAtender.size() == 0)
 			return null;
-		return senhasAtender.get(senhasAtender.indexOf(0)); //para retornar a ultima senha		
+		return getSenhasaAtender().get(0); //para retornar a ultima senha		
 	}
 
 	/** processo para rejeitar a próxima senha, caso o utente seja muito atrasado
 	 */
 	public void rejeitaProximaSenha() 
 	{
-		senhasAtender.remove(senhasAtender.size() - 1);	
+		senhasAtender.remove(getProximaSenha());	
 	}
 
 	/** processo de terminar a consulta associada à senha */ 
 	public void terminaConsulta( Senha s ) 
 	{
-		senhasAtender.remove(s);
+		if (senhasAtender.contains(s))
+		{
+			senhasAtender.remove(s);
+		}		
+		return;	
 	}
 	
 	
@@ -83,16 +85,24 @@ public class Servico {
 	
 	public void addSenhasServico(Senha senha)
 	{
-		System.out.println(senha);
-		senhasAtender.add(senha);	
+		senhasAtender.add(senha);
+		Collections.sort(senhasAtender, new Comparator<Senha>() 
+			{		
+				public int compare(Senha senha, Senha senha1) 
+				{
+					if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta()))
+					{
+						return senha.getConsulta().getHoraConsulta().compareTo(senha1.getConsulta().getHoraConsulta());
+					}
+					return senha.getConsulta().getDataConsulta().compareTo(senha1.getConsulta().getDataConsulta());
+				}
+		});			
 	}
 	
-	public void removeConsultasServico(Senha senha) {
+	public void removeSenhaServico(Senha senha) {
 		senhasAtender.remove(senha);
 	}
 	
-	
-
 	@Override
 	public String toString() {
 		return "Servico [servicoId=" + servicoId + ", servicoNome=" + servicoNome + "]";

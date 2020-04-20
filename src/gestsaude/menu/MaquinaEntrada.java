@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import gestsaude.recurso.*;
 import gestsaude.util.Consultas;
+import gestsaude.util.RelogioSimulado;
 
 /** Representa uma máquina de entrada, onde os clientes retiram as senhas
  * Neste caso, apenas permite retirar as senhas para confirmar consulta 
@@ -47,11 +48,11 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				return;
 			}
 			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30) por este no FINAL LocalTime.now() ---------TODO
-			if(!gest.temConsultaProxima(u, LocalTime.of(8, 00))){
+			if(!Consultas.temConsultaProxima(u, LocalTime.of(8, 00))){
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}		
-			Senha senha = gest.emiteSenha(u.getPresentes().get(0), LocalDateTime.now());
+			Senha senha = gest.emiteSenha(u.getPresentes().get(0), RelogioSimulado.getTempoAtual());
 			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha());			
 		} else {
 			JOptionPane.showMessageDialog( this, "Número inválido" );

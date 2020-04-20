@@ -65,25 +65,31 @@ public class MenuServico extends JDialog {
 		senha = servico.getProximaSenha();
 		if( senha == null )
 			return false;
-		
 		senhaLbl.setText( senha.getIdSenha() );
 		utenteLbl.setText( senha.getUtente().getNomeUtente());
 		return true;
 	}
 
 	/** método chamado para rejeitar o utente */
-	private void rejeitarUtente() {
-		// TODO implementar este método (se necessário)
+	private void rejeitarUtente() 
+	{		
+		servico.rejeitaProximaSenha();
+		servico.removeSenhaServico(senha);
 	}
+		
 
 	/** método chamado para confirmar a consulta */
-	private void confirmarConsulta() {
-		// TODO implementar este método (se necessário)
+	private void confirmarConsulta() 
+	{
+
+		
 	}
 	
 	/** método chamado para finalizar a consulta */
-	private void finalizarConsulta( ) {
+	private void finalizarConsulta( ) 
+	{		
 		gest.removeConsulta(senha.getConsulta());
+		servico.removeSenhaServico(senha);
 	}
 
 	/** método chamado para encaminhar o utente para outros serviços */
@@ -99,13 +105,17 @@ public class MenuServico extends JDialog {
 			if( res == null || res.isEmpty() )
 				break;
 			
+			System.out.println(res);			
 			gest.getServico(res);
-			Servico s = null; 
+			System.out.println();
+			Servico s = gest.getServico(res); 
 			if( s == null )
 				JOptionPane.showMessageDialog(this, "Esse serviço não existe!" );
 			else {
 				serv.add( res );
 				senha.addServicosVistar(s);
+				gest.addConsulta(senha.getConsulta());
+
 			}
 		} while( true );
 		finalizarConsulta();
@@ -129,9 +139,8 @@ public class MenuServico extends JDialog {
 	/** Atualiza título, indicando quantos utentes estão em fila de espera */
 	public void atualizarInfo() {
 		// TODO indicar quantos utentes estão em fila de espera
-		int nUtentes = 0; 
-		// TODO Indicar o id do servico
-		setTitle( "ID SERVIÇO" + " utentes: " + nUtentes );
+		int nUtentes = servico.getSenhasaAtender().size();
+		setTitle( servico.getServicoId() + " utentes: " + nUtentes );
 		proxBt.setEnabled( nUtentes > 0 ); // se houver em espera pode-se ativar o botão de próximo
 	}
 	
