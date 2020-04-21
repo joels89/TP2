@@ -5,12 +5,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import gestsaude.menu.MenuServico;
 import gestsaude.util.Consultas;
 import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa um Serviço
  */
 public class Servico {
+	
+	private static final int ATRASAUTENTE = 4;
 	
 	private String servicoId;
 	private String servicoNome;
@@ -98,6 +101,24 @@ public class Servico {
 				}
 		});			
 	}
+	
+	public void alteraPosiçaoSenha(Senha senha)
+	{	
+		if(senhasAtender.size()<ATRASAUTENTE)
+		{
+			senhasAtender.add(senhasAtender.size(), senha);
+			senhasAtender.remove(0);
+		}
+		else
+		{
+			senhasAtender.add(ATRASAUTENTE, senha);
+			senhasAtender.remove(0);
+		}
+
+		System.out.println(senhasAtender);
+		
+	}
+	
 	
 	public void removeSenhaServico(Senha senha) {
 		senhasAtender.remove(senha);

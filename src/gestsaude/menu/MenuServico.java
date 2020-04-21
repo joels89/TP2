@@ -72,15 +72,15 @@ public class MenuServico extends JDialog {
 
 	/** método chamado para rejeitar o utente */
 	private void rejeitarUtente() 
-	{		
-		servico.rejeitaProximaSenha();
-		servico.removeSenhaServico(senha);
+	{
+		servico.alteraPosiçaoSenha(senha);		
 	}
 		
 
 	/** método chamado para confirmar a consulta */
 	private void confirmarConsulta() 
 	{
+		
 
 		
 	}
@@ -90,6 +90,7 @@ public class MenuServico extends JDialog {
 	{		
 		gest.removeConsulta(senha.getConsulta());
 		servico.removeSenhaServico(senha);
+		gest.getSenhas().remove(senha.getIdSenha());
 	}
 
 	/** método chamado para encaminhar o utente para outros serviços */
@@ -104,26 +105,27 @@ public class MenuServico extends JDialog {
 			// se não introduziu nada sai do ciclo 
 			if( res == null || res.isEmpty() )
 				break;
-			
-			System.out.println(res);			
-			gest.getServico(res);
-			System.out.println();
 			Servico s = gest.getServico(res); 
 			if( s == null )
 				JOptionPane.showMessageDialog(this, "Esse serviço não existe!" );
 			else {
 				serv.add( res );
-				senha.addServicosVistar(s);
-				gest.addConsulta(senha.getConsulta());
-
+				senha.proxServico().addSenhasServico(senha);
+				//gest.getServico(servico.getServicoId()).addConsultasServico(senha.getConsulta());
+				senha.proxServico().addConsultasServico(senha.getConsulta());
+				
+				s.addSenhasServico(senha);
+				servico.removeSenhaServico(senha);
+				atualizarInfo();	
 			}
 		} while( true );
-		finalizarConsulta();
+		//finalizarConsulta();
 	}
 
 	/** método chamado para listar as senhas em espera neste serviço */
 	private void listarSenhas() {
 		// ver quais as senhas em espera por este serviço
+		System.out.println();
 		List<Senha> senhas = gest.getServico(servico.getServicoId()).getSenhasaAtender();
 		String infoSenhas[] = new String[ senhas.size() ];
 		

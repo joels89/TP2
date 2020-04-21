@@ -30,12 +30,13 @@ public class Senha {
 	 * @return o pr�ximo servi�o associado a esta senha
 	 * 	 */
 	public Servico proxServico() {
-		return null;
+		return servicosaVisitar.get(0);
 	}
 
 	/** faz o processamento do fim da consulta por um dado servi�o
 	 */
 	public void terminaConsulta() {
+		servicosaVisitar.remove(0);
 	}
 
 
