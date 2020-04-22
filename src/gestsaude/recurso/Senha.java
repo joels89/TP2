@@ -30,13 +30,18 @@ public class Senha {
 	 * @return o pr�ximo servi�o associado a esta senha
 	 * 	 */
 	public Servico proxServico() {
-		return servicosaVisitar.get(0);
+		if (servicosaVisitar.size()>1)
+		{
+			return servicosaVisitar.get(servicosaVisitar.size()-2);
+		}
+		return servicosaVisitar.get(0);	
 	}
 
 	/** faz o processamento do fim da consulta por um dado servi�o
 	 */
-	public void terminaConsulta() {
-		servicosaVisitar.remove(0);
+	public void terminaConsulta(Servico servico) {
+		System.out.println("terminou a consulta do: " + servico);
+		servicosaVisitar.remove(servico);
 	}
 
 
@@ -80,7 +85,13 @@ public class Senha {
 	
 	public void addServicosVistar(Servico servico)
 	{
-		servicosaVisitar.add(servico);   	
+		if (servicosaVisitar.contains(servico))
+		{
+			System.out.println("ja existe");
+			return;
+		}
+		
+		servicosaVisitar.add(servico);;   	
 	}
 	
 	public void removeServicosVistar(Servico servico)

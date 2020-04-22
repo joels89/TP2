@@ -36,6 +36,13 @@ public class Servico {
 			return null;
 		return getSenhasaAtender().get(0); //para retornar a ultima senha		
 	}
+	
+	public Senha getProximaSenha(int idx) 
+	{
+		if (senhasAtender.size() == 0)
+			return null;
+		return getSenhasaAtender().get(idx); //para retornar a ultima senha		
+	}
 
 	/** processo para rejeitar a próxima senha, caso o utente seja muito atrasado
 	 */
@@ -75,10 +82,19 @@ public class Servico {
 	
 	public void addConsultasServico(Consulta consulta)
 	{
+		if (consultadasMarcadasServico.contains(consulta))
+		{
+			System.out.println("ja existe");
+			return;
+			
+		}
+		
 		Consultas.addConsultaOrdemData(consultadasMarcadasServico, consulta); 	
 	}
 	
-	public void removeConsultasServico(Consulta consulta) {
+	public void removeConsultasServico(Consulta consulta) 
+	{
+		System.out.println("removeu a consulta do serviço: " + consulta);
 		consultadasMarcadasServico.remove(consulta);
 	}
 	
@@ -86,8 +102,14 @@ public class Servico {
 		return Collections.unmodifiableList(senhasAtender);
 	}
 	
-	public void addSenhasServico(Senha senha)
+	public void addSenhasAoServiço(Senha senha)
 	{
+		if(senhasAtender.contains(senha))
+		{		
+			System.out.println("ja existe");
+			return;
+		}
+		
 		senhasAtender.add(senha);
 		Collections.sort(senhasAtender, new Comparator<Senha>() 
 			{		
@@ -121,6 +143,7 @@ public class Servico {
 	
 	
 	public void removeSenhaServico(Senha senha) {
+		System.out.println("Removeu a senha do serviço: " + senha);
 		senhasAtender.remove(senha);
 	}
 	

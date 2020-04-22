@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -32,6 +33,7 @@ public class MenuServico extends JDialog {
 	
 	// dimensões dos botões
 	private static final Dimension tamanhoBt = new Dimension( 170, 30);
+	private static final int SEM_UTENTES = 0;
 
 	private Servico servico;
 	private Senha senha;
@@ -43,6 +45,7 @@ public class MenuServico extends JDialog {
 	private CardLayout menusCard;
 	private JButton proxBt;
 	private JLabel senhaLbl, utenteLbl;
+	
 
 	/** Construtor da janela de Serviço
 	 * @param pos posição onde por a janela
@@ -62,10 +65,22 @@ public class MenuServico extends JDialog {
 	 */
 	private boolean proximoUtente() {
 		// TODO ver se há senhas em espera e usar a próxima
+		int idx = 0;
 		senha = servico.getProximaSenha();
-		if( senha == null )
+				
+		if( senha == null)
 			return false;
-		senhaLbl.setText( senha.getIdSenha() );
+				
+		while(!servico.equals(senha.proxServico()))
+		{
+			idx++;
+			senha= servico.getProximaSenha(idx);
+			System.out.println(servico);
+			System.out.println(senha.proxServico());
+			System.out.println(idx);
+		}
+						
+		senhaLbl.setText( senha.getIdSenha());
 		utenteLbl.setText( senha.getUtente().getNomeUtente());
 		return true;
 	}
@@ -80,70 +95,95 @@ public class MenuServico extends JDialog {
 	/** método chamado para confirmar a consulta */
 	private void confirmarConsulta() 
 	{
-		
-
-		
+	
 	}
 	
 	/** método chamado para finalizar a consulta */
 	private void finalizarConsulta( ) 
-	{		
-		gest.removeConsulta(senha.getConsulta());
-		servico.removeSenhaServico(senha);
-		gest.getSenhas().remove(senha.getIdSenha());
+	{			
+		if(senha.getConsultasMarcadasServico().size() == 1) //caso seja o ultimo serviço da senha a visitar
+		{
+			servico.removeSenhaServico(senha);
+			senha.terminaConsulta(servico);
+			servico.removeConsultasServico(senha.getConsulta()); 
+			gest.getSenhas().remove(senha.getIdSenha()); //apaga a senha do sistema
+			gest.removeConsulta(senha.getConsulta()); // apaga a consulta do sistema
+		}
+		else
+		{
+			senha.terminaConsulta(servico);
+			servico.removeSenhaServico(senha);
+			servico.removeConsultasServico(senha.getConsulta());
+		}
+
 	}
 
 	/** método chamado para encaminhar o utente para outros serviços */
-	private void encaminhar( ) {
+	private void encaminhar() {
 		Vector<String> serv = new Vector<String>();
 		// ciclo para pedir os vários serviçpos (pode ser mais que um)
 		do {
 			// criar umalista visual, com todos os serviços introduzidos até agora
-			JList<String> lista = new JList<String>( serv );
-			// pedir ao utilizar o id do próximo serviço, apresentando os serviços já introduzidos
-			String res = JOptionPane.showInputDialog( this, lista, "Encaminhar para onde?", JOptionPane.PLAIN_MESSAGE );
-			// se não introduziu nada sai do ciclo 
-			if( res == null || res.isEmpty() )
+			JList<String> lista = new JList<String>(serv);
+			// pedir ao utilizar o id do próximo serviço, apresentando os serviços já
+			// introduzidos
+			String res = JOptionPane.showInputDialog(this, lista, "Encaminhar para onde?", JOptionPane.PLAIN_MESSAGE);
+			// se não introduziu nada sai do ciclo
+			if (res == null || res.isEmpty())
 				break;
-			Servico s = gest.getServico(res); 
-			if( s == null )
-				JOptionPane.showMessageDialog(this, "Esse serviço não existe!" );
+			Servico s = gest.getServico(res);
+			if (s == null)
+				JOptionPane.showMessageDialog(this, "Esse serviço não existe!");
 			else {
-				serv.add( res );
-				senha.proxServico().addSenhasServico(senha);
-				//gest.getServico(servico.getServicoId()).addConsultasServico(senha.getConsulta());
-				senha.proxServico().addConsultasServico(senha.getConsulta());
-				
-				s.addSenhasServico(senha);
-				servico.removeSenhaServico(senha);
-				atualizarInfo();	
+				serv.add(res);
+				s.addSenhasAoServiço(senha);		
+				senha.addServicosVistar(s);
+				gest.getServico(s.getServicoId()).addConsultasServico(senha.getConsulta());
+				/*
+				 * senha.terminaConsulta(servico); servico.removeSenhaServico(senha);
+				 * servico.removeConsultasServico(senha.getConsulta());
+				 */
+				atualizarInfo();
 			}
-		} while( true );
-		//finalizarConsulta();
+		} while (true);
+		finalizarConsulta();
 	}
 
 	/** método chamado para listar as senhas em espera neste serviço */
 	private void listarSenhas() {
-		// ver quais as senhas em espera por este serviço
-		System.out.println();
-		List<Senha> senhas = gest.getServico(servico.getServicoId()).getSenhasaAtender();
-		String infoSenhas[] = new String[ senhas.size() ];
-		
-		int i=0;
-		for( Senha s : senhas ) {
-			infoSenhas[i++] = s.getIdSenha() + ": " + gest.getUtente(s.getConsulta().getNumeroSNSUtente()); 
+		// ver quais as senhas em espera por este serviço		
+		List<Senha> senhas = new ArrayList<Senha>();
+		for (Senha senhaServico : servico.getSenhasaAtender())
+		{
+			if (senhaServico.proxServico().equals(servico))
+			{
+				senhas.add(senhaServico);
+			}
 		}
-		JList<String> list = new JList<String>( infoSenhas );
-		JScrollPane scroll = new JScrollPane( list );
-		JOptionPane.showMessageDialog( this, scroll, "Senhas no serviço", JOptionPane.PLAIN_MESSAGE );
+
+		String infoSenhas[] = new String[senhas.size()];
+		int i = 0;
+		for (Senha s : senhas) {
+			infoSenhas[i++] = s.getIdSenha() + ": " + gest.getUtente(s.getConsulta().getNumeroSNSUtente());
+		}
+		JList<String> list = new JList<String>(infoSenhas);
+		JScrollPane scroll = new JScrollPane(list);
+		JOptionPane.showMessageDialog(this, scroll, "Senhas no serviço", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/** Atualiza título, indicando quantos utentes estão em fila de espera */
 	public void atualizarInfo() {
-		// TODO indicar quantos utentes estão em fila de espera
-		int nUtentes = servico.getSenhasaAtender().size();
+		
+		int nUtentes = SEM_UTENTES;
+		for (Senha senhaServico : servico.getSenhasaAtender()) //listar apenas os utentes que estão disponiveis no serviço
+		{
+			if (senhaServico.proxServico().equals(servico))// caso a proximo serviço associado a senha não seja igual ao nosso serviço, o utente nao é listado.
+			{
+				nUtentes++;
+			}
+		}	
 		setTitle( servico.getServicoId() + " utentes: " + nUtentes );
-		proxBt.setEnabled( nUtentes > 0 ); // se houver em espera pode-se ativar o botão de próximo
+		proxBt.setEnabled( nUtentes > SEM_UTENTES ); // se houver em espera pode-se ativar o botão de próximo
 	}
 	
 	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos

@@ -138,23 +138,23 @@ public class EditorConsulta extends JDialog {
 	}
 
 	/** método chamado pela interface para saber se todos os parametros
-	 * estão corretos e se a consulta é aceitável. Deve dar indicações de erro.
+	 * estão corretos e se a consulta é aceitável. Deve dar indicações de erro.https://www.google.com/search?q=garmin+935+xt&source=lmns&tbm=shop&bih=1041&biw=2133&hl=pt-PT&ved=2ahUKEwiqvND-j_roAhULKhoKHWNlACYQ_AUoAnoECAEQAg
 	 */
 	private void testaTudoOk() {
-		int h = Integer.parseInt( (String)horaBox.getSelectedItem() );
-		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
-		if( utente == null )
-			apresentarMensagem( "Falta definir o utente!", false );
-		else if( servico == null )
-			apresentarMensagem( "Falta definir o serviço!", false );
-		else if( data == null )
-			apresentarMensagem( "Falta definir a data!", false );
+		int h = Integer.parseInt((String) horaBox.getSelectedItem());
+		int m = Integer.parseInt((String) minsBox.getSelectedItem());
+		if (utente == null)
+			apresentarMensagem("Falta definir o utente!", false);
+		else if (servico == null)
+			apresentarMensagem("Falta definir o serviço!", false);
+		else if (data == null)
+			apresentarMensagem("Falta definir a data!", false);
 		else {
 			// TODO criar aqui uma consulta com todos os dados introduzidos
-			   System.out.println("DATA - " + data);
+			System.out.println("DATA - " + data);
 
-			   //Consulta c = getConsulta();
-			   Consulta c = new Consulta (data, LocalTime.of(h,m), servico.getServicoId(), utente.getNumeroSNS());
+			// Consulta c = getConsulta();
+			Consulta c = new Consulta(data, LocalTime.of(h, m), servico.getServicoId(), utente.getNumeroSNS());
 			// TODO verificar se pode criar/editar a consulta
 			int res = 0;
 			System.out.println(estaAlterarConsulta);
@@ -162,24 +162,24 @@ public class EditorConsulta extends JDialog {
 				System.out.println(c);
 				res = gest.alteraConsulta(consulta, c);
 				System.out.println("res = " + res);
-			}else
+			} else
 				res = gest.podeAceitarConsulta(c);
-			switch( res ) {
-			case GEstSaude.CONSULTA_ACEITE: 
-				apresentarMensagem( "Está tudo OK!", true );
+			switch (res) {
+			case GEstSaude.CONSULTA_ACEITE:
+				apresentarMensagem("Está tudo OK!", true);
 				break;
-			case GEstSaude.UTENTE_TEM_CONSULTA: 
-				apresentarMensagem( "Utente já tem consulta!", false );
+			case GEstSaude.UTENTE_TEM_CONSULTA:
+				apresentarMensagem("Utente já tem consulta!", false);
 				break;
-			case GEstSaude.SERVICO_TEM_CONSULTA: 
-				apresentarMensagem( "Serviço já tem consulta!", false );
+			case GEstSaude.SERVICO_TEM_CONSULTA:
+				apresentarMensagem("Serviço já tem consulta!", false);
 				break;
-			case GEstSaude.DATA_JA_PASSOU: 
-				apresentarMensagem( "Fora de prazo!", false );
+			case GEstSaude.DATA_JA_PASSOU:
+				apresentarMensagem("Fora de prazo!", false);
 				break;
 			// esta nunca deve aparecer, mas vamos testar na mesma
 			case GEstSaude.ALTERACAO_INVALIDA:
-				apresentarMensagem( "Alteração não permitida!", false );
+				apresentarMensagem("Alteração não permitida!", false);
 				break;
 			}
 		}
@@ -210,7 +210,7 @@ public class EditorConsulta extends JDialog {
 		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
 		LocalDateTime quando = LocalDateTime.of( data,LocalTime.of( h, m));
 		
-		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText()); //----- TODO
+		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());
 		setVisible( false );
 	}
 

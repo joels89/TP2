@@ -82,7 +82,7 @@ public class GEstSaude {
 	public void addSenha(Senha senha) {
 		senhas.put(senha.getIdSenha(), senha);
 		senha.addServicosVistar(servicos.get(senha.getConsulta().getServicoId()));
-		servicos.get(senha.getConsulta().getServicoId()).addSenhasServico(senha);
+		servicos.get(senha.getConsulta().getServicoId()).addSenhasAoServiço(senha);
 	}
 
 	public void resetSenhas() {
