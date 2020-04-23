@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import gestsaude.menu.MenuServico;
 import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa uma Senha
@@ -29,18 +30,15 @@ public class Senha {
 	/** retorna o pr�ximo servi�o associado a esta senha 
 	 * @return o pr�ximo servi�o associado a esta senha
 	 * 	 */
-	public Servico proxServico() {
-		if (servicosaVisitar.size()>1)
-		{
-			return servicosaVisitar.get(servicosaVisitar.size()-2);
-		}
-		return servicosaVisitar.get(0);	
+	public Servico proxServico() 
+	{
+
+		return servicosaVisitar.get(0);
 	}
 
 	/** faz o processamento do fim da consulta por um dado servi�o
 	 */
 	public void terminaConsulta(Servico servico) {
-		System.out.println("terminou a consulta do: " + servico);
 		servicosaVisitar.remove(servico);
 	}
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import gestsaude.menu.MenuServico;
 import gestsaude.util.Consultas;
+import gestsaude.util.RelogioSimulado;
 import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa um Serviço
@@ -104,6 +105,8 @@ public class Servico {
 	
 	public void addSenhasAoServiço(Senha senha)
 	{
+		System.out.println(RelogioSimulado.getTempoAtual());
+		
 		if(senhasAtender.contains(senha))
 		{		
 			System.out.println("ja existe");
@@ -115,11 +118,20 @@ public class Servico {
 			{		
 				public int compare(Senha senha, Senha senha1) 
 				{
-					if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta()))
+					if(senha.getConsulta().getHoraConsulta().compareTo(senha.getHoraEntrada().toLocalTime()) < 0)
 					{
-						return senha.getConsulta().getHoraConsulta().compareTo(senha1.getConsulta().getHoraConsulta());
+						System.out.println("chegou atrasado!");
+						return senha.getHoraEntrada().compareTo(senha1.getHoraEntrada());
 					}
-					return senha.getConsulta().getDataConsulta().compareTo(senha1.getConsulta().getDataConsulta());
+					else
+					{
+						System.out.println("Chegou a tempo");
+						if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta()))
+						{
+							return senha.getConsulta().getHoraConsulta().compareTo(senha1.getConsulta().getHoraConsulta());
+						}
+						return senha.getConsulta().getDataConsulta().compareTo(senha1.getConsulta().getDataConsulta());
+					}
 				}
 		});			
 	}
