@@ -139,10 +139,6 @@ public class MenuServico extends JDialog {
 				s.addSenhasAoServiço(senha);		
 				senha.addServicosVistar(s);
 				gest.getServico(s.getServicoId()).addConsultasServico(senha.getConsulta());
-				/*
-				 * senha.terminaConsulta(servico); servico.removeSenhaServico(senha);
-				 * servico.removeConsultasServico(senha.getConsulta());
-				 */
 				atualizarInfo();
 			}
 		} while (true);

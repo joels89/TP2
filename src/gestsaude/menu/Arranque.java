@@ -139,7 +139,7 @@ public class Arranque {
 
 		// Criar o relógio simulado e definir o tempo por segundo
 		RelogioSimulado relogio = RelogioSimulado.getRelogioSimulado();
-		relogio.setTicksPorSegundo( 60 ); 
+		relogio.setTicksPorSegundo( 1000); 
 
 		// criar as máquina de entrada, neste caso irá ter duas
 		MaquinaEntrada me1 = new MaquinaEntrada( new Point(10, 10), "Entrada 1", gs );

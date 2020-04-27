@@ -43,16 +43,26 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 		//Utente u = null;
 		if( u != null ) {
 			String nome = u.getNomeUtente();
-			if((Consultas.getConsultasDoDia(u.getPresentes(), LocalDate.now())).size() == 0) {
+			
+			if (RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(8, 00)) < 0 ||
+					RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(20, 00)) > 0)
+			{
+				JOptionPane.showMessageDialog( this, nome + ", O serviço de senhas só funciona entre as 8 e as 20 horas");
+				return;
+			}
+			
+			if((Consultas.getConsultasDoDia(u.getPresentes(), RelogioSimulado.getTempoAtual().toLocalDate())).size() == 0) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas hoje!" );
 				return;
 			}
 			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30) por este no FINAL LocalTime.now() ---------TODO
-			if(!Consultas.temConsultaProxima(u, LocalTime.of(8, 00))){
+			if(!Consultas.temConsultaProxima(u, RelogioSimulado.getTempoAtual().toLocalTime() )){
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
-			}		
+			}
+			
 			Senha senha = gest.emiteSenha(u.getPresentes().get(0), RelogioSimulado.getTempoAtual());
+			
 			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha());			
 		} else {
 			JOptionPane.showMessageDialog( this, "Número inválido" );

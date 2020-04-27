@@ -48,6 +48,11 @@ public class GEstSaude {
 		Collection<Senha> senhas = getSenhas().values();
 
 		for (Senha s : senhas) {
+			if(s.getConsulta().getDataConsulta().getDayOfMonth() != t.getDayOfMonth())
+			{
+				System.out.println("outro dia");
+				resetSenhas();				
+			}
 			if (s.getConsulta().equals(c))
 				return s; // testa se a consulta já está validada, se estiver retornar a senha já emitida
 		}
@@ -86,6 +91,7 @@ public class GEstSaude {
 	}
 
 	public void resetSenhas() {
+		getSenhas().clear();
 		proxSenha = 1;
 	}
 
@@ -218,5 +224,6 @@ public class GEstSaude {
 	public HashMap<String, Senha> getSenhas() {
 		return senhas;
 	}
+		
 
 }

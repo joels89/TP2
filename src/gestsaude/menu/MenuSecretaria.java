@@ -64,7 +64,7 @@ public class MenuSecretaria extends JFrame {
 	/** lista apenas as consultas de hoje */
 	private void listarHoje()
 	{
-		listarConsultas(Consultas.getConsultasDoDia(gest.getConsultas(), LocalDate.now()));
+		listarConsultas(Consultas.getConsultasDoDia(gest.getConsultas(), RelogioSimulado.getTempoAtual().toLocalDate()));
 	}
 	
 	/** lista todas as consultas de um utente */
@@ -182,7 +182,16 @@ public class MenuSecretaria extends JFrame {
 	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
 	/** método que vai atualizar o relogio no título da janela
 	 */
-	public void atualizarRelogio() {
+	public void atualizarRelogio() 
+	{
+		System.out.println(RelogioSimulado.getTempoAtual().toLocalTime());
+		System.out.println(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0);
+		
+		if(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0 && !gest.getSenhas().isEmpty())
+		{
+			System.out.println("reset senhas");
+			gest.resetSenhas();
+		}
 		String tempo = RelogioSimulado.getTempoAtual().toLocalTime().format( DateTimeFormatter.ofPattern("hh:mm") );
 		setTitle( titulo + "     " + tempo );		
 	}
