@@ -8,10 +8,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import gestsaude.util.Consultas;
 import gestsaude.util.RelogioSimulado;
-import gestsaude.util.gestSaudeUtilitarios;
 
 /**
  * Representa o sistema
@@ -37,7 +35,6 @@ public class GEstSaude {
 	private HashMap<String, Senha> senhas = new HashMap<String, Senha>();
 	private ArrayList<Consulta> consultas = new ArrayList<Consulta>();
 
-
 	// definição da próxima senha
 	private int proxSenha = 1;
 
@@ -46,20 +43,17 @@ public class GEstSaude {
 
 	public Senha emiteSenha(Consulta c, LocalDateTime t) {
 		Collection<Senha> senhas = getSenhas().values();
-
 		for (Senha s : senhas) {
 			if(s.getConsulta().getDataConsulta().getDayOfMonth() != t.getDayOfMonth())
 			{
-				System.out.println("outro dia");
+				System.out.println("outro dia");// TODO tirar no final
 				resetSenhas();				
 			}
 			if (s.getConsulta().equals(c))
-				return s; // testa se a consulta já está validada, se estiver retornar a senha já emitida
+				return s; // testa se a consulta já está validada, se estiver retornar a senha já emitida // TODO tirar no final
 		}
 
-		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()); // senão criar e
-																									// retornar a nova
-																									// senha
+		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()); // senão criar e retornar a nova senha// TODO tirar no final
 		addSenha(senha);
 		return senha;
 	}
@@ -106,50 +100,49 @@ public class GEstSaude {
 		// enunciado)
 		if (servicos.get(c.getServicoId()) == null) {
 			System.out.println(
-					"        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");
+					"        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");// TODO tirar no final
 			return CONSULTA_INVALIDA;
 		}
 		if (utentes.get(c.getNumeroSNSUtente()) == null) {
-			System.out
-					.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n");
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n");// TODO tirar no final
 			return CONSULTA_INVALIDA;
 		}
 		if (c.getDataConsulta() == null || c.getHoraConsulta() == null) {
-			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Consulta sem hora ou data marcada \n");
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Consulta sem hora ou data marcada \n");// TODO tirar no final
 			return CONSULTA_INVALIDA;
 		}
 
 		if ((c.getHoraConsulta().compareTo(HORARIO_INICIO) < 0) || (c.getHoraConsulta().compareTo(HORARIO_FIM) > 0)) {
 			System.out.println(
-					"        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");
+					"        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");// TODO tirar no final
 			return CONSULTA_INVALIDA;
 		}
+		
 		for (Consulta consultaListada : consultas) {
-			if ((c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) && ((c.getDataConsulta()
-					.equals(consultaListada.getDataConsulta()))
-					&& (Math.abs(RelogioSimulado.localTime2Min(c.getHoraConsulta())
-							- RelogioSimulado.localTime2Min(consultaListada.getHoraConsulta())) < TRES_HORAS))) {
+			if ((c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) &&
+				((c.getDataConsulta().equals(consultaListada.getDataConsulta())) &&
+				(Math.abs(RelogioSimulado.localTime2Min(c.getHoraConsulta()) - RelogioSimulado.localTime2Min(consultaListada.getHoraConsulta())) < TRES_HORAS))) {
 				System.out.println(
-						"        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");
+						"        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");// TODO tirar no final
 				return UTENTE_TEM_CONSULTA;
 			}
 		}
+		
 		for (Consulta consultaListada : consultas) {
-			if ((c.getServicoId() == consultaListada.getServicoId())
-					&& ((c.getDataConsulta().equals(consultaListada.getDataConsulta())
-							&& (c.getHoraConsulta().equals(consultaListada.getHoraConsulta()))))) {
+			if ((c.getServicoId() == consultaListada.getServicoId()) &&
+				((c.getDataConsulta().equals(consultaListada.getDataConsulta()) &&
+				 (c.getHoraConsulta().equals(consultaListada.getHoraConsulta()))))) {
 				System.out.println(
-						"        **** ATENCAO CONSULTA INVALIDA - SERVICO_TEM_CONSULTA *** \n O servico ja tem uma consulta marcada para esta data e hora \n");
+						"        **** ATENCAO CONSULTA INVALIDA - SERVICO_TEM_CONSULTA *** \n O servico ja tem uma consulta marcada para esta data e hora \n");// TODO tirar no final
 				return SERVICO_TEM_CONSULTA;
 			}
 		}
 
 		if (c.getDataConsulta().compareTo(LocalDate.now()) < 0) {
 			System.out.println(
-					"        **** ATENCAO CONSULTA INVALIDA - DATA_JA_PASSOU *** \n Consulta tem de ser sempre marcada para o dia seguinte. Volte para uma data a partir de amanha \n");
+					"        **** ATENCAO CONSULTA INVALIDA - DATA_JA_PASSOU *** \n Consulta tem de ser sempre marcada para o dia seguinte. Volte para uma data a partir de amanha \n");// TODO tirar no final
 			return DATA_JA_PASSOU;
 		}
-
 		return CONSULTA_ACEITE;
 	}
 
@@ -157,8 +150,9 @@ public class GEstSaude {
 		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
 			return CONSULTA_INVALIDA;
 		}
+		// ************************** Este if deixou de ter senntido?????????? TODO*******************
 		/*
-		 * if (!aceitaConsulta(servicos.get(c.getServicoId()))) { return
+		 * if (!aceitaConsulta(servicos.get(c.getServicoId()))) { return/
 		 * CONSULTA_INVALIDA; }
 		 */
 		Consultas.addConsultaOrdemData(consultas, c);
@@ -173,7 +167,6 @@ public class GEstSaude {
 			servicos.get(c.getServicoId()).removeConsultasServico(c);
 			utentes.get(c.getNumeroSNSUtente()).removeConsulta(c);
 		}
-
 	}
 
 	public boolean aceitaConsulta(Servico servico) {
@@ -192,8 +185,7 @@ public class GEstSaude {
 		// (marcar em menos de 3 horas ou outra condicao) ---- TODO retirar no final
 		removeConsulta(antiga);
 		if ((podeAceitarConsulta(nova) != CONSULTA_ACEITE)) {
-			addConsulta(antiga);// se chumbou a nova consulta voltamos a adicionar a consulta velha á lista ----
-								// TODO retirar no final
+			addConsulta(antiga);// se chumbou a nova consulta voltamos a adicionar a consulta velha á lista ----TODO retirar no final
 			return CONSULTA_INVALIDA;
 		}
 		return CONSULTA_ACEITE;
@@ -221,9 +213,8 @@ public class GEstSaude {
 		return servicos.get(servicoId);
 	}
 
-	public HashMap<String, Senha> getSenhas() {
+	public HashMap<String, Senha> getSenhas() {// -- Isto serve para que? TODO verificar
 		return senhas;
 	}
 		
-
 }

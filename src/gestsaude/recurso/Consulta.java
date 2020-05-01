@@ -5,8 +5,7 @@ import java.time.LocalTime;
 
 /** Representa uma Consulta 
  */
-public class Consulta 
-{
+public class Consulta {
 
 /*	Esta classe representa uma consulta. Deve ter a indicação do utente, do serviço e o dia e
 	hora da consulta. Deve ter construtores, getters e setters relevantes. */

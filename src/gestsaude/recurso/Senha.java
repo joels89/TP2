@@ -25,8 +25,7 @@ public class Senha {
 	/** retorna o próximo serviço associado a esta senha 
 	 * @return o próximo serviço associado a esta senha
 	 * 	 */
-	public Servico proxServico() 
-	{
+	public Servico proxServico() {
 		return servicosVisitar.get(0);
 	}
 
@@ -68,18 +67,15 @@ public class Senha {
 		this.idSenha = idSenha;
 	}
 
-	public void addServicosVistar(Servico servico)
-	{
-		if (servicosVisitar.contains(servico))
-		{
+	public void addServicosVistar(Servico servico) {
+		if (servicosVisitar.contains(servico)) {
 			System.out.println("ja existe"); // TODo retirar no final se tiver tudo bem
 			return;
 		}
-		servicosVisitar.add(servico);;   	
+		servicosVisitar.add(servico);   	
 	}
 	
-	public void removeServicosVistar(Servico servico)
-	{
+	public void removeServicosVistar(Servico servico) {
 		servicosVisitar.remove(servico);
 	}
 	

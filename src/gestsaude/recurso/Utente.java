@@ -7,14 +7,13 @@ import gestsaude.util.Consultas;
 
 /** Representa um Utente
  */
-public class Utente 
-{
+public class Utente {
+	
 	private String numeroSNS;
 	private String nomeUtente;
 	private ArrayList<Consulta> consultasMarcadas = new ArrayList<Consulta>();
 	
-	public Utente(String numeroSNS, String nomeUtente) 
-	{		
+	public Utente(String numeroSNS, String nomeUtente) {		
 		this.numeroSNS = numeroSNS;
 		setNomeUtente(nomeUtente);
 	}
@@ -35,18 +34,15 @@ public class Utente
 		this.nomeUtente = nomeUtente;
 	}
 	
-	public void addConsulta(Consulta consulta)
-	{
+	public void addConsulta(Consulta consulta) {
 		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);	    	
 	}
 	
-	public void removeConsulta(Consulta consulta) 
-	{
+	public void removeConsulta(Consulta consulta) {
 		consultasMarcadas.remove(consulta);
 	}
 	
-	public List <Consulta> getConsultasMarcadas()
-	{		
+	public List <Consulta> getConsultasMarcadas() {		
 		return Collections.unmodifiableList(consultasMarcadas);
 	}
 	
