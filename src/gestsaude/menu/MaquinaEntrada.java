@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -20,6 +22,7 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Dimension tamanhoBt = new Dimension( 170, 50); // tamanho dos botões
+	public static final int TRES = 3;
 	
 	private GEstSaude gest;
 
@@ -55,12 +58,12 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas hoje!" );
 				return;
 			}
-			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30) por este no FINAL LocalTime.now() ---------TODO
-			if(!Consultas.temConsultaProxima(u, RelogioSimulado.getTempoAtual().toLocalTime() )){
+
+			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30) por este no FINAL LocalTime.now() ---------TODO	
+			if(Consultas.getConsultaEntreDatas(u.getConsultasMarcadas(), RelogioSimulado.getTempoAtual().minusHours(TRES), RelogioSimulado.getTempoAtual().plusHours(TRES)).isEmpty()) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}
-			
 			Senha senha = gest.emiteSenha(u.getConsultasMarcadas().get(0), RelogioSimulado.getTempoAtual());
 			
 			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha());			

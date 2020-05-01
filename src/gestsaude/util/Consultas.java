@@ -2,18 +2,11 @@ package gestsaude.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
-
-
 import gestsaude.recurso.Consulta;
-import gestsaude.recurso.Utente;
 
 /** Class utilitária que define um conjunto base de operações com listas de consultas
  */
@@ -23,15 +16,11 @@ public class Consultas {
 	 * @param cs lista onde colcoar a consulta
 	 * @param c a cosulta a adicionar
 	 */
-	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c  ) 
-	{
+	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c ) {
 		cs.add(c);
-		Collections.sort(cs, new Comparator<Consulta>() 
-			{		
-				public int compare(Consulta consulta, Consulta consulta2) 
-				{
-					if(consulta.getDataConsulta().equals(consulta2.getDataConsulta()))
-					{
+		Collections.sort(cs, new Comparator<Consulta>() {		
+				public int compare(Consulta consulta, Consulta consulta2) {
+					if(consulta.getDataConsulta().equals(consulta2.getDataConsulta())) {
 						return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
 					}
 					return consulta.getDataConsulta().compareTo(consulta2.getDataConsulta());
@@ -39,14 +28,13 @@ public class Consultas {
 		});									
 	}
 
-
-	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim )
-	{
+	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim ) { // TODO nao estava a ser utilzado. implementou a utilidade do temConsultaProxima() antigo
+		System.out.println("initial "+ ini);
+		System.out.println("final "+ fim);
+		System.out.println("lista "+ cs);
 		List<Consulta> listaConsultasEntreDatas = new ArrayList<Consulta>();		
-		for (Consulta consulta : cs)
-		{
+		for (Consulta consulta : cs) {
 			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());  //LocalDate + LocalTime = LocalDateTime
-			
 			if ((dataHoraConsulta.isBefore(fim)) && (dataHoraConsulta.isAfter(ini)))
 				listaConsultasEntreDatas.add(consulta);
 		}
@@ -58,8 +46,7 @@ public class Consultas {
 	 * @param dia dia a usar
 	 * @return uma lista com as consultas marcadas para dia
 	 */
-	public static List<Consulta> getConsultasDoDia( List<Consulta> cs, LocalDate dia ) 
-	{
+	public static List<Consulta> getConsultasDoDia( List<Consulta> cs, LocalDate dia ) {
 		List<Consulta> listaConsultasDia = new ArrayList<Consulta>();		
 		for (Consulta consulta : cs)
 			if(consulta.getDataConsulta().equals(dia))
@@ -72,27 +59,14 @@ public class Consultas {
 	 * @param t tempo a aptire do qual se deve considerar as consultas (inclusive)
 	 * @return  uma lista com as consultas após a data t
 	 */
-	public static List<Consulta> getConsultasApos( List<Consulta> cs, LocalDateTime t ) {
-
+	public static List<Consulta> getConsultasApos( List<Consulta> cs, LocalDateTime t ) { // TODO nao eta a ser utilzado
 		List<Consulta> listaConsultasApos = new ArrayList<Consulta>();		
-		for (Consulta consulta : cs)
-		{
-			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());  //LocalDate + LocalTime = LocalDateTime
-			
+		for (Consulta consulta : cs) {
+			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());  //LocalDate + LocalTime = LocalDateTime	
 			if ((dataHoraConsulta.isAfter(t)))
 				listaConsultasApos.add(consulta);
 		}
-		return Collections.unmodifiableList(listaConsultasApos); //needs to be tested
-
-	}
-	
-	public static boolean temConsultaProxima(Utente u, LocalTime horaSenha) {// -------------------------TODO -ver onde por o método
-		if (u.getConsultasMarcadas() != null) {
-			return (Math.abs(
-					RelogioSimulado.localTime2Min(u.getConsultasMarcadas().get(0).getHoraConsulta()) - RelogioSimulado.localTime2Min(horaSenha)) < RelogioSimulado.TRES_HORAS);
-			// indice zero verifica em relacao a primeira. se passarem tres horas a consulta deve ser removida confirmar.
-		}
-		return false;
+		return Collections.unmodifiableList(listaConsultasApos); // TODO needs to be tested
 	}
 
 }
