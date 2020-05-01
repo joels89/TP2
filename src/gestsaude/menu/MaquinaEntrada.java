@@ -51,7 +51,7 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				return;
 			}
 			
-			if((Consultas.getConsultasDoDia(u.getPresentes(), RelogioSimulado.getTempoAtual().toLocalDate())).size() == 0) {
+			if((Consultas.getConsultasDoDia(u.getConsultasMarcadas(), RelogioSimulado.getTempoAtual().toLocalDate())).size() == 0) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas hoje!" );
 				return;
 			}
@@ -61,7 +61,7 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				return;
 			}
 			
-			Senha senha = gest.emiteSenha(u.getPresentes().get(0), RelogioSimulado.getTempoAtual());
+			Senha senha = gest.emiteSenha(u.getConsultasMarcadas().get(0), RelogioSimulado.getTempoAtual());
 			
 			JOptionPane.showMessageDialog( this, nome + ", a sua senha é " + senha.getIdSenha());			
 		} else {

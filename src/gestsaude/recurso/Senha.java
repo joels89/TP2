@@ -1,14 +1,9 @@
 package gestsaude.recurso;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import gestsaude.menu.MenuServico;
-import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa uma Senha
  */
@@ -17,94 +12,85 @@ public class Senha {
 	private Utente utente;
 	private Consulta consulta;
 	private String idSenha;
-	private LocalDateTime DataeHoradeEntrada;
-	public List<Servico> servicosaVisitar = new ArrayList<Servico>();
+	private LocalDateTime dataHoraEntrada;
+	public List<Servico> servicosVisitar = new ArrayList<Servico>();
 	
-	public Senha (Utente utente, Consulta consulta, LocalDateTime DataeHoradeEntrada, String idSenha) {
-		this.utente = utente;
-		this.consulta = consulta;
-		this.DataeHoradeEntrada = DataeHoradeEntrada;
-		this.idSenha = idSenha;
+	public Senha (Utente utente, Consulta consulta, LocalDateTime dataHoraEntrada, String idSenha) {// *** TODO **No enunciado nao diz que o contrutor deve ter o utente e denha id é necessario?
+		setUtente(utente);
+		setConsulta(consulta);
+		this.dataHoraEntrada = dataHoraEntrada; // Nao percebi damos uma data e hora e fazemos get e set so da hora?
+		setIdSenha(idSenha);
 	}
 	
-	/** retorna o prï¿½ximo serviï¿½o associado a esta senha 
-	 * @return o prï¿½ximo serviï¿½o associado a esta senha
+	/** retorna o próximo serviço associado a esta senha 
+	 * @return o próximo serviço associado a esta senha
 	 * 	 */
 	public Servico proxServico() 
 	{
-
-		return servicosaVisitar.get(0);
+		return servicosVisitar.get(0);
 	}
 
-	/** faz o processamento do fim da consulta por um dado serviï¿½o
+	/** faz o processamento do fim da consulta por um dado serviço
 	 */
-	public void terminaConsulta(Servico servico) {
-		servicosaVisitar.remove(servico);
+	public void terminaConsulta(Servico servico) {//********TODO a sconsultas nunca sao removidas ????
+		servicosVisitar.remove(servico);
 	}
-
 
 	public Utente getUtente() {
 		return utente;
 	}
 
-
 	public void setUtente(Utente utente) {
 		this.utente = utente;
 	}
-
 
 	public Consulta getConsulta() {
 		return consulta;
 	}
 
-
 	public void setConsulta(Consulta consulta) {
 		this.consulta = consulta;
 	}
 
-
 	public LocalDateTime getHoraEntrada() {
-		return DataeHoradeEntrada;
+		return dataHoraEntrada;
+	}
+
+	public void setHoraEntrada(LocalDateTime Data) {
+		this.dataHoraEntrada = Data;
 	}
 	
 	public String getIdSenha() {
 		return idSenha;
 	}
 
-
 	public void setIdSenha(String idSenha) {
 		this.idSenha = idSenha;
 	}
 
-
-	public void setHoraEntrada(LocalDateTime Data) {
-		this.DataeHoradeEntrada = Data;
-	}
-	
 	public void addServicosVistar(Servico servico)
 	{
-		if (servicosaVisitar.contains(servico))
+		if (servicosVisitar.contains(servico))
 		{
-			System.out.println("ja existe");
+			System.out.println("ja existe"); // TODo retirar no final se tiver tudo bem
 			return;
 		}
-		
-		servicosaVisitar.add(servico);;   	
+		servicosVisitar.add(servico);;   	
 	}
 	
 	public void removeServicosVistar(Servico servico)
 	{
-		servicosaVisitar.remove(servico);
+		servicosVisitar.remove(servico);
 	}
 	
-	public List<Servico> getConsultasMarcadasServico() {
-		return Collections.unmodifiableList(servicosaVisitar);
+	public List<Servico> getConsultasMarcadasServico() {// este get nao deveria chmar-se "getServicosVisitar" ????????????????
+		return Collections.unmodifiableList(servicosVisitar);
 	}
 
 	@Override
 	public String toString() {
 		return "idSenha=" + idSenha + ", DataeHoradeEntrada="
-				+ DataeHoradeEntrada + "]";
+				+ dataHoraEntrada + "]";
 	}
 	
 }

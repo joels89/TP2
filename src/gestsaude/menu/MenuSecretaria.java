@@ -73,7 +73,7 @@ public class MenuSecretaria extends JFrame {
 		isUtente = true;
 		numSns = JOptionPane.showInputDialog(this, "Número de SNS do utente?");
 		if(gest.getUtente(numSns) !=null)
-			listarConsultas(gest.getUtente(numSns).getPresentes());
+			listarConsultas(gest.getUtente(numSns).getConsultasMarcadas());
 		else
 			JOptionPane.showMessageDialog( this, "Utente inválido" );			
 	}

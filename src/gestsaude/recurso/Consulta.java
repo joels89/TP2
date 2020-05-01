@@ -1,11 +1,7 @@
 package gestsaude.recurso;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-
-import gestsaude.menu.DatePicker;
 
 /** Representa uma Consulta 
  */
@@ -21,9 +17,9 @@ public class Consulta
 	private String numeroSNSUtente;
 	
 	public Consulta(LocalDate dataConsulta, LocalTime horaConsulta, String servicoId, String numeroSNSUtente) {
-		this.dataConsulta = dataConsulta;
-		this.horaConsulta = horaConsulta;
-		this.servicoId = servicoId;
+		setDataConulta(dataConsulta);
+		setHoraConsulta(horaConsulta);
+		setServicoId(servicoId);
 		this.numeroSNSUtente = numeroSNSUtente;
 	}
 
@@ -31,8 +27,8 @@ public class Consulta
 		return dataConsulta;
 	}
 
-	public void setDataConulta(LocalDate dataConulta) {
-		this.dataConsulta = dataConulta;
+	public void setDataConulta(LocalDate dataConsulta) {
+		this.dataConsulta = dataConsulta;
 	}
 
 	public LocalTime getHoraConsulta() {
@@ -55,17 +51,13 @@ public class Consulta
 		return numeroSNSUtente;
 	}
 
-	public void setNumeroSNSUtente(String numeroSNSUtente) {
+	public void setNumeroSNSUtente(String numeroSNSUtente) { ////////// TODo eu removia este ou punha privado piois este valor nao deveria por se r alterado
 		this.numeroSNSUtente = numeroSNSUtente;
 	}
-
 
 	public String toString() {
 		return "\n Consulta - Data: " + dataConsulta + ", Hora: " + horaConsulta + ", servicoId: (" + servicoId
 				+ "), Utente (NºSNS): " + numeroSNSUtente;
 	}
-	
-
-
 	
 }

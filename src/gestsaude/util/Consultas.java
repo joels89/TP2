@@ -87,9 +87,9 @@ public class Consultas {
 	}
 	
 	public static boolean temConsultaProxima(Utente u, LocalTime horaSenha) {// -------------------------TODO -ver onde por o método
-		if (u.getPresentes() != null) {
+		if (u.getConsultasMarcadas() != null) {
 			return (Math.abs(
-					RelogioSimulado.localTime2Min(u.getPresentes().get(0).getHoraConsulta()) - RelogioSimulado.localTime2Min(horaSenha)) < RelogioSimulado.TRES_HORAS);
+					RelogioSimulado.localTime2Min(u.getConsultasMarcadas().get(0).getHoraConsulta()) - RelogioSimulado.localTime2Min(horaSenha)) < RelogioSimulado.TRES_HORAS);
 			// indice zero verifica em relacao a primeira. se passarem tres horas a consulta deve ser removida confirmar.
 		}
 		return false;

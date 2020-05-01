@@ -4,28 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import gestsaude.menu.MenuServico;
 import gestsaude.util.Consultas;
 import gestsaude.util.RelogioSimulado;
-import gestsaude.util.gestSaudeUtilitarios;
 
 /** Representa um Serviço
  */
 public class Servico {
 	
 	private static final int ATRASAUTENTE = 4;
-	
 	private String servicoId;
 	private String servicoNome;
 	private ArrayList <Consulta> consultadasMarcadasServico = new ArrayList<Consulta>();
 	private ArrayList<Senha> senhasAtender = new ArrayList<Senha>();
 	
-	
 	public Servico(String servicoId, String servicoNome) 
 	{
-		this.servicoId = servicoId;
-		this.servicoNome = servicoNome;
+		setServicoId(servicoId);
+		setServicoNome(servicoNome);
 	}
 	
 	/** Retorna a próxima senha a ser atendida, ou null, caso não haja 
@@ -35,21 +30,21 @@ public class Servico {
 	{
 		if (senhasAtender.size() == 0)
 			return null;
-		return getSenhasaAtender().get(0); //para retornar a ultima senha		
+		return getSenhasaAtender().get(0);		
 	}
 	
 	public Senha getProximaSenha(int idx) 
 	{
 		if (senhasAtender.size() == 0)
 			return null;
-		return getSenhasaAtender().get(idx); //para retornar a ultima senha		
+		return getSenhasaAtender().get(idx);	
 	}
 
 	/** processo para rejeitar a próxima senha, caso o utente seja muito atrasado
 	 */
 	public void rejeitaProximaSenha() 
 	{
-		senhasAtender.remove(getProximaSenha());	
+		senhasAtender.remove(getProximaSenha());	//***TODO*** se rejeitamos a senha nao deveriamos eliminar a consulta associada?
 	}
 
 	/** processo de terminar a consulta associada à senha */ 
@@ -61,7 +56,6 @@ public class Servico {
 		}		
 		return;	
 	}
-	
 	
 	public String getServicoId() {
 		return servicoId;
@@ -85,17 +79,15 @@ public class Servico {
 	{
 		if (consultadasMarcadasServico.contains(consulta))
 		{
-			System.out.println("ja existe");
-			return;
-			
+			System.out.println("ja existe");// TODO remover qd testado
+			return;	
 		}
-		
 		Consultas.addConsultaOrdemData(consultadasMarcadasServico, consulta); 	
 	}
 	
 	public void removeConsultasServico(Consulta consulta) 
 	{
-		System.out.println("removeu a consulta do serviço: " + consulta);
+		System.out.println("removeu a consulta do serviço: " + consulta); // TODO remover qd testado
 		consultadasMarcadasServico.remove(consulta);
 	}
 	
@@ -109,7 +101,7 @@ public class Servico {
 		
 		if(senhasAtender.contains(senha))
 		{		
-			System.out.println("ja existe");
+			System.out.println("ja existe");// TODO remover qd testado
 			return;
 		}
 		
@@ -120,12 +112,12 @@ public class Servico {
 				{
 					if(senha.getConsulta().getHoraConsulta().compareTo(senha.getHoraEntrada().toLocalTime()) < 0)
 					{
-						System.out.println("chegou atrasado!");
+						System.out.println("chegou atrasado!");// TODO remover qd testado
 						return senha.getHoraEntrada().compareTo(senha1.getHoraEntrada());
 					}
 					else
 					{
-						System.out.println("Chegou a tempo");
+						System.out.println("Chegou a tempo");// TODO remover qd testado
 						if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta()))
 						{
 							return senha.getConsulta().getHoraConsulta().compareTo(senha1.getConsulta().getHoraConsulta());
@@ -148,11 +140,8 @@ public class Servico {
 			senhasAtender.add(ATRASAUTENTE, senha);
 			senhasAtender.remove(0);
 		}
-
-		System.out.println(senhasAtender);
-		
+		System.out.println(senhasAtender);// TODO remover qd testado
 	}
-	
 	
 	public void removeSenhaServico(Senha senha) {
 		System.out.println("Removeu a senha do serviço: " + senha);
@@ -163,8 +152,5 @@ public class Servico {
 	public String toString() {
 		return "Servico [servicoId=" + servicoId + ", servicoNome=" + servicoNome + "]";
 	}
-	
-	
-	
-}
 
+}
