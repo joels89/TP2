@@ -33,7 +33,7 @@ public class Senha {
 
 	/** faz o processamento do fim da consulta por um dado serviço
 	 */
-	public void terminaConsulta(Servico servico) {//********TODO a sconsultas nunca sao removidas ????
+	public void terminaConsulta(Servico servico) {
 		servicosVisitar.remove(servico);
 	}
 
@@ -78,6 +78,9 @@ public class Senha {
 	}
 	
 	public void removeServicosVistar(Servico servico) {
+		if (!servicosVisitar.contains(servico)) {
+			return;
+		}
 		servicosVisitar.remove(servico);
 	}
 	

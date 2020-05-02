@@ -45,8 +45,10 @@ public class Arranque {
 
 	//Classe Utente - OK
 	//Classe Consulta - OK
+	//Classe Senha - OK
 	
 	//Classe GestSaude - OK tirar so sysout no final
+	
 	//Classe Servico	
 		//rejeitaProximaSenha()  ver onde este metodo sera usado
 		//// TODO	verificar se devia ser com SORT ver FAQs do prof
