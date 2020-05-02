@@ -33,6 +33,13 @@ public class Arranque {
 	/**
 	 * @return
 	 */
+
+	
+///////// BUGS ////////////
+
+//atualizaco de listas
+	
+	
 	
 ///////// Tarefas////////////
 

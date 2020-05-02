@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import gestsaude.recurso.Servico;
 
 /** Representa uma Senha
  */
@@ -15,10 +16,10 @@ public class Senha {
 	private LocalDateTime dataHoraEntrada;
 	public List<Servico> servicosVisitar = new ArrayList<Servico>();
 	
-	public Senha (Utente utente, Consulta consulta, LocalDateTime dataHoraEntrada, String idSenha) {// *** TODO **No enunciado nao diz que o contrutor deve ter o utente e denha id é necessario?
+	public Senha (Utente utente, Consulta consulta, LocalDateTime dataHoraEntrada, String idSenha) {
 		setUtente(utente);
 		setConsulta(consulta);
-		this.dataHoraEntrada = dataHoraEntrada; // Nao percebi damos uma data e hora e fazemos get e set so da hora?
+		setDataHoraEntrada(dataHoraEntrada);
 		setIdSenha(idSenha);
 	}
 	
@@ -26,8 +27,9 @@ public class Senha {
 	 * @return o próximo serviço associado a esta senha
 	 * 	 */
 	public Servico proxServico() {
-		return servicosVisitar.get(0);
+		return servicosVisitar.get(Servico.LISTA_INDICE_ZERO);
 	}
+
 
 	/** faz o processamento do fim da consulta por um dado serviço
 	 */
@@ -51,12 +53,13 @@ public class Senha {
 		this.consulta = consulta;
 	}
 
-	public LocalDateTime getHoraEntrada() {
+
+	public LocalDateTime getDataHoraEntrada() {
 		return dataHoraEntrada;
 	}
 
-	public void setHoraEntrada(LocalDateTime Data) {
-		this.dataHoraEntrada = Data;
+	public void setDataHoraEntrada(LocalDateTime dataHoraEntrada) {
+		this.dataHoraEntrada = dataHoraEntrada;
 	}
 	
 	public String getIdSenha() {
@@ -78,7 +81,7 @@ public class Senha {
 		servicosVisitar.remove(servico);
 	}
 	
-	public List<Servico> getConsultasMarcadasServico() {// este get nao deveria chmar-se "getServicosVisitar" ????????????????
+	public List<Servico> getServicosVisitar() {
 		return Collections.unmodifiableList(servicosVisitar);
 	}
 

@@ -11,6 +11,7 @@ import gestsaude.util.Consultas;
 public class Servico {
 	
 	private static final int ATRASA_UTENTE = 4;
+	public static final int LISTA_INDICE_ZERO = 0;
 	private String servicoId;
 	private String servicoNome;
 	private ArrayList <Consulta> consultadasMarcadasServico = new ArrayList<Consulta>();
@@ -27,7 +28,7 @@ public class Servico {
 	public Senha getProximaSenha() {
 		if (senhasAtender.size() == 0)
 			return null;
-		return getSenhasaAtender().get(0);		
+		return getSenhasaAtender().get(LISTA_INDICE_ZERO);		
 	}
 	
 	public Senha getProximaSenha(int idx) {
@@ -93,8 +94,8 @@ public class Servico {
 		senhasAtender.add(senha);
 		Collections.sort(senhasAtender, new Comparator<Senha>()	{	// TODO	verificar se devia ser com SORT ver FAQs do prof e este codigo por num metodo
 				public int compare(Senha senha, Senha senha1) {
-					if(senha.getConsulta().getHoraConsulta().compareTo(senha.getHoraEntrada().toLocalTime()) < 0) {
-						return senha.getHoraEntrada().compareTo(senha1.getHoraEntrada());
+					if(senha.getConsulta().getHoraConsulta().compareTo(senha.getDataHoraEntrada().toLocalTime()) < 0) {
+						return senha.getDataHoraEntrada().compareTo(senha1.getDataHoraEntrada());
 					}
 					else {
 						if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta())) {

@@ -101,7 +101,7 @@ public class MenuServico extends JDialog {
 	/** método chamado para finalizar a consulta */
 	private void finalizarConsulta( ) 
 	{			
-		if(senha.getConsultasMarcadasServico().size() == 1) //caso seja o ultimo serviço da senha a visitar
+		if(senha.getServicosVisitar().size() == 1) //caso seja o ultimo serviço da senha a visitar
 		{
 			servico.removeSenhaServico(senha);
 			senha.terminaConsulta(servico);
