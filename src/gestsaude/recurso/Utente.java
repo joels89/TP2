@@ -23,7 +23,9 @@ public class Utente {
 		return numeroSNS;
 	}
 
-	public void setNumeroSNS(String numeroSNS) {// TODO ver se e maior q zero
+	public void setNumeroSNS(String numeroSNS) {
+		if (Integer.parseInt(numeroSNS) < 0 ) // Verifica se o número de SNS é maior que zero
+			return;
 		this.numeroSNS = numeroSNS;
 	}
 
@@ -35,11 +37,17 @@ public class Utente {
 		this.nomeUtente = nomeUtente;
 	}
 
-	public void addConsulta(Consulta consulta) { // TODO verificar se a consulta existe na lista
+	public void addConsulta(Consulta consulta) {
+		if (consultasMarcadas.contains(consulta)) { // Se a consulta existe na lista não pode ser adicionada novamente
+			return;
+		}
 		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);
 	}
 
-	public void removeConsulta(Consulta consulta) { // TODO verificar se a consulta existe na lista
+	public void removeConsulta(Consulta consulta) {
+		if (!consultasMarcadas.contains(consulta)) { // Se a consulta não existe na lista não pode ser removida
+			return;
+		}
 		consultasMarcadas.remove(consulta);
 	}
 
