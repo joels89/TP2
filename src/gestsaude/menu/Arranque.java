@@ -37,9 +37,9 @@ public class Arranque {
 ///////// Tarefas////////////
 
 	//Classe Utente - OK
-	
 	//Classe Consulta - OK
 	
+	//Classe GestSaude - OK tirar so sysout no final
 	//Classe Servico	
 		//rejeitaProximaSenha()  ver onde este metodo sera usado
 		//// TODO	verificar se devia ser com SORT ver FAQs do prof
@@ -86,7 +86,7 @@ public class Arranque {
 
 
 		// Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
-		Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,10), ped1.getServicoId(), utente120.getNumeroSNS());
+		Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,10), Enf.getServicoId(), utente120.getNumeroSNS());
 		Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped2.getServicoId(), utente121.getNumeroSNS());
 		Consulta consulta3 = new Consulta(HOJE, LocalTime.of(8,10), orto1.getServicoId(), utente122.getNumeroSNS());
 		Consulta consulta4 = new Consulta(HOJE, LocalTime.of(8,20), derm1.getServicoId(), utente125.getNumeroSNS());

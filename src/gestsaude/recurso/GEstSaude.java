@@ -177,13 +177,11 @@ public class GEstSaude {
 		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
 			return CONSULTA_INVALIDA;
 		}
-		// ************************** Este if deixou de ter senntido??????????
-		// TODO******************* testar aparentemente funciona ma s ver se rebemta o
-		// cof~digo
-		/*
-		 * if (!aceitaConsulta(servicos.get(c.getServicoId()))) { return/
-		 * CONSULTA_INVALIDA; }
-		 */
+
+		if (!aceitaConsulta(servicos.get(c.getServicoId()))) { // Condicao para evitar adicionar consultas inválidas a partir da classe Arranque
+			return CONSULTA_INVALIDA;
+		}
+
 		Consultas.addConsultaOrdemData(consultas, c);
 		servicos.get(c.getServicoId()).addConsultasServico(c);
 		utentes.get(c.getNumeroSNSUtente()).addConsulta(c);
@@ -191,11 +189,12 @@ public class GEstSaude {
 	}
 
 	public void removeConsulta(Consulta c) {
-		if (consultas.contains(c)) {
-			consultas.remove(c);
-			servicos.get(c.getServicoId()).removeConsultasServico(c);
-			utentes.get(c.getNumeroSNSUtente()).removeConsulta(c);
-		}
+		if (!consultas.contains(c))
+			return;
+		consultas.remove(c);
+		servicos.get(c.getServicoId()).removeConsultasServico(c);
+		utentes.get(c.getNumeroSNSUtente()).removeConsulta(c);
+
 	}
 
 	public boolean aceitaConsulta(Servico servico) {
