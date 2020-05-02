@@ -24,8 +24,7 @@ public class GEstSaude {
 	public static final int DATA_JA_PASSOU = 3; // indica que a data já passou
 	public static final int ALTERACAO_INVALIDA = 4; // indica que a alteração é inválida
 
-	public static final int MINS_POR_HORA = 60;
-	public static final int TRES_HORAS = 180;
+	public static final int TRES_HORAS = 3;
 	public static final LocalTime HORARIO_INICIO = LocalTime.of(8, 10);
 	public static final LocalTime HORARIO_FIM = LocalTime.of(19, 50);
 
@@ -117,11 +116,9 @@ public class GEstSaude {
 					"        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");// TODO tirar no final
 			return CONSULTA_INVALIDA;
 		}
-		
-		for (Consulta consultaListada : consultas) {
-			if ((c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) &&
-				((c.getDataConsulta().equals(consultaListada.getDataConsulta())) &&
-				(Math.abs(RelogioSimulado.localTime2Min(c.getHoraConsulta()) - RelogioSimulado.localTime2Min(consultaListada.getHoraConsulta())) < TRES_HORAS))) {
+			
+		for (Consulta consultaListada : Consultas.getConsultaEntreDatas(consultas, c.getDataConsulta().atTime(c.getHoraConsulta().minusHours(TRES_HORAS)), c.getDataConsulta().atTime(c.getHoraConsulta().plusHours(TRES_HORAS)))) {
+			if (c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) {
 				System.out.println(
 						"        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");// TODO tirar no final
 				return UTENTE_TEM_CONSULTA;

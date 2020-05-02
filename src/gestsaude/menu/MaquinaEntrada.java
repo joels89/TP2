@@ -22,7 +22,6 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 	
 	private static final long serialVersionUID = 1L;
 	private static final Dimension tamanhoBt = new Dimension( 170, 50); // tamanho dos botões
-	public static final int TRES = 3;
 	
 	private GEstSaude gest;
 
@@ -59,8 +58,9 @@ public class MaquinaEntrada extends javax.swing.JDialog {
 				return;
 			}
 
-			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas  LocalTime.of(8, 30) por este no FINAL LocalTime.now() ---------TODO	
-			if(Consultas.getConsultaEntreDatas(u.getConsultasMarcadas(), RelogioSimulado.getTempoAtual().minusHours(TRES), RelogioSimulado.getTempoAtual().plusHours(TRES)).isEmpty()) {
+			// TODO testar se o cliente tem uma consulta nas 3 horas anteriores e próximas	
+			if(Consultas.getConsultaEntreDatas(u.getConsultasMarcadas(),
+			  RelogioSimulado.getTempoAtual().minusHours(GEstSaude.TRES_HORAS), RelogioSimulado.getTempoAtual().plusHours(GEstSaude.TRES_HORAS)).isEmpty()) {
 				JOptionPane.showMessageDialog( this, nome + ", não tem consultas nas próximas 3 horas!" );
 				return;
 			}
