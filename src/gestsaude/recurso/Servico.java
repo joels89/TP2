@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import gestsaude.util.Consultas;
-import gestsaude.util.RelogioSimulado;
 
 /** Representa um Serviço
  */
 public class Servico {
 	
-	private static final int ATRASAUTENTE = 4;
+	private static final int ATRASA_UTENTE = 4;
 	private String servicoId;
 	private String servicoNome;
 	private ArrayList <Consulta> consultadasMarcadasServico = new ArrayList<Consulta>();
@@ -40,7 +39,7 @@ public class Servico {
 	/** processo para rejeitar a próxima senha, caso o utente seja muito atrasado
 	 */
 	public void rejeitaProximaSenha() {
-		senhasAtender.remove(getProximaSenha());	//***TODO*** se rejeitamos a senha nao deveriamos eliminar a consulta associada?
+		senhasAtender.remove(getProximaSenha());	//***TODO*** nao esta a ser utillizado
 	}
 
 	/** processo de terminar a consulta associada à senha */ 
@@ -76,7 +75,9 @@ public class Servico {
 		Consultas.addConsultaOrdemData(consultadasMarcadasServico, consulta); 	
 	}
 	
-	public void removeConsultasServico(Consulta consulta) { // TODO so remove,mos se existir
+	public void removeConsultasServico(Consulta consulta) {
+		if (!consultadasMarcadasServico.contains(consulta)) // Se a consulta não existe na lista não pode ser removida
+			return;
 		consultadasMarcadasServico.remove(consulta);
 	}
 	
@@ -85,9 +86,7 @@ public class Servico {
 	}
 	
 	public void addSenhasAoServiço(Senha senha)	{
-		System.out.println(RelogioSimulado.getTempoAtual());
-		
-		if(senhasAtender.contains(senha)) {		
+		if(senhasAtender.contains(senha)) {	 // Se a Senha já existe na lista não pode ser adicionada novamente
 			return;
 		}
 		
@@ -108,18 +107,19 @@ public class Servico {
 	}
 	
 	public void alteraPosiçaoSenha(Senha senha) {
-		if(senhasAtender.size()<ATRASAUTENTE) {
+		if(senhasAtender.size()<ATRASA_UTENTE) {
 			senhasAtender.add(senhasAtender.size(), senha);
 			senhasAtender.remove(0);
 		}
 		else {
-			senhasAtender.add(ATRASAUTENTE, senha);
+			senhasAtender.add(ATRASA_UTENTE, senha);
 			senhasAtender.remove(0);
 		}
 	}
 	
 	public void removeSenhaServico(Senha senha) {
-		System.out.println("Removeu a senha do serviço: " + senha);
+		if (!senhasAtender.contains(senha)) //  Se a senha não existe na lista não pode ser removida
+			return;
 		senhasAtender.remove(senha);
 	}
 	

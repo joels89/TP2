@@ -36,13 +36,12 @@ public class Arranque {
 	
 ///////// Tarefas////////////
 
-	//Classe Utente
-		//setNumeroSNS(String numeroSNS) {// TOdo ver se e maior q zero
-	    // TODO verificar se a consulta existe na lista para adicionar e remover
+	//Classe Utente - OK
+	
+	//Classe Consulta - OK
 	
 	//Classe Servico	
-		//rejeitaProximaSenha()  ver onde esta este meto a ser usado
-	   // TODO so removemos se a consulta existir
+		//rejeitaProximaSenha()  ver onde este metodo sera usado
 		//// TODO	verificar se devia ser com SORT ver FAQs do prof
 	
 	
