@@ -49,6 +49,10 @@ public class Arranque {
 	
 	//Classe GestSaude - OK tirar so sysout no final
 	
+	//Classe Consultas
+		// ordenar semsort
+		//o metodo consultas apos nao e usado
+		
 	//Classe Servico	
 		//rejeitaProximaSenha()  ver onde este metodo sera usado
 		//// TODO	verificar se devia ser com SORT ver FAQs do prof
