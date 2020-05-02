@@ -161,7 +161,7 @@ public class MenuSecretaria extends JFrame {
 
 	/** método chamado quando se pretende listar toda sas senhas */
 	private void listarSenhas() {
-		Collection<Senha> senhas = gest.getSenhas().values();
+		Collection<Senha> senhas = gest.getSenhasFromMap().values();
 		String infoSenhas[] = new String[senhas.size()];
 		int i=0;
 		for( Senha s : senhas) {			
@@ -187,7 +187,7 @@ public class MenuSecretaria extends JFrame {
 		System.out.println(RelogioSimulado.getTempoAtual().toLocalTime());
 		System.out.println(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0);
 		
-		if(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0 && !gest.getSenhas().isEmpty())
+		if(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0 && !gest.getSenhasFromMap().isEmpty())
 		{
 			System.out.println("reset senhas");
 			gest.resetSenhas();

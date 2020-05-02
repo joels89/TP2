@@ -106,7 +106,7 @@ public class MenuServico extends JDialog {
 			servico.removeSenhaServico(senha);
 			senha.terminaConsulta(servico);
 			servico.removeConsultasServico(senha.getConsulta()); 
-			gest.getSenhas().remove(senha.getIdSenha()); //apaga a senha do sistema
+			gest.getSenhasFromMap().remove(senha.getIdSenha()); //apaga a senha do sistema
 			gest.removeConsulta(senha.getConsulta()); // apaga a consulta do sistema
 		}
 		else

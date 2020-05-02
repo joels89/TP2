@@ -50,7 +50,9 @@ public class Consulta {
 		return numeroSNSUtente;
 	}
 
-	public void setNumeroSNSUtente(String numeroSNSUtente) { ////////// fazer validacao >0
+	public void setNumeroSNSUtente(String numeroSNSUtente) { 
+		if (Integer.parseInt(numeroSNSUtente) <= 0)
+			return;
 		this.numeroSNSUtente = numeroSNSUtente;
 	}
 
