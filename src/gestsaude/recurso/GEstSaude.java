@@ -45,14 +45,13 @@ public class GEstSaude {
 		for (Senha s : senhas) {
 			if(s.getConsulta().getDataConsulta().getDayOfMonth() != t.getDayOfMonth())
 			{
-				System.out.println("outro dia");// TODO tirar no final
 				resetSenhas();				
 			}
 			if (s.getConsulta().equals(c))
-				return s; // testa se a consulta já está validada, se estiver retornar a senha já emitida // TODO tirar no final
+				return s;
 		}
 
-		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha()); // senão criar e retornar a nova senha// TODO tirar no final
+		Senha senha = new Senha(utentes.get(c.getNumeroSNSUtente()), c, t, getProximoIdSenha());
 		addSenha(senha);
 		return senha;
 	}
@@ -117,7 +116,9 @@ public class GEstSaude {
 			return CONSULTA_INVALIDA;
 		}
 			
-		for (Consulta consultaListada : Consultas.getConsultaEntreDatas(consultas, c.getDataConsulta().atTime(c.getHoraConsulta().minusHours(TRES_HORAS)), c.getDataConsulta().atTime(c.getHoraConsulta().plusHours(TRES_HORAS)))) {
+		for (Consulta consultaListada : Consultas.getConsultaEntreDatas(consultas,
+			c.getDataConsulta().atTime(c.getHoraConsulta().minusHours(TRES_HORAS)),
+			c.getDataConsulta().atTime(c.getHoraConsulta().plusHours(TRES_HORAS)))) {
 			if (c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) {
 				System.out.println(
 						"        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");// TODO tirar no final
@@ -128,7 +129,7 @@ public class GEstSaude {
 		for (Consulta consultaListada : consultas) {
 			if ((c.getServicoId() == consultaListada.getServicoId()) &&
 				((c.getDataConsulta().equals(consultaListada.getDataConsulta()) &&
-				 (c.getHoraConsulta().equals(consultaListada.getHoraConsulta()))))) {
+				(c.getHoraConsulta().equals(consultaListada.getHoraConsulta()))))) {
 				System.out.println(
 						"        **** ATENCAO CONSULTA INVALIDA - SERVICO_TEM_CONSULTA *** \n O servico ja tem uma consulta marcada para esta data e hora \n");// TODO tirar no final
 				return SERVICO_TEM_CONSULTA;
@@ -147,7 +148,7 @@ public class GEstSaude {
 		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
 			return CONSULTA_INVALIDA;
 		}
-		// ************************** Este if deixou de ter senntido?????????? TODO*******************
+		// ************************** Este if deixou de ter senntido?????????? TODO******************* testar aparentemente funciona ma s ver se rebemta o cof~digo
 		/*
 		 * if (!aceitaConsulta(servicos.get(c.getServicoId()))) { return/
 		 * CONSULTA_INVALIDA; }
@@ -177,12 +178,9 @@ public class GEstSaude {
 	public int podeAlterarConsulta(Consulta antiga, Consulta nova) {
 		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
 		// enunciado)
-		//
-		// vamos eliminar a consulta velha para q esta nao entre em conflito com a nova
-		// (marcar em menos de 3 horas ou outra condicao) ---- TODO retirar no final
 		removeConsulta(antiga);
 		if ((podeAceitarConsulta(nova) != CONSULTA_ACEITE)) {
-			addConsulta(antiga);// se chumbou a nova consulta voltamos a adicionar a consulta velha á lista ----TODO retirar no final
+			addConsulta(antiga);
 			return CONSULTA_INVALIDA;
 		}
 		return CONSULTA_ACEITE;
@@ -194,7 +192,7 @@ public class GEstSaude {
 		if ((podeAlterarConsulta(antiga, nova) != CONSULTA_ACEITE)) {
 			return ALTERACAO_INVALIDA;
 		}
-		addConsulta(nova); // Adicionamos a consulta nova ---- TODO retirar no final
+		addConsulta(nova);
 		return CONSULTA_ACEITE;
 	}
 
@@ -210,7 +208,7 @@ public class GEstSaude {
 		return servicos.get(servicoId);
 	}
 
-	public HashMap<String, Senha> getSenhas() {// -- Isto serve para que? TODO verificar
+	public HashMap<String, Senha> getSenhas() {// TODO mudar o nome
 		return senhas;
 	}
 		

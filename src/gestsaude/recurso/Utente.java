@@ -5,16 +5,17 @@ import java.util.Collections;
 import java.util.List;
 import gestsaude.util.Consultas;
 
-/** Representa um Utente
+/**
+ * Representa um Utente
  */
 public class Utente {
-	
+
 	private String numeroSNS;
 	private String nomeUtente;
 	private ArrayList<Consulta> consultasMarcadas = new ArrayList<Consulta>();
-	
-	public Utente(String numeroSNS, String nomeUtente) {		
-		this.numeroSNS = numeroSNS;
+
+	public Utente(String numeroSNS, String nomeUtente) {
+		setNumeroSNS(numeroSNS);
 		setNomeUtente(nomeUtente);
 	}
 
@@ -22,7 +23,7 @@ public class Utente {
 		return numeroSNS;
 	}
 
-	public void setNumeroSNS(String numeroSNS) { //////// TODo eu removia este ou punha privado piois este valor nao deveria por se r alterado
+	public void setNumeroSNS(String numeroSNS) {// TODO ver se e maior q zero
 		this.numeroSNS = numeroSNS;
 	}
 
@@ -33,22 +34,22 @@ public class Utente {
 	public void setNomeUtente(String nomeUtente) {
 		this.nomeUtente = nomeUtente;
 	}
-	
-	public void addConsulta(Consulta consulta) {
-		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);	    	
+
+	public void addConsulta(Consulta consulta) { // TODO verificar se a consulta existe na lista
+		Consultas.addConsultaOrdemData(consultasMarcadas, consulta);
 	}
-	
-	public void removeConsulta(Consulta consulta) {
+
+	public void removeConsulta(Consulta consulta) { // TODO verificar se a consulta existe na lista
 		consultasMarcadas.remove(consulta);
 	}
-	
-	public List <Consulta> getConsultasMarcadas() {		
+
+	public List<Consulta> getConsultasMarcadas() {
 		return Collections.unmodifiableList(consultasMarcadas);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Utente: " + nomeUtente + " - SnsNº(" + numeroSNS + ")";
 	}
-	
+
 }

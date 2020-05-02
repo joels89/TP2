@@ -33,6 +33,19 @@ public class Arranque {
 	/**
 	 * @return
 	 */
+	
+///////// Tarefas////////////
+
+	//Classe Utente
+		//setNumeroSNS(String numeroSNS) {// TOdo ver se e maior q zero
+	    // TODO verificar se a consulta existe na lista para adicionar e remover
+	
+	//Classe Servico	
+		//rejeitaProximaSenha()  ver onde esta este meto a ser usado
+	   // TODO so removemos se a consulta existir
+		//// TODO	verificar se devia ser com SORT ver FAQs do prof
+	
+	
 	public static GEstSaude getGEstSaude() {
 		GEstSaude gest = new GEstSaude();
 
@@ -63,6 +76,7 @@ public class Arranque {
 		Servico card1 = new Servico("Card1", "Cardiologia - Dr Paul Sassão");
 		Servico ofta1 = new Servico("Ofta1", "Oftalmologia - Drª Íris Tapada");
 		Servico aler = new Servico("Aler", "Alergologia - Dr E. S. Pirro");
+		
 
 
 		Servico Rad = new Servico ("Rad","Radiologia");

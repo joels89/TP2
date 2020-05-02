@@ -19,7 +19,7 @@ public class Consulta {
 		setDataConulta(dataConsulta);
 		setHoraConsulta(horaConsulta);
 		setServicoId(servicoId);
-		this.numeroSNSUtente = numeroSNSUtente;
+		setNumeroSNSUtente(numeroSNSUtente);
 	}
 
 	public LocalDate getDataConsulta() {
@@ -50,7 +50,7 @@ public class Consulta {
 		return numeroSNSUtente;
 	}
 
-	public void setNumeroSNSUtente(String numeroSNSUtente) { ////////// TODo eu removia este ou punha privado piois este valor nao deveria por se r alterado
+	public void setNumeroSNSUtente(String numeroSNSUtente) { ////////// fazer validacao >0
 		this.numeroSNSUtente = numeroSNSUtente;
 	}
 

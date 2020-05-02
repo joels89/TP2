@@ -71,14 +71,12 @@ public class Servico {
 	
 	public void addConsultasServico(Consulta consulta) {
 		if (consultadasMarcadasServico.contains(consulta)) {
-			System.out.println("ja existe");// TODO remover qd testado
 			return;	
 		}
 		Consultas.addConsultaOrdemData(consultadasMarcadasServico, consulta); 	
 	}
 	
-	public void removeConsultasServico(Consulta consulta) {
-		System.out.println("removeu a consulta do serviço: " + consulta); // TODO remover qd testado
+	public void removeConsultasServico(Consulta consulta) { // TODO so remove,mos se existir
 		consultadasMarcadasServico.remove(consulta);
 	}
 	
@@ -90,19 +88,16 @@ public class Servico {
 		System.out.println(RelogioSimulado.getTempoAtual());
 		
 		if(senhasAtender.contains(senha)) {		
-			System.out.println("ja existe");// TODO remover qd testado
 			return;
 		}
 		
 		senhasAtender.add(senha);
-		Collections.sort(senhasAtender, new Comparator<Senha>()	{		
+		Collections.sort(senhasAtender, new Comparator<Senha>()	{	// TODO	verificar se devia ser com SORT ver FAQs do prof e este codigo por num metodo
 				public int compare(Senha senha, Senha senha1) {
 					if(senha.getConsulta().getHoraConsulta().compareTo(senha.getHoraEntrada().toLocalTime()) < 0) {
-						System.out.println("chegou atrasado!");// TODO remover qd testado
 						return senha.getHoraEntrada().compareTo(senha1.getHoraEntrada());
 					}
 					else {
-						System.out.println("Chegou a tempo");// TODO remover qd testado
 						if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta())) {
 							return senha.getConsulta().getHoraConsulta().compareTo(senha1.getConsulta().getHoraConsulta());
 						}
@@ -112,7 +107,7 @@ public class Servico {
 		});			
 	}
 	
-	public void alteraPosiçaoSenha(Senha senha) {	
+	public void alteraPosiçaoSenha(Senha senha) {
 		if(senhasAtender.size()<ATRASAUTENTE) {
 			senhasAtender.add(senhasAtender.size(), senha);
 			senhasAtender.remove(0);
@@ -121,7 +116,6 @@ public class Servico {
 			senhasAtender.add(ATRASAUTENTE, senha);
 			senhasAtender.remove(0);
 		}
-		System.out.println(senhasAtender);// TODO remover qd testado
 	}
 	
 	public void removeSenhaServico(Senha senha) {

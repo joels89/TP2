@@ -16,7 +16,7 @@ public class Consultas {
 	 * @param cs lista onde colcoar a consulta
 	 * @param c a cosulta a adicionar
 	 */
-	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c ) {
+	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c ) {// TODO ver se vamos deixamos SORT ou como nas faq
 		cs.add(c);
 		Collections.sort(cs, new Comparator<Consulta>() {		
 				public int compare(Consulta consulta, Consulta consulta2) {
@@ -28,17 +28,14 @@ public class Consultas {
 		});									
 	}
 
-	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim ) { // TODO nao estava a ser utilzado. implementou a utilidade do temConsultaProxima() antigo
-		System.out.println("initial "+ ini);
-		System.out.println("final "+ fim);
-		System.out.println("lista "+ cs);
+	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim ) {
 		List<Consulta> listaConsultasEntreDatas = new ArrayList<Consulta>();		
 		for (Consulta consulta : cs) {
-			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());  //LocalDate + LocalTime = LocalDateTime
+			LocalDateTime dataHoraConsulta = consulta.getDataConsulta().atTime(consulta.getHoraConsulta());
 			if ((dataHoraConsulta.isBefore(fim)) && (dataHoraConsulta.isAfter(ini)))
 				listaConsultasEntreDatas.add(consulta);
 		}
-		return Collections.unmodifiableList(listaConsultasEntreDatas); //needs to be tested
+		return Collections.unmodifiableList(listaConsultasEntreDatas);
 	}
 	
 	/** Retorna uma lista apenas com as consultas marcadas num dado dia

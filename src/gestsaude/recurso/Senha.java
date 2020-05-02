@@ -69,7 +69,6 @@ public class Senha {
 
 	public void addServicosVistar(Servico servico) {
 		if (servicosVisitar.contains(servico)) {
-			System.out.println("ja existe"); // TODo retirar no final se tiver tudo bem
 			return;
 		}
 		servicosVisitar.add(servico);   	
