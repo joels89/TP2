@@ -97,21 +97,25 @@ public class Servico {
 		if(senhasAtender.contains(senha)) {	 // Se a Senha já existe na lista não pode ser adicionada novamente
 			return;
 		}
-		
-		senhasAtender.add(senha);
-		Collections.sort(senhasAtender, new Comparator<Senha>()	{	// TODO	verificar se devia ser com SORT ver FAQs do prof e este codigo por num metodo
-				public int compare(Senha senha, Senha senha1) {
-					if(senha.getConsulta().getHoraConsulta().compareTo(senha.getDataHoraEntrada().toLocalTime()) < 0) {
-						return senha.getDataHoraEntrada().compareTo(senha1.getDataHoraEntrada());
-					}
-					else {
-						if(senha.getConsulta().getDataConsulta().equals(senha1.getConsulta().getDataConsulta())) {
-							return senha.getConsulta().getHoraConsulta().compareTo(senha1.getConsulta().getHoraConsulta());
-						}
-						return senha.getConsulta().getDataConsulta().compareTo(senha1.getConsulta().getDataConsulta());
-					}
+
+		int idx = 0;
+
+		if(!senhasAtender.isEmpty()) {
+			if (senha.getDataHoraEntrada().toLocalTime().isAfter(senha.getConsulta().getHoraConsulta())) {
+				for (Senha senhas : senhasAtender) {
+					if (senha.getDataHoraEntrada().toLocalTime().isAfter(senhas.getConsulta().getHoraConsulta()))
+						idx++;
 				}
-		});			
+				senhasAtender.add(idx, senha);
+			}else {
+				for (Senha senhas : senhasAtender) {
+					if (senha.getConsulta().getHoraConsulta().isAfter(senhas.getConsulta().getHoraConsulta()))
+						idx++;
+				}
+				senhasAtender.add(idx, senha);
+			}	
+		}else
+			senhasAtender.add(senha);
 	}
 	
 	public void removeSenhaServico(Senha senha) {
