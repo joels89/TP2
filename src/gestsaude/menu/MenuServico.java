@@ -88,7 +88,7 @@ public class MenuServico extends JDialog {
 	/** método chamado para rejeitar o utente */
 	private void rejeitarUtente() 
 	{
-		servico.alteraPosiçaoSenha(senha);		
+		servico.rejeitaProximaSenha();		
 	}
 		
 

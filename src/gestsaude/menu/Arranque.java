@@ -42,20 +42,19 @@ public class Arranque {
 	
 	
 ///////// Tarefas////////////
-
+//********package recurso*********
 	//Classe Utente - OK
 	//Classe Consulta - OK
 	//Classe Senha - OK
 	
 	//Classe GestSaude - OK tirar so sysout no final
 	
-	//Classe Consultas
-		// ordenar semsort - DONE comit 22h 4/maio
-		//o metodo consultas apos nao e usado
-		
 	//Classe Servico	
-		//rejeitaProximaSenha()  ver onde este metodo sera usado
-		//// TODO	verificar se devia ser com SORT ver FAQs do prof
+		//// TODO	verificar se devia ser com SORT ver FAQs do prof Feito na classe consultas ver e replicar
+
+	//********package util*********
+	//Classe Consultas
+	//o metodo consultas apos nao e usado
 	
 	
 	public static GEstSaude getGEstSaude() {
@@ -99,11 +98,11 @@ public class Arranque {
 
 
 		// Deve adicionar as seguntes consultas (data e hora, ide do serviço, id utente)
-		Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,10), Enf.getServicoId(), utente120.getNumeroSNS());
-		Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped2.getServicoId(), utente121.getNumeroSNS());
-		Consulta consulta3 = new Consulta(HOJE, LocalTime.of(8,10), orto1.getServicoId(), utente122.getNumeroSNS());
-		Consulta consulta4 = new Consulta(HOJE, LocalTime.of(8,20), derm1.getServicoId(), utente125.getNumeroSNS());
-		Consulta consulta5 = new Consulta(HOJE, LocalTime.of(8,30), ped1.getServicoId(), utente126.getNumeroSNS());
+		Consulta consulta1 = new Consulta(HOJE, LocalTime.of(8,50), ped1.getServicoId(), utente120.getNumeroSNS());
+		Consulta consulta2 = new Consulta(HOJE, LocalTime.of(8,10), ped1.getServicoId(), utente121.getNumeroSNS());
+		Consulta consulta3 = new Consulta(HOJE, LocalTime.of(8,30), ped1.getServicoId(), utente122.getNumeroSNS());
+		Consulta consulta4 = new Consulta(HOJE, LocalTime.of(8,20), ped1.getServicoId(), utente125.getNumeroSNS());
+		Consulta consulta5 = new Consulta(HOJE, LocalTime.of(9,30), ped1.getServicoId(), utente126.getNumeroSNS());
 		Consulta consulta6 = new Consulta(HOJE, LocalTime.of(8,40), ped1.getServicoId(), utente127.getNumeroSNS());
 		Consulta consulta7 = new Consulta(AMANHA, LocalTime.of(8,10), ped1.getServicoId(), utente127.getNumeroSNS());
 		Consulta consulta8 = new Consulta(AMANHA, LocalTime.of(8,10), ped1.getServicoId(), utente129.getNumeroSNS());

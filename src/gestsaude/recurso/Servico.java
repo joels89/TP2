@@ -40,7 +40,14 @@ public class Servico {
 	/** processo para rejeitar a próxima senha, caso o utente seja muito atrasado
 	 */
 	public void rejeitaProximaSenha() {
-		senhasAtender.remove(getProximaSenha());	//***TODO*** nao esta a ser utillizado
+		if(senhasAtender.size()<ATRASA_UTENTE) {
+			senhasAtender.add(senhasAtender.size(), getProximaSenha());
+			senhasAtender.remove(LISTA_INDICE_ZERO);
+		}
+		else {
+			senhasAtender.add(ATRASA_UTENTE, getProximaSenha());
+			senhasAtender.remove(LISTA_INDICE_ZERO);
+		}
 	}
 
 	/** processo de terminar a consulta associada à senha */ 
@@ -105,17 +112,6 @@ public class Servico {
 					}
 				}
 		});			
-	}
-	
-	public void alteraPosiçaoSenha(Senha senha) {
-		if(senhasAtender.size()<ATRASA_UTENTE) {
-			senhasAtender.add(senhasAtender.size(), senha);
-			senhasAtender.remove(0);
-		}
-		else {
-			senhasAtender.add(ATRASA_UTENTE, senha);
-			senhasAtender.remove(0);
-		}
 	}
 	
 	public void removeSenhaServico(Senha senha) {
