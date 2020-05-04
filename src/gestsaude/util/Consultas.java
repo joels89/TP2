@@ -7,25 +7,31 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import gestsaude.recurso.Consulta;
+import gestsaude.recurso.Senha;
 
-/** Class utilitária que define um conjunto base de operações com listas de consultas
+/**
+ * Class utilitária que define um conjunto base de operações com listas de
+ * consultas
  */
 public class Consultas {
 
-	/** adiciona a cosulta na lista usando a ordem cronológica
+	/**
+	 * adiciona a cosulta na lista usando a ordem cronológica
+	 * 
 	 * @param cs lista onde colcoar a consulta
-	 * @param c a cosulta a adicionar
+	 * @param c  a cosulta a adicionar
 	 */
-	public static void addConsultaOrdemData( List<Consulta> cs, Consulta c ) {// TODO ver se vamos deixamos SORT ou como nas faq
-		cs.add(c);
-		Collections.sort(cs, new Comparator<Consulta>() {		
-				public int compare(Consulta consulta, Consulta consulta2) {
-					if(consulta.getDataConsulta().equals(consulta2.getDataConsulta())) {
-						return consulta.getHoraConsulta().compareTo(consulta2.getHoraConsulta());
-					}
-					return consulta.getDataConsulta().compareTo(consulta2.getDataConsulta());
-				}
-		});									
+	public static void addConsultaOrdemData(List<Consulta> cs, Consulta c) {
+		int idx = 0;
+		if(cs.isEmpty())
+			cs.add(c);
+		else{
+			for (Consulta consulta : cs) {
+				if (c.getDataConsulta().atTime(c.getHoraConsulta()).isAfter(consulta.getDataConsulta().atTime(consulta.getHoraConsulta())))
+					idx++;
+			}
+			cs.add(idx, c);
+		}
 	}
 
 	public static List<Consulta> getConsultaEntreDatas( List<Consulta> cs, LocalDateTime ini, LocalDateTime fim ) {
@@ -37,7 +43,7 @@ public class Consultas {
 		}
 		return Collections.unmodifiableList(listaConsultasEntreDatas);
 	}
-	
+
 	/** Retorna uma lista apenas com as consultas marcadas num dado dia
 	 * @param cs lista de consulta a filtrar
 	 * @param dia dia a usar
@@ -50,7 +56,7 @@ public class Consultas {
 				listaConsultasDia.add(consulta);
 		return Collections.unmodifiableList(listaConsultasDia);
 	}
-	
+
 	/** Retorna uma lista com as consultas após uma dada data
 	 * @param cs  lista de consulta a filtrar
 	 * @param t tempo a aptire do qual se deve considerar as consultas (inclusive)

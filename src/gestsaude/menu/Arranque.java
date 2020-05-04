@@ -50,7 +50,7 @@ public class Arranque {
 	//Classe GestSaude - OK tirar so sysout no final
 	
 	//Classe Consultas
-		// ordenar semsort
+		// ordenar semsort - DONE comit 22h 4/maio
 		//o metodo consultas apos nao e usado
 		
 	//Classe Servico	
