@@ -206,11 +206,9 @@ public class GEstSaude {
 	}
 
 	public int podeAlterarConsulta(Consulta antiga, Consulta nova) {
-		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
-		// enunciado)
-		removeConsulta(antiga);
+		//removeConsulta(antiga);
 		if ((podeAceitarConsulta(nova) != CONSULTA_ACEITE)) {
-			addConsulta(antiga);
+			//addConsulta(antiga);
 			return CONSULTA_INVALIDA;
 		}
 		return CONSULTA_ACEITE;
@@ -222,7 +220,6 @@ public class GEstSaude {
 		if ((podeAlterarConsulta(antiga, nova) != CONSULTA_ACEITE)) {
 			return ALTERACAO_INVALIDA;
 		}
-		addConsulta(nova);
 		return CONSULTA_ACEITE;
 	}
 

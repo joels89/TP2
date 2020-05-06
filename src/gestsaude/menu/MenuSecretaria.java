@@ -122,9 +122,9 @@ public class MenuSecretaria extends JFrame {
 		EditorConsulta ec = new EditorConsulta( getLocation(), gest );
 		ec.setVisible( true );
 		Consulta c = ec.getConsulta();
-		System.out.println("Agendar 120");
-		// se existe uma consulta adicionar ao sistema
+		System.out.println(c);
 		if( c != null ) {
+			System.out.println("!= null");
 			gest.addConsulta(c);
 			listarTodas();
 		}		
@@ -137,11 +137,6 @@ public class MenuSecretaria extends JFrame {
 			return;
 		else if ( opcao == JOptionPane.YES_OPTION ) { // To do not delete consulta if you close the window
 			gest.removeConsulta(c);
-			/*
-			 * //if (isUtente) listarPorUtente(); else listarTodas();
-			 */
-			
-		//isUtente = false;
 		}
 	}
 
@@ -153,6 +148,7 @@ public class MenuSecretaria extends JFrame {
 		Consulta nova = ec.getConsulta();
 		// se o utilizador editou a consulta, é preciso alterar
 		if( nova != null ) {
+			System.out.println("!= null");
 			gest.removeConsulta(c); // to remove old consulta
 			gest.addConsulta(nova);
 			listarTodas();
@@ -183,13 +179,9 @@ public class MenuSecretaria extends JFrame {
 	/** método que vai atualizar o relogio no título da janela
 	 */
 	public void atualizarRelogio() 
-	{
-		System.out.println(RelogioSimulado.getTempoAtual().toLocalTime());
-		System.out.println(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0);
-		
+	{		
 		if(RelogioSimulado.getTempoAtual().toLocalTime().compareTo(LocalTime.of(16, 01)) > 0 && !gest.getSenhasFromMap().isEmpty())
 		{
-			System.out.println("reset senhas");
 			gest.resetSenhas();
 		}
 		String tempo = RelogioSimulado.getTempoAtual().toLocalTime().format( DateTimeFormatter.ofPattern("hh:mm") );

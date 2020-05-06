@@ -152,16 +152,10 @@ public class EditorConsulta extends JDialog {
 		else {
 			// TODO criar aqui uma consulta com todos os dados introduzidos
 			System.out.println("DATA - " + data);
-
-			// Consulta c = getConsulta();
-			Consulta c = new Consulta(data, LocalTime.of(h, m), servico.getServicoId(), utente.getNumeroSNS());
-			// TODO verificar se pode criar/editar a consulta
+			Consulta c = new Consulta(data, LocalTime.of(h, m), (String) idServico.getSelectedItem(), snsUtente.getText());
 			int res = 0;
-			System.out.println(estaAlterarConsulta);
 			if (estaAlterarConsulta) {
-				System.out.println(c);
 				res = gest.alteraConsulta(consulta, c);
-				System.out.println("res = " + res);
 			} else
 				res = gest.podeAceitarConsulta(c);
 			switch (res) {
@@ -194,7 +188,6 @@ public class EditorConsulta extends JDialog {
 		for( Servico s : gest.getServicos() )
 			if(gest.aceitaConsulta(s))
 			{
-				System.out.println(s);
 				box.addItem(s.getServicoId());
 			}
 	}
@@ -209,8 +202,22 @@ public class EditorConsulta extends JDialog {
 		int h = Integer.parseInt( (String)horaBox.getSelectedItem() );
 		int m = Integer.parseInt( (String)minsBox.getSelectedItem() );
 		LocalDateTime quando = LocalDateTime.of( data,LocalTime.of( h, m));
-		
-		consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());
+		if (!estaAlterarConsulta)
+		{
+			System.out.println("adicionar nova consulta");
+			consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());	
+		}
+		else
+		{
+			System.out.println("Editar Consulta");
+			Consulta c = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());
+			if(gest.alteraConsulta(consulta, c) == 0)
+			{
+				System.out.println("Consulta aceite");
+				consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());				
+			}	
+		}
+			
 		setVisible( false );
 	}
 
@@ -218,6 +225,12 @@ public class EditorConsulta extends JDialog {
 	 * fazer aqui as considerações finais, se necessário
 	 */
 	protected void cancelPremido() {
+		if(estaAlterarConsulta)
+		{
+			System.out.println("botao Cancel Primido no altera consulta");
+			gest.addConsulta(consulta);	
+		}
+		
 		setVisible( false );
 	}
 

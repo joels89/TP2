@@ -75,9 +75,6 @@ public class MenuServico extends JDialog {
 		{
 			idx++;
 			senha= servico.getProximaSenha(idx);
-			System.out.println(servico);
-			System.out.println(senha.proxServico());
-			System.out.println(idx);
 		}
 						
 		senhaLbl.setText( senha.getIdSenha());
