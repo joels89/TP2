@@ -96,10 +96,14 @@ public class Servico {
 	public void addSenhasAoServiço(Senha senha)	{
 		if(senhasAtender.contains(senha)) {	 // Se a Senha já existe na lista não pode ser adicionada novamente
 			return;
-		}
-
+		}	
+		ordenharSenhas(senha);
+	}
+	
+	private void ordenharSenhas(Senha senha) {
+		
 		int idx = 0;
-
+		
 		if(!senhasAtender.isEmpty()) {
 			if (senha.getDataHoraEntrada().toLocalTime().isAfter(senha.getConsulta().getHoraConsulta())) {
 				for (Senha senhas : senhasAtender) {
@@ -117,7 +121,7 @@ public class Servico {
 		}else
 			senhasAtender.add(senha);
 	}
-	
+
 	public void removeSenhaServico(Senha senha) {
 		if (!senhasAtender.contains(senha)) //  Se a senha não existe na lista não pode ser removida
 			return;

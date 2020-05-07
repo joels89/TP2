@@ -151,7 +151,6 @@ public class EditorConsulta extends JDialog {
 			apresentarMensagem("Falta definir a data!", false);
 		else {
 			// TODO criar aqui uma consulta com todos os dados introduzidos
-			System.out.println("DATA - " + data);
 			Consulta c = new Consulta(data, LocalTime.of(h, m), (String) idServico.getSelectedItem(), snsUtente.getText());
 			int res = 0;
 			if (estaAlterarConsulta) {
@@ -204,16 +203,13 @@ public class EditorConsulta extends JDialog {
 		LocalDateTime quando = LocalDateTime.of( data,LocalTime.of( h, m));
 		if (!estaAlterarConsulta)
 		{
-			System.out.println("adicionar nova consulta");
 			consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());	
 		}
 		else
 		{
-			System.out.println("Editar Consulta");
 			Consulta c = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());
 			if(gest.alteraConsulta(consulta, c) == 0)
 			{
-				System.out.println("Consulta aceite");
 				consultaRes = new Consulta (quando.toLocalDate(), quando.toLocalTime(), (String) idServico.getSelectedItem(), snsUtente.getText());				
 			}	
 		}
@@ -227,10 +223,11 @@ public class EditorConsulta extends JDialog {
 	protected void cancelPremido() {
 		if(estaAlterarConsulta)
 		{
-			System.out.println("botao Cancel Primido no altera consulta");
-			gest.addConsulta(consulta);	
-		}
-		
+			if(!gest.getConsultas().contains(consulta))
+			{
+				gest.addConsulta(consulta);			
+			}
+		}	
 		setVisible( false );
 	}
 

@@ -105,46 +105,30 @@ public class GEstSaude {
 		// enunciado)
 		if (servicos.get(c.getServicoId()) == null) {
 			System.out.println(
-					"        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");// TODO
-																													// tirar
-																													// no
-																													// final
-			return CONSULTA_INVALIDA;
+					"        **** ATENCAO CONSULTA INVALIDA ****  \n Servico nao existe na Lista de Servicos  \n ");
 		}
 		if (utentes.get(c.getNumeroSNSUtente()) == null) {
 			System.out
-					.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n");// TODO
-																														// tirar
-																														// no
-																														// final
+					.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Utente nao existe na Lista de Utentes \n");
 			return CONSULTA_INVALIDA;
 		}
 		if (c.getDataConsulta() == null || c.getHoraConsulta() == null) {
-			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Consulta sem hora ou data marcada \n");// TODO
-																														// tirar
-																														// no
-																														// final
+			System.out.println("        **** ATENCAO CONSULTA INVALIDA ***  \n Consulta sem hora ou data marcada \n");
 			return CONSULTA_INVALIDA;
 		}
 
 		if ((c.getHoraConsulta().compareTo(HORARIO_INICIO) < 0) || (c.getHoraConsulta().compareTo(HORARIO_FIM) > 0)) {
 			System.out.println(
-					"        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");// TODO
-																																								// tirar
-																																								// no
-																																								// final
+					"        **** ATENCAO CONSULTA INVALIDA *** \n Consulta fora do Horario de Funcionamento. Volte a remarcar entre as 8:10 e as 19:50 \n");
 			return CONSULTA_INVALIDA;
 		}
 
 		for (Consulta consultaListada : Consultas.getConsultaEntreDatas(consultas,
 				c.getDataConsulta().atTime(c.getHoraConsulta().minusHours(TRES_HORAS)),
 				c.getDataConsulta().atTime(c.getHoraConsulta().plusHours(TRES_HORAS)))) {
-			if (c.getNumeroSNSUtente() == consultaListada.getNumeroSNSUtente()) {
+			if (consultaListada.getNumeroSNSUtente().equals(c.getNumeroSNSUtente())) {
 				System.out.println(
-						"        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n");// TODO
-																																															// tirar
-																																															// no
-																																															// final
+						"        **** ATENCAO CONSULTA INVALIDA - UTENTE_TEM_CONSULTA *** \n A segunda consulta no mesmo dia deve iniciar no mínimo após 3 horas do inicio da primeira \n"); // final
 				return UTENTE_TEM_CONSULTA;
 			}
 		}
@@ -174,11 +158,17 @@ public class GEstSaude {
 	}
 
 	public int addConsulta(Consulta c) {
-		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
+		if (consultas.contains(c)) {
 			return CONSULTA_INVALIDA;
 		}
 
-		if (!aceitaConsulta(servicos.get(c.getServicoId()))) { // Condicao para evitar adicionar consultas inválidas a partir da classe Arranque
+		if ((podeAceitarConsulta(c) != CONSULTA_ACEITE)) {
+
+			return CONSULTA_INVALIDA;
+		}
+
+		if (!aceitaConsulta(servicos.get(c.getServicoId()))) { // Condicao para evitar adicionar consultas inválidas a
+																// partir da classe Arranque
 			return CONSULTA_INVALIDA;
 		}
 
@@ -198,25 +188,23 @@ public class GEstSaude {
 	}
 
 	public boolean aceitaConsulta(Servico servico) {
-		if (servico.getServicoId() == "Rad" || servico.getServicoId() == "Audio" || servico.getServicoId() == "Scopia"
-				|| servico.getServicoId() == "Enf" || servico.getServicoId() == "NeuLab") {
+		System.out.println("aceita consulta");
+		if (servico.getServicoId().equals("Rad") || servico.getServicoId().equals("Audio") || servico.getServicoId().equals("Scopia") 
+				|| servico.getServicoId().equals("Enf") || servico.getServicoId().equals("NeuLab")) {
+			System.out.println("nao aceita consulta");
 			return false;
 		}
 		return true;
 	}
 
 	public int podeAlterarConsulta(Consulta antiga, Consulta nova) {
-		//removeConsulta(antiga);
 		if ((podeAceitarConsulta(nova) != CONSULTA_ACEITE)) {
-			//addConsulta(antiga);
 			return CONSULTA_INVALIDA;
 		}
 		return CONSULTA_ACEITE;
 	}
 
 	public int alteraConsulta(Consulta antiga, Consulta nova) {
-		// testar todos os motivos pelo qual isto pode falhar (ver constantes e
-		// enunciado)
 		if ((podeAlterarConsulta(antiga, nova) != CONSULTA_ACEITE)) {
 			return ALTERACAO_INVALIDA;
 		}

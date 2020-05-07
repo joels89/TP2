@@ -122,9 +122,7 @@ public class MenuSecretaria extends JFrame {
 		EditorConsulta ec = new EditorConsulta( getLocation(), gest );
 		ec.setVisible( true );
 		Consulta c = ec.getConsulta();
-		System.out.println(c);
 		if( c != null ) {
-			System.out.println("!= null");
 			gest.addConsulta(c);
 			listarTodas();
 		}		
@@ -148,7 +146,6 @@ public class MenuSecretaria extends JFrame {
 		Consulta nova = ec.getConsulta();
 		// se o utilizador editou a consulta, é preciso alterar
 		if( nova != null ) {
-			System.out.println("!= null");
 			gest.removeConsulta(c); // to remove old consulta
 			gest.addConsulta(nova);
 			listarTodas();
