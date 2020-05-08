@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import gestsaude.recurso.GEstSaude;
+import gestsaude.core.GEstSaude;
 import gestsaude.recurso.Senha;
 import gestsaude.recurso.Servico;
 

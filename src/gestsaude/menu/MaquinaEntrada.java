@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 import javax.swing.*;
 
+import gestsaude.core.GEstSaude;
 import gestsaude.recurso.*;
 import gestsaude.util.Consultas;
 import gestsaude.util.RelogioSimulado;

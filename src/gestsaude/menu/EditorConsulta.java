@@ -7,7 +7,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
+
+import gestsaude.core.GEstSaude;
 import gestsaude.recurso.*;
+import gestsaude.util.DatePicker;
 
 /**
  * Classe usada para apresentar a janela de criação/edição de uma consulta

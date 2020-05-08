@@ -1,4 +1,4 @@
-package gestsaude.recurso;
+package gestsaude.core;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import gestsaude.util.Consultas;
+import gestsaude.recurso.*;
 
 /**
  * Representa o sistema

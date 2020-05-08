@@ -1,4 +1,4 @@
-package gestsaude.menu;
+package gestsaude.util;
 
 import java.awt.*;
 import java.awt.event.*;

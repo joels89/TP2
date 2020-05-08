@@ -1,4 +1,4 @@
-package gestsaude.menu;
+package gestsaude.arranque;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -10,7 +10,10 @@ import java.util.Collection;
 import javax.swing.Timer;
 
 import gestsaude.recurso.Consulta;
-import gestsaude.recurso.GEstSaude;
+import gestsaude.core.GEstSaude;
+import gestsaude.menu.MaquinaEntrada;
+import gestsaude.menu.MenuSecretaria;
+import gestsaude.menu.MenuServico;
 import gestsaude.recurso.Servico;
 import gestsaude.recurso.Utente;
 import gestsaude.util.RelogioSimulado;
