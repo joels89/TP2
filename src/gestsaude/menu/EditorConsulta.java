@@ -161,8 +161,7 @@ public class EditorConsulta extends JDialog {
 					snsUtente.getText());
 			int res = 0;
 			if (estaAlterarConsulta) {
-				if (!consulta.getServicoId().equals(c.getServicoId())
-						|| consulta.getNumeroSNSUtente().equals(c.getNumeroSNSUtente())) {
+				if (!consulta.getServicoId().equals(c.getServicoId())) {
 					res = GEstSaude.ALTERACAO_INVALIDA;
 				} else {
 					res = gest.podeAlterarConsulta(consulta, c);
