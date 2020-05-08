@@ -14,6 +14,7 @@ public class Consulta {
 	private LocalTime horaConsulta;
 	private String servicoId;
 	private String numeroSNSUtente;
+	private Senha senha;
 	
 	public Consulta(LocalDate dataConsulta, LocalTime horaConsulta, String servicoId, String numeroSNSUtente) {
 		setDataConulta(dataConsulta);
@@ -54,6 +55,14 @@ public class Consulta {
 		if (Integer.parseInt(numeroSNSUtente) <= 0)
 			return;
 		this.numeroSNSUtente = numeroSNSUtente;
+	}
+
+	public Senha getSenha() {
+		return senha;
+	}
+
+	public void setSenha(Senha senha) {
+		this.senha = senha;
 	}
 
 	public String toString() {

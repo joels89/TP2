@@ -24,7 +24,7 @@ public class Utente {
 	}
 
 	public void setNumeroSNS(String numeroSNS) {
-		if (Integer.parseInt(numeroSNS) <= 0 ) // Verifica se o número de SNS é maior que zero
+		if (Integer.parseInt(numeroSNS) <= 0) // Verifica se o número de SNS é maior que zero
 			return;
 		this.numeroSNS = numeroSNS;
 	}

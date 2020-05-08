@@ -26,13 +26,14 @@ import gestsaude.recurso.GEstSaude;
 import gestsaude.recurso.Senha;
 import gestsaude.recurso.Servico;
 
-/** Janela de interação reservada a cada serviço
+/**
+ * Janela de interação reservada a cada serviço
  *
  */
 public class MenuServico extends JDialog {
-	
+
 	// dimensões dos botões
-	private static final Dimension tamanhoBt = new Dimension( 170, 30);
+	private static final Dimension tamanhoBt = new Dimension(170, 30);
 	private static final int SEM_UTENTES = 0;
 
 	private Servico servico;
@@ -41,73 +42,69 @@ public class MenuServico extends JDialog {
 
 	// elementos gráficos usados na interface
 	private static final long serialVersionUID = 1L;
-	private JPanel menusPanel; 
+	private JPanel menusPanel;
 	private CardLayout menusCard;
 	private JButton proxBt;
 	private JLabel senhaLbl, utenteLbl;
-	
 
-	/** Construtor da janela de Serviço
-	 * @param pos posição onde por a janela
-	 * @param s qual o serviço associado à janela
+	/**
+	 * Construtor da janela de Serviço
+	 * 
+	 * @param pos  posição onde por a janela
+	 * @param s    qual o serviço associado à janela
 	 * @param gest o sistema
 	 */
-	public MenuServico( Point pos, Servico s, GEstSaude gest ) {
-		setLocation( pos );
-		servico = s;		
+	public MenuServico(Point pos, Servico s, GEstSaude gest) {
+		setLocation(pos);
+		servico = s;
 		setupAspeto();
 		atualizarInfo();
 		this.gest = gest;
 	}
-	
-	/** método que chama o próximo utente 
+
+	/**
+	 * método que chama o próximo utente
+	 * 
 	 * @return true se tem próximo utente
 	 */
 	private boolean proximoUtente() {
 		// TODO ver se há senhas em espera e usar a próxima
 		int idx = 0;
 		senha = servico.getProximaSenha();
-				
-		if( senha == null)
+
+		if (senha == null)
 			return false;
-				
-		while(!servico.equals(senha.proxServico()))
-		{
+
+		while (!servico.equals(senha.proxServico())) {
 			idx++;
-			senha= servico.getProximaSenha(idx);
+			senha = servico.getProximaSenha(idx);
 		}
-						
-		senhaLbl.setText( senha.getIdSenha());
-		utenteLbl.setText( senha.getUtente().getNomeUtente());
+
+		senhaLbl.setText(senha.getIdSenha());
+		utenteLbl.setText(senha.getUtente().getNomeUtente());
 		return true;
 	}
 
 	/** método chamado para rejeitar o utente */
-	private void rejeitarUtente() 
-	{
-		servico.rejeitaProximaSenha();		
+	private void rejeitarUtente() {
+		servico.rejeitaProximaSenha();
 	}
-		
 
 	/** método chamado para confirmar a consulta */
-	private void confirmarConsulta() 
-	{
-	
+	private void confirmarConsulta() {
+
 	}
-	
+
 	/** método chamado para finalizar a consulta */
-	private void finalizarConsulta( ) 
-	{			
-		if(senha.getServicosVisitar().size() == 1) //caso seja o ultimo serviço da senha a visitar
+	private void finalizarConsulta() {
+		if (senha.getServicosVisitar().size() == 1) // caso seja o ultimo serviço da senha a visitar
 		{
 			servico.removeSenhaServico(senha);
 			senha.terminaConsulta(servico);
-			servico.removeConsultasServico(senha.getConsulta()); 
-			gest.getSenhasFromMap().remove(senha.getIdSenha()); //apaga a senha do sistema
+			servico.removeConsultasServico(senha.getConsulta());
+			gest.getSenhasFromMap().remove(senha.getIdSenha()); // apaga a senha do sistema
 			gest.removeConsulta(senha.getConsulta()); // apaga a consulta do sistema
-		}
-		else
-		{
+		} else {
 			senha.terminaConsulta(servico);
 			servico.removeSenhaServico(senha);
 			servico.removeConsultasServico(senha.getConsulta());
@@ -133,7 +130,7 @@ public class MenuServico extends JDialog {
 				JOptionPane.showMessageDialog(this, "Esse serviço não existe!");
 			else {
 				serv.add(res);
-				s.addSenhasAoServiço(senha);		
+				s.addSenhasAoServiço(senha);
 				senha.addServicosVistar(s);
 				gest.getServico(s.getServicoId()).addConsultasServico(senha.getConsulta());
 				atualizarInfo();
@@ -144,12 +141,10 @@ public class MenuServico extends JDialog {
 
 	/** método chamado para listar as senhas em espera neste serviço */
 	private void listarSenhas() {
-		// ver quais as senhas em espera por este serviço		
+		// ver quais as senhas em espera por este serviço
 		List<Senha> senhas = new ArrayList<Senha>();
-		for (Senha senhaServico : servico.getSenhasaAtender())
-		{
-			if (senhaServico.proxServico().equals(servico))
-			{
+		for (Senha senhaServico : servico.getSenhasaAtender()) {
+			if (senhaServico.proxServico().equals(servico)) {
 				senhas.add(senhaServico);
 			}
 		}
@@ -166,149 +161,157 @@ public class MenuServico extends JDialog {
 
 	/** Atualiza título, indicando quantos utentes estão em fila de espera */
 	public void atualizarInfo() {
-		
+
 		int nUtentes = SEM_UTENTES;
-		for (Senha senhaServico : servico.getSenhasaAtender()) //listar apenas os utentes que estão disponiveis no serviço
+		for (Senha senhaServico : servico.getSenhasaAtender()) // listar apenas os utentes que estão disponiveis no
+																// serviço
 		{
-			if (senhaServico.proxServico().equals(servico))// caso a proximo serviço associado a senha não seja igual ao nosso serviço, o utente nao é listado.
+			if (senhaServico.proxServico().equals(servico))// caso a proximo serviço associado a senha não seja igual ao
+															// nosso serviço, o utente nao é listado.
 			{
 				nUtentes++;
 			}
-		}	
-		setTitle( servico.getServicoId() + " utentes: " + nUtentes );
-		proxBt.setEnabled( nUtentes > SEM_UTENTES ); // se houver em espera pode-se ativar o botão de próximo
+		}
+		setTitle(servico.getServicoId() + " utentes: " + nUtentes);
+		proxBt.setEnabled(nUtentes > SEM_UTENTES); // se houver em espera pode-se ativar o botão de próximo
 	}
-	
-	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
-	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
-	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
-	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
-	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
-	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar nada nestes métodos
-	
-	/** método que define o aspeto desta janela
+
+	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar
+	// nada nestes métodos
+	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar
+	// nada nestes métodos
+	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar
+	// nada nestes métodos
+	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar
+	// nada nestes métodos
+	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar
+	// nada nestes métodos
+	// métodos relacionados com a interface gráfica. Não deve ser necessário alterar
+	// nada nestes métodos
+
+	/**
+	 * método que define o aspeto desta janela
 	 */
 	private void setupAspeto() {
-		setLayout( new BorderLayout() );
+		setLayout(new BorderLayout());
 		setupInfoPanel();
-		
+
 		JPanel menuChamada = setupMenuChamada();
 		JPanel menuConsulta = setupMenuConsulta();
 		menusCard = new CardLayout();
-		menusPanel = new JPanel( menusCard );
-		menusPanel.add( menuChamada );
-		menusPanel.add( menuConsulta );
-		
-		add( menusPanel, BorderLayout.CENTER );
+		menusPanel = new JPanel(menusCard);
+		menusPanel.add(menuChamada);
+		menusPanel.add(menuConsulta);
+
+		add(menusPanel, BorderLayout.CENTER);
 		pack();
 	}
-	
-	private void setupInfoPanel() {
-		JPanel info = new JPanel( );
-		info.setLayout( new BoxLayout( info, BoxLayout.Y_AXIS) );
-		senhaLbl = new JLabel( "---", JLabel.CENTER );
-		senhaLbl.setFont( new Font("Roman", Font.BOLD, 15) );
-		senhaLbl.setAlignmentX( JLabel.CENTER_ALIGNMENT);
-		info.add( senhaLbl );
 
-		utenteLbl = new JLabel( "---", JLabel.CENTER );
-		utenteLbl.setFont( new Font("Roman", Font.BOLD, 10) );
-		utenteLbl.setAlignmentX( JLabel.CENTER_ALIGNMENT);
-		info.add( utenteLbl );
+	private void setupInfoPanel() {
+		JPanel info = new JPanel();
+		info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+		senhaLbl = new JLabel("---", JLabel.CENTER);
+		senhaLbl.setFont(new Font("Roman", Font.BOLD, 15));
+		senhaLbl.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		info.add(senhaLbl);
+
+		utenteLbl = new JLabel("---", JLabel.CENTER);
+		utenteLbl.setFont(new Font("Roman", Font.BOLD, 10));
+		utenteLbl.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		info.add(utenteLbl);
 
 		JButton senhasBt = new JButton("Senhas");
-		senhasBt.addActionListener( new ActionListener() {
+		senhasBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				listarSenhas();
 			}
 		});
-		senhasBt.setAlignmentX( JLabel.CENTER_ALIGNMENT);
-		senhasBt.setMargin( new Insets(0,0,0,0));
-		info.add( senhasBt );
-		
-		add( info, BorderLayout.NORTH );
+		senhasBt.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		senhasBt.setMargin(new Insets(0, 0, 0, 0));
+		info.add(senhasBt);
+
+		add(info, BorderLayout.NORTH);
 	}
-	
 
 	private JPanel setupMenuChamada() {
-		JPanel menuChamada = new JPanel( new GridLayout(0,1) );
+		JPanel menuChamada = new JPanel(new GridLayout(0, 1));
 		proxBt = new JButton("Chamar Utente");
 		JButton rejeitarBt = new JButton("Rejeitar Utente");
 		JButton consultaBt = new JButton("Confirmar consulta");
-		
-		proxBt.setMinimumSize( tamanhoBt );
-		proxBt.setPreferredSize( tamanhoBt );
-		proxBt.addActionListener( new ActionListener() {
+
+		proxBt.setMinimumSize(tamanhoBt);
+		proxBt.setPreferredSize(tamanhoBt);
+		proxBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if( proximoUtente() ) {
+				if (proximoUtente()) {
 					atualizarInfo();
-					rejeitarBt.setEnabled( true );
-					consultaBt.setEnabled( true );
+					rejeitarBt.setEnabled(true);
+					consultaBt.setEnabled(true);
 				}
 			}
 		});
-		menuChamada.add( proxBt );
-				
-		rejeitarBt.addActionListener( new ActionListener() {
+		menuChamada.add(proxBt);
+
+		rejeitarBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				senhaLbl.setText( "---" );
-				utenteLbl.setText( "---" );
+				senhaLbl.setText("---");
+				utenteLbl.setText("---");
 				rejeitarUtente();
 			}
 		});
-		rejeitarBt.setEnabled( false );
-		menuChamada.add( rejeitarBt );
-		
-		consultaBt.addActionListener( new ActionListener() {
+		rejeitarBt.setEnabled(false);
+		menuChamada.add(rejeitarBt);
+
+		consultaBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				confirmarConsulta();
-				rejeitarBt.setEnabled( false );
-				consultaBt.setEnabled( false );
-				menusCard.next( menusPanel );
+				rejeitarBt.setEnabled(false);
+				consultaBt.setEnabled(false);
+				menusCard.next(menusPanel);
 			}
 		});
-		consultaBt.setEnabled( false );
-		menuChamada.add( consultaBt );
-		
-		return menuChamada;		
+		consultaBt.setEnabled(false);
+		menuChamada.add(consultaBt);
+
+		return menuChamada;
 	}
-	
+
 	private JPanel setupMenuConsulta() {
-		JPanel menuConsulta = new JPanel( new GridLayout(0,1) );
+		JPanel menuConsulta = new JPanel(new GridLayout(0, 1));
 		JButton finalizarBt = new JButton("Finalizar Consulta");
-		finalizarBt.setMinimumSize( tamanhoBt );
-		finalizarBt.setPreferredSize( tamanhoBt );
-		finalizarBt.addActionListener( new ActionListener() {
+		finalizarBt.setMinimumSize(tamanhoBt);
+		finalizarBt.setPreferredSize(tamanhoBt);
+		finalizarBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				finalizarConsulta( );
+				finalizarConsulta();
 				limpaInfo();
 			}
 
 		});
-		menuConsulta.add( finalizarBt );
+		menuConsulta.add(finalizarBt);
 
 		JButton encaminharBt = new JButton("Encaminhar");
-		encaminharBt.addActionListener( new ActionListener() {
+		encaminharBt.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				encaminhar( );
+				encaminhar();
 				limpaInfo();
 			}
 		});
-		menuConsulta.add( encaminharBt );
-		
+		menuConsulta.add(encaminharBt);
+
 		return menuConsulta;
 	}
 
 	private void limpaInfo() {
-		senhaLbl.setText( "---" );
-		utenteLbl.setText( "---" );
+		senhaLbl.setText("---");
+		utenteLbl.setText("---");
 		atualizarInfo();
-		menusCard.next( menusPanel );
+		menusCard.next(menusPanel);
 	}
 }

@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import gestsaude.recurso.Servico;
 
-/** Representa uma Senha
+/**
+ * Representa uma Senha
  */
 public class Senha {
 
@@ -15,23 +16,25 @@ public class Senha {
 	private String idSenha;
 	private LocalDateTime dataHoraEntrada;
 	public List<Servico> servicosVisitar = new ArrayList<Servico>();
-	
-	public Senha (Utente utente, Consulta consulta, LocalDateTime dataHoraEntrada, String idSenha) {
+
+	public Senha(Utente utente, Consulta consulta, LocalDateTime dataHoraEntrada, String idSenha) {
 		setUtente(utente);
 		setConsulta(consulta);
 		setDataHoraEntrada(dataHoraEntrada);
 		setIdSenha(idSenha);
 	}
-	
-	/** retorna o próximo serviço associado a esta senha 
+
+	/**
+	 * retorna o próximo serviço associado a esta senha
+	 * 
 	 * @return o próximo serviço associado a esta senha
-	 * 	 */
+	 */
 	public Servico proxServico() {
 		return servicosVisitar.get(Servico.LISTA_INDICE_ZERO);
 	}
 
-
-	/** faz o processamento do fim da consulta por um dado serviço
+	/**
+	 * faz o processamento do fim da consulta por um dado serviço
 	 */
 	public void terminaConsulta(Servico servico) {
 		servicosVisitar.remove(servico);
@@ -53,7 +56,6 @@ public class Senha {
 		this.consulta = consulta;
 	}
 
-
 	public LocalDateTime getDataHoraEntrada() {
 		return dataHoraEntrada;
 	}
@@ -61,7 +63,7 @@ public class Senha {
 	public void setDataHoraEntrada(LocalDateTime dataHoraEntrada) {
 		this.dataHoraEntrada = dataHoraEntrada;
 	}
-	
+
 	public String getIdSenha() {
 		return idSenha;
 	}
@@ -74,24 +76,23 @@ public class Senha {
 		if (servicosVisitar.contains(servico)) {
 			return;
 		}
-		servicosVisitar.add(servico);   	
+		servicosVisitar.add(servico);
 	}
-	
+
 	public void removeServicosVistar(Servico servico) {
 		if (!servicosVisitar.contains(servico)) {
 			return;
 		}
 		servicosVisitar.remove(servico);
 	}
-	
+
 	public List<Servico> getServicosVisitar() {
 		return Collections.unmodifiableList(servicosVisitar);
 	}
 
 	@Override
 	public String toString() {
-		return "idSenha=" + idSenha + ", DataeHoradeEntrada="
-				+ dataHoraEntrada + "]";
+		return "idSenha=" + idSenha + ", DataeHoradeEntrada=" + dataHoraEntrada + "]";
 	}
-	
+
 }
